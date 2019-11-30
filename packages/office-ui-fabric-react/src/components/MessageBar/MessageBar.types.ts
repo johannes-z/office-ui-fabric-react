@@ -2,9 +2,16 @@ import * as React from 'react';
 import { BaseButton, Button } from '../../Button';
 import { ITheme, IStyle } from '../../Styling';
 import { IRefObject, IStyleFunctionOrObject } from '../../Utilities';
+import { IIconProps } from '../../Icon';
 
+/**
+ * {@docCategory MessageBar}
+ */
 export interface IMessageBar {}
 
+/**
+ * {@docCategory MessageBar}
+ */
 export interface IMessageBarProps extends React.HTMLAttributes<HTMLElement> {
   /**
    * Optional callback to access the IMessageBar interface. Use this instead of ref for accessing
@@ -34,7 +41,7 @@ export interface IMessageBarProps extends React.HTMLAttributes<HTMLElement> {
    * If null, we don't show a dismiss button.
    * @defaultvalue null
    */
-  onDismiss?: (ev?: React.MouseEvent<HTMLButtonElement | BaseButton | HTMLAnchorElement | HTMLDivElement | Button>) => any;
+  onDismiss?: (ev?: React.MouseEvent<HTMLElement | BaseButton | Button>) => any;
 
   /**
    * Determines if the message bar is multi lined.
@@ -75,8 +82,23 @@ export interface IMessageBarProps extends React.HTMLAttributes<HTMLElement> {
    * Call to provide customized styling that will layer on top of the variant rules.
    */
   styles?: IStyleFunctionOrObject<IMessageBarStyleProps, IMessageBarStyles>;
+
+  /**
+   * Custom icon prop to replace the dismiss icon.
+   * If unset, default will be the Fabric Clear icon.
+   */
+  dismissIconProps?: IIconProps;
+
+  /**
+   * Custom icon prop to replace the message bar icon.
+   * If unset, default will be the icon set by messageBarType.
+   */
+  messageBarIconProps?: IIconProps;
 }
 
+/**
+ * {@docCategory MessageBar}
+ */
 export interface IMessageBarStyleProps {
   /**
    * Theme (provided through customization).
@@ -119,6 +141,9 @@ export interface IMessageBarStyleProps {
   actions?: boolean;
 }
 
+/**
+ * {@docCategory MessageBar}
+ */
 export interface IMessageBarStyles {
   /**
    * Style set for the root element.
@@ -176,6 +201,9 @@ export interface IMessageBarStyles {
   actions?: IStyle;
 }
 
+/**
+ * {@docCategory MessageBar}
+ */
 export enum MessageBarType {
   /** Info styled MessageBar */
   info = 0,

@@ -1,14 +1,18 @@
 import * as React from 'react';
-import { Async, BaseComponent, classNamesFunction, findIndex, KeyCodes, getId } from '../../Utilities';
 import {
-  ISwatchColorPicker,
-  ISwatchColorPickerProps,
-  ISwatchColorPickerStyleProps,
-  ISwatchColorPickerStyles
-} from './SwatchColorPicker.types';
+  Async,
+  classNamesFunction,
+  findIndex,
+  KeyCodes,
+  getId,
+  warnMutuallyExclusive,
+  warnConditionallyRequiredProps
+} from '../../Utilities';
+import { ISwatchColorPickerProps, ISwatchColorPickerStyleProps, ISwatchColorPickerStyles } from './SwatchColorPicker.types';
 import { Grid } from '../../utilities/grid/Grid';
 import { IColorCellProps } from './ColorPickerGridCell.types';
 import { ColorPickerGridCell } from './ColorPickerGridCell';
+import { memoizeFunction } from '@uifabric/utilities';
 
 export interface ISwatchColorPickerState {
   selectedIndex?: number;
@@ -16,7 +20,7 @@ export interface ISwatchColorPickerState {
 
 const getClassNames = classNamesFunction<ISwatchColorPickerStyleProps, ISwatchColorPickerStyles>();
 
-export class SwatchColorPickerBase extends BaseComponent<ISwatchColorPickerProps, ISwatchColorPickerState> implements ISwatchColorPicker {
+export class SwatchColorPickerBase extends React.Component<ISwatchColorPickerProps, ISwatchColorPickerState> {
   public static defaultProps = {
     cellShape: 'circle',
     disabled: false,
@@ -32,16 +36,31 @@ export class SwatchColorPickerBase extends BaseComponent<ISwatchColorPickerProps
   private readonly navigationIdleDelay: number = 250 /* ms */;
   private async: Async;
 
+  // Add an index to each color cells. Memoizes this so that color cells do not re-render on every update.
+  private _getItemsWithIndex = memoizeFunction((items: IColorCellProps[]) => {
+    return items.map((item, index) => {
+      return { ...item, index: index };
+    });
+  });
+
   constructor(props: ISwatchColorPickerProps) {
     super(props);
 
     this._id = props.id || getId('swatchColorPicker');
 
-    this._warnMutuallyExclusive({
-      focusOnHover: 'onHover'
-    });
+    if (process.env.NODE_ENV !== 'production') {
+      warnMutuallyExclusive('SwatchColorPicker', this.props, {
+        focusOnHover: 'onHover'
+      });
 
-    this._warnConditionallyRequiredProps(['focusOnHover'], 'mouseLeaveParentSelector', !!this.props.mouseLeaveParentSelector);
+      warnConditionallyRequiredProps(
+        'SwatchColorPicker',
+        this.props,
+        ['focusOnHover'],
+        'mouseLeaveParentSelector',
+        !!this.props.mouseLeaveParentSelector
+      );
+    }
 
     this.isNavigationIdle = true;
     this.async = new Async(this);
@@ -56,7 +75,8 @@ export class SwatchColorPickerBase extends BaseComponent<ISwatchColorPickerProps
     };
   }
 
-  public componentWillReceiveProps(newProps: ISwatchColorPickerProps): void {
+  // tslint:disable-next-line function-name
+  public UNSAFE_componentWillReceiveProps(newProps: ISwatchColorPickerProps): void {
     if (newProps.selectedId !== undefined) {
       this.setState({
         selectedIndex: this._getSelectedIndex(newProps.colorCells, newProps.selectedId)
@@ -96,9 +116,7 @@ export class SwatchColorPickerBase extends BaseComponent<ISwatchColorPickerProps
     return (
       <Grid
         {...this.props}
-        items={colorCells.map((item, index) => {
-          return { ...item, index: index };
-        })}
+        items={this._getItemsWithIndex(colorCells)}
         columnCount={columnCount}
         onRenderItem={this._renderOption}
         positionInSet={positionInSet && positionInSet}
@@ -224,7 +242,7 @@ export class SwatchColorPickerBase extends BaseComponent<ISwatchColorPickerProps
       return;
     }
 
-    // Get the the elements that math the given selector
+    // Get the elements that math the given selector
     const elements = document.querySelectorAll(parentSelector);
 
     // iterate over the elements return to make sure it is a parent of the target and focus it
@@ -334,9 +352,12 @@ export class SwatchColorPickerBase extends BaseComponent<ISwatchColorPickerProps
         this.props.onColorChanged(item.id, item.color);
       }
 
-      this.setState({
-        selectedIndex: index
-      });
+      // Update internal state only if the component is uncontrolled
+      if (this.props.isControlled !== true) {
+        this.setState({
+          selectedIndex: index
+        });
+      }
     }
   };
 }

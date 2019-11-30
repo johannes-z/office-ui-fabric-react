@@ -2,8 +2,7 @@
 
 const fs = require('fs');
 const path = require('path');
-const { series, resolveCwd } = require('just-task');
-const { copyTask } = require('just-scripts');
+const { series, resolveCwd, copyTask } = require('just-scripts');
 
 function expandSourcePath(pattern) {
   if (!pattern) {
@@ -33,7 +32,7 @@ function expandSourcePath(pattern) {
   }
 }
 
-exports.copy = () => {
+function copy() {
   let tasks = [];
   let configPath = path.resolve(process.cwd(), 'config/pre-copy.json');
 
@@ -52,4 +51,6 @@ exports.copy = () => {
   }
 
   return series.apply(null, tasks);
-};
+}
+
+module.exports = { expandSourcePath, copy };

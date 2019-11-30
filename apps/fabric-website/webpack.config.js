@@ -1,21 +1,23 @@
-module.exports = function(env) {
+// @ts-check
+
+module.exports = function(env, argv) {
   const path = require('path');
-  const resources = require('../../scripts/webpack/webpack-resources');
+  const resources = require('@uifabric/build/webpack/webpack-resources');
+  const { addMonacoWebpackConfig } = require('@uifabric/tsx-editor/scripts/addMonacoWebpackConfig');
+  // @ts-ignore
   const version = require('./package.json').version;
-  const isDogfoodArg = env && !env.production;
-  const isProductionArg = env && env.production;
+  // production mode is either coming from env variable, CLI argument as mode or production
+  const isProductionArg =
+    (env && (env.production || env.NODE_ENV === 'production')) || argv.mode === 'production' || argv.production === true;
   const now = Date.now();
 
   // Production defaults
   let minFileNamePart = '';
-  let entryPointName = 'fabric-sitev5';
+  const entryPointName = 'fabric-sitev5';
   let publicPath = 'https://static2.sharepointonline.com/files/fabric/fabric-website/dist/';
 
   // Dogfood overrides
-  if (isDogfoodArg) {
-    publicPath = 'https://static2df.sharepointonline.com/files/fabric/fabric-website/dist/';
-    entryPointName = 'fabric-sitev5-df';
-  } else if (!isProductionArg) {
+  if (!isProductionArg) {
     publicPath = '/dist/';
   } else {
     minFileNamePart = '.min';
@@ -24,7 +26,7 @@ module.exports = function(env) {
   return resources.createConfig(
     entryPointName,
     isProductionArg,
-    {
+    addMonacoWebpackConfig({
       entry: {
         [entryPointName]: './lib/root.js'
       },
@@ -34,22 +36,20 @@ module.exports = function(env) {
         chunkFilename: `${entryPointName}-${version}-[name]-${now}${minFileNamePart}.js`
       },
 
-      externals: [
-        {
-          react: 'React'
-        },
-        {
-          'react-dom': 'ReactDOM'
-        }
-      ],
+      // The website config intentionally doesn't have React as an external because we bundle it
+      // to ensure we get a consistent version.
 
       resolve: {
         alias: {
-          'office-ui-fabric-react/src': path.join(__dirname, 'node_modules/office-ui-fabric-react/src'),
-          'office-ui-fabric-react/lib': path.join(__dirname, 'node_modules/office-ui-fabric-react/lib')
+          '@uifabric/fabric-website/src': path.join(__dirname, 'src'),
+          '@uifabric/fabric-website/lib': path.join(__dirname, 'lib'),
+          'office-ui-fabric-react$': path.resolve(__dirname, '../../packages/office-ui-fabric-react/lib'),
+          'office-ui-fabric-react/src': path.resolve(__dirname, '../../packages/office-ui-fabric-react/src'),
+          'office-ui-fabric-react/lib': path.resolve(__dirname, '../../packages/office-ui-fabric-react/lib'),
+          '@uifabric/api-docs/lib': path.resolve(__dirname, '../../packages/api-docs/lib')
         }
       }
-    },
-    isProductionArg /* only production */
+    }),
+    /* only production */ isProductionArg
   );
 };

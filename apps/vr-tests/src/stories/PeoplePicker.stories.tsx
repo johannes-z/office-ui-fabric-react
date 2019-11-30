@@ -12,8 +12,18 @@ import {
   PersonaPresence
 } from 'office-ui-fabric-react';
 
-import { TestImages } from '../common/TestImages';
+import { TestImages } from '@uifabric/example-data';
 
+const overflowPersona: IPersonaProps & { key: string | number } = {
+  key: 2,
+  imageUrl: TestImages.personaMale,
+  imageInitials: 'AR',
+  text: 'Aaron Reid Lundberg Kolar Lundberg Lindqvist Kolar Reid',
+  secondaryText: 'Designer',
+  tertiaryText: 'In a meeting',
+  optionalText: 'Available at 4:00pm',
+  presence: PersonaPresence.busy
+};
 const people: (IPersonaProps & { key: string | number })[] = [
   {
     key: 1,
@@ -213,6 +223,23 @@ storiesOf('PeoplePicker', module)
           className={'ms-PeoplePicker'}
           pickerSuggestionsProps={suggestionProps}
           defaultSelectedItems={[people[2]]}
+        />
+      </Fabric>
+    ),
+    { rtl: true }
+  )
+  .addStory(
+    'Normal Overflow selected',
+    () => (
+      <Fabric>
+        <NormalPeoplePicker
+          onResolveSuggestions={getPeople}
+          onEmptyInputFocus={getPeople}
+          getTextFromItem={getTextFromItem}
+          className={'ms-PeoplePicker'}
+          pickerSuggestionsProps={suggestionProps}
+          styles={{ root: { maxWidth: 200 } }}
+          defaultSelectedItems={[people[1], overflowPersona]}
         />
       </Fabric>
     ),

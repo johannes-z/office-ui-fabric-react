@@ -15,7 +15,7 @@ const REMOVE_BUTTON_SIZE = 24;
 export function getStyles(props: IPeoplePickerItemSelectedStyleProps): IPeoplePickerItemSelectedStyles {
   const { className, theme, selected, invalid, disabled } = props;
 
-  const { palette, semanticColors } = theme;
+  const { palette, semanticColors, fonts } = theme;
 
   const classNames = getGlobalClassNames(GlobalClassNames, theme);
 
@@ -25,6 +25,9 @@ export function getStyles(props: IPeoplePickerItemSelectedStyleProps): IPeoplePi
       !disabled && {
         color: palette.white,
         selectors: {
+          ':hover': {
+            color: palette.white
+          },
           [HighContrastSelector]: {
             color: 'HighlightText'
           }
@@ -34,7 +37,7 @@ export function getStyles(props: IPeoplePickerItemSelectedStyleProps): IPeoplePi
       color: palette.redDark,
       borderBottom: `2px dotted ${palette.redDark}`,
       selectors: {
-        '$root:hover &': {
+        [`.${classNames.root}:hover &`]: {
           // override Persona root:hover selector
           color: palette.redDark
         }
@@ -57,14 +60,14 @@ export function getStyles(props: IPeoplePickerItemSelectedStyleProps): IPeoplePi
 
   const personaCoinInitialsStyles: IStyle = [
     invalid && {
-      fontSize: 20 // does not exist on the FontSizes type ramp.
+      fontSize: fonts.xLarge.fontSize
     }
   ];
 
   return {
     root: [
       classNames.root,
-      getFocusStyle(theme, -2),
+      getFocusStyle(theme, { inset: -2 }),
       {
         borderRadius: 15,
         display: 'inline-flex',
@@ -75,6 +78,7 @@ export function getStyles(props: IPeoplePickerItemSelectedStyleProps): IPeoplePi
         userSelect: 'none',
         maxWidth: 300,
         verticalAlign: 'middle',
+        minWidth: 0,
         selectors: {
           ':hover': {
             background: !selected && !disabled ? palette.neutralLight : ''
@@ -119,10 +123,10 @@ export function getStyles(props: IPeoplePickerItemSelectedStyleProps): IPeoplePi
       classNames.removeButton,
       {
         borderRadius: 15,
+        color: palette.neutralPrimary,
         flex: '0 0 auto',
         width: REMOVE_BUTTON_SIZE,
         height: REMOVE_BUTTON_SIZE,
-        flexBasis: REMOVE_BUTTON_SIZE,
         selectors: {
           ':hover': {
             background: palette.neutralTertiaryAlt,
@@ -138,6 +142,10 @@ export function getStyles(props: IPeoplePickerItemSelectedStyleProps): IPeoplePi
               color: palette.white,
               background: palette.themeDark
             },
+            ':active': {
+              color: palette.white,
+              background: palette.themeDarker
+            },
             [HighContrastSelector]: {
               color: 'HighlightText'
             }
@@ -147,6 +155,9 @@ export function getStyles(props: IPeoplePickerItemSelectedStyleProps): IPeoplePi
           selectors: {
             ':hover': {
               background: palette.red
+            },
+            ':active': {
+              background: palette.redDark
             }
           }
         }

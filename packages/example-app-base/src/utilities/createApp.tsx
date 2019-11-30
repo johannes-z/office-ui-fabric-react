@@ -1,9 +1,7 @@
-/* tslint:disable:jsx-no-lambda */
-
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { App, IAppDefinition, IAppLink } from '../components/App/index';
-import { Router, Route } from 'office-ui-fabric-react/lib/utilities/router/index';
+import { Router, Route } from './router/index';
 import { setBaseUrl } from 'office-ui-fabric-react/lib/Utilities';
 import { Fabric } from 'office-ui-fabric-react/lib/Fabric';
 
@@ -31,10 +29,10 @@ export function createApp(
 
     setBaseUrl('./dist/');
 
-    const routes: (JSX.Element | JSX.Element[])[] = groups.map((group: ExampleGroup, groupIndex: number) =>
-      group.examples.map((example: IExample, index: number) => (
-        <Route key={example.key} path={'#component=' + example.key} component={example.onRender} />
-      ))
+    const routes: (JSX.Element | JSX.Element[])[] = groups.map(group =>
+      group.examples.map(example => {
+        return <Route key={example.key} path={'#component=' + example.key} component={example.onRender} />;
+      })
     );
 
     // Add the default route
@@ -50,13 +48,15 @@ export function createApp(
       appDefinition.headerLinks = headerLinks;
     }
 
+    const renderApp = (props: {}) => <App appDefinition={appDefinition} {...props} />;
+
     ReactDOM.render(
       <Fabric>
         <Router>
           <Route key="minimal" path="?minimal" component={_getComponent}>
             {routes}
           </Route>
-          <Route key={'app'} component={(props: {}) => <App appDefinition={appDefinition} {...props} />}>
+          <Route key="app" component={renderApp}>
             {routes}
           </Route>
         </Router>
@@ -107,11 +107,11 @@ function _getDefinition(groups: ExampleGroup[]): IAppDefinition {
       },
       {
         name: 'Fabric',
-        url: 'http://dev.office.com/fabric'
+        url: 'https://dev.microsoft.com/fabric'
       },
       {
-        name: 'Github',
-        url: 'http://www.github.com/officedev'
+        name: 'GitHub',
+        url: 'https://github.com/OfficeDev/office-ui-fabric-react'
       }
     ]
   };

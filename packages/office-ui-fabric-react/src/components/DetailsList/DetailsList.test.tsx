@@ -11,6 +11,8 @@ import { IDetailsColumnProps } from 'office-ui-fabric-react/lib/components/Detai
 import { IDetailsHeaderProps, DetailsHeader } from './DetailsHeader';
 import { EventGroup, IRenderFunction } from '../../Utilities';
 import { IDragDropEvents } from './../../utilities/dragdrop/index';
+import { SelectionMode, Selection, SelectionZone } from '../../utilities/selection/index';
+import { getTheme } from '../../Styling';
 
 // Populate mock data for testing
 function mockData(count: number, isColumn: boolean = false, customDivider: boolean = false): any {
@@ -311,6 +313,11 @@ describe('DetailsList', () => {
       );
     };
 
+    const getCellValueKey = (item: any, index: number, column: IColumn) => {
+      const valueKey = item && column && column.fieldName ? item[column.fieldName] : column.key + index;
+      return valueKey;
+    };
+
     jest.useFakeTimers();
 
     let component: any;
@@ -323,6 +330,7 @@ describe('DetailsList', () => {
         // tslint:disable-next-line:jsx-no-lambda
         onShouldVirtualize={() => false}
         onRenderItemColumn={onRenderColumn}
+        getCellValueKey={getCellValueKey}
       />
     );
 
@@ -390,25 +398,18 @@ describe('DetailsList', () => {
   });
 
   it('invokes optional onColumnResize callback per IColumn if defined when columns are adjusted', () => {
-    const detailsList = mount(
-      <DetailsList
-        items={mockData(2)}
-        skipViewportMeasures={true}
-        // tslint:disable-next-line:jsx-no-lambda
-        onShouldVirtualize={() => false}
-      />
-    );
-
     const columns: IColumn[] = mockData(2, true);
     columns[0].onColumnResize = jest.fn();
     columns[1].onColumnResize = jest.fn();
 
-    // componentWillReceiveProps not executed on initial render in test
-    // so we need to force one via setProps and update.
-    const newProps = { columns };
-
-    detailsList.setProps(newProps);
-    detailsList.update();
+    mount(
+      <DetailsList
+        items={mockData(2)}
+        columns={columns}
+        // tslint:disable-next-line:jsx-no-lambda
+        onShouldVirtualize={() => false}
+      />
+    );
 
     expect(columns[0].onColumnResize).toHaveBeenCalledTimes(1);
     expect(columns[1].onColumnResize).toHaveBeenCalledTimes(1);
@@ -448,5 +449,38 @@ describe('DetailsList', () => {
     );
 
     expect(onRenderColumnHeaderTooltipMock).toHaveBeenCalledTimes(NUM_COLUMNS);
+  });
+
+  it('invokes optional onRenderCheckbox callback to customize checkbox rendering when provided', () => {
+    const onRenderCheckboxMock = jest.fn();
+    const selection = new Selection();
+    const theme = getTheme();
+    mount(
+      <DetailsList
+        items={mockData(2)}
+        skipViewportMeasures={true}
+        // tslint:disable-next-line:jsx-no-lambda
+        onShouldVirtualize={() => false}
+        onRenderCheckbox={onRenderCheckboxMock}
+        checkboxVisibility={CheckboxVisibility.always}
+        selectionMode={SelectionMode.multiple}
+        selection={selection}
+      />
+    );
+
+    expect(onRenderCheckboxMock).toHaveBeenCalledTimes(3);
+    expect(onRenderCheckboxMock.mock.calls[2][0]).toEqual({ checked: false, theme });
+
+    selection.setAllSelected(true);
+
+    expect(onRenderCheckboxMock).toHaveBeenCalledTimes(6);
+    expect(onRenderCheckboxMock.mock.calls[5][0]).toEqual({ checked: true, theme });
+  });
+
+  it('initializes the selection mode object with the selectionMode prop', () => {
+    const component = mount(<DetailsList items={mockData(5)} columns={mockData(5, true)} selectionMode={SelectionMode.none} />);
+
+    const selectionZone = component.find(SelectionZone);
+    expect(selectionZone.props().selection.mode).toEqual(SelectionMode.none);
   });
 });

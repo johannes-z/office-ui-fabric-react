@@ -1,10 +1,9 @@
 // tslint:disable:no-any
-import * as React from 'react';
-import { App as AppBase, IAppDefinition, IAppProps } from '@uifabric/example-app-base';
+import { IAppDefinition } from '@uifabric/example-app-base';
 import { AppCustomizations } from './customizations';
 
 export const AppDefinition: IAppDefinition = {
-  appTitle: 'Fabric - React',
+  appTitle: 'UI Fabric - Experiments',
   customizations: AppCustomizations,
   testPages: [],
   examplePages: [
@@ -47,6 +46,12 @@ export const AppDefinition: IAppDefinition = {
           url: '#/examples/layoutgroup'
         },
         {
+          component: require<any>('../components/MicroFeedback/MicroFeedbackPage').MicroFeedbackPage,
+          key: 'MicroFeedback',
+          name: 'MicroFeedback',
+          url: '#/examples/microfeedback'
+        },
+        {
           component: require<any>('../components/Pagination/PaginationPage').PaginationPage,
           key: 'Pagination',
           name: 'Pagination',
@@ -77,6 +82,12 @@ export const AppDefinition: IAppDefinition = {
           url: '#/examples/sidebar'
         },
         {
+          component: require<any>('../components/Slider/SliderPage').SliderPage,
+          key: 'Slider',
+          name: 'Slider',
+          url: '#/examples/slider'
+        },
+        {
           component: require<any>('../slots/SlotsPage').SlotsPage,
           key: 'Slots',
           name: 'Slots',
@@ -101,12 +112,6 @@ export const AppDefinition: IAppDefinition = {
           url: '#/examples/toggle'
         },
         {
-          component: require<any>('../components/Shimmer/ShimmerPage').ShimmerPage,
-          key: 'Shimmer',
-          name: 'Shimmer',
-          url: '#/examples/shimmer'
-        },
-        {
           component: require<any>('../components/VirtualizedList/VirtualizedListPage').VirtualizedListPage,
           key: 'VirtualizedList',
           name: 'VirtualizedList',
@@ -117,6 +122,13 @@ export const AppDefinition: IAppDefinition = {
           key: 'StaticList',
           name: 'StaticList',
           url: '#/examples/staticlist'
+        },
+        {
+          component: require<any>('../components/SelectedItemsList/SelectedPeopleList/SelectedPeopleListPage').SelectedPeopleListPage,
+          key: 'SelectedPeopleList',
+          name: 'SelectedPeopleList',
+          url: '#examples/selectedpeoplelist',
+          category: 'Data Collections'
         },
         {
           component: require<any>('../components/fluent/examplePages/FluentThemePage').FluentThemePage,
@@ -140,13 +152,11 @@ export const AppDefinition: IAppDefinition = {
     },
     {
       name: 'Fabric',
-      url: 'http://dev.office.com/fabric'
+      url: 'https://dev.microsoft.com/fabric'
     },
     {
-      name: 'Github',
-      url: 'http://www.github.com/officedev'
+      name: 'GitHub',
+      url: 'https://github.com/OfficeDev/office-ui-fabric-react'
     }
   ]
 };
-
-export const App = (props: IAppProps) => <AppBase appDefinition={AppDefinition} {...props} />;

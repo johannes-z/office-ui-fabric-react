@@ -2,6 +2,9 @@ import * as React from 'react';
 import { IRefObject, IRectangle, IRenderFunction } from '../../Utilities';
 import { List } from './List';
 
+/**
+ * {@docCategory List}
+ */
 export const ScrollToMode = {
   /**
    * Does not make any consideration to where in the viewport the item should align to.
@@ -21,13 +24,24 @@ export const ScrollToMode = {
   center: 3 as 3
 };
 
+/**
+ * {@docCategory List}
+ */
 export type ScrollToMode = typeof ScrollToMode[keyof typeof ScrollToMode];
 
+/**
+ * {@docCategory List}
+ */
 export interface IList {
   /**
    * Force the component to update.
    */
   forceUpdate: () => void;
+
+  /**
+   * Get the current height the list and it's pages.
+   */
+  getTotalListHeight?: () => number;
 
   /**
    * Scroll to the given index. By default will bring the page the specified item is on into the view. If a callback
@@ -49,6 +63,9 @@ export interface IList {
   getStartItemIndexInView: () => number;
 }
 
+/**
+ * {@docCategory List}
+ */
 export interface IListProps<T = any> extends React.HTMLAttributes<List<T> | HTMLDivElement> {
   /**
    * Optional callback to access the IList interface. Use this instead of ref for accessing
@@ -64,7 +81,7 @@ export interface IListProps<T = any> extends React.HTMLAttributes<List<T> | HTML
 
   /**
    * Method to call when trying to render an item.
-   * @param item - The the data associated with the cell that is being rendered.
+   * @param item - The data associated with the cell that is being rendered.
    * @param index - The index of the cell being rendered.
    * @param isScrolling - True if the list is being scrolled. May be useful for rendering a placeholder if your cells are complex.
    */
@@ -110,7 +127,7 @@ export interface IListProps<T = any> extends React.HTMLAttributes<List<T> | HTML
    * in pixels, which has been seen to cause browser performance issues.
    * In general, use `getPageSpecification` instead.
    */
-  getPageHeight?: (itemIndex?: number, visibleRect?: IRectangle) => number;
+  getPageHeight?: (itemIndex?: number, visibleRect?: IRectangle, itemCount?: number) => number;
 
   /**
    * Method called by the list to derive the page style object. For spacer pages, the list will derive
@@ -162,8 +179,16 @@ export interface IListProps<T = any> extends React.HTMLAttributes<List<T> | HTML
    * Override this to control how cells are rendered within a page.
    */
   onRenderPage?: (pageProps: IPageProps<T>, defaultRender?: IRenderFunction<IPageProps<T>>) => React.ReactNode;
+
+  /**
+   * An object which can be passed in as a fresh instance to 'force update' the list.
+   */
+  version?: {};
 }
 
+/**
+ * {@docCategory List}
+ */
 export interface IPage<T = any> {
   key: string;
   items: T[] | undefined;
@@ -174,8 +199,12 @@ export interface IPage<T = any> {
   height: number;
   data?: any;
   isSpacer?: boolean;
+  isVisible?: boolean;
 }
 
+/**
+ * {@docCategory List}
+ */
 export interface IPageProps<T = any> extends React.HTMLAttributes<HTMLDivElement>, React.ClassAttributes<HTMLDivElement> {
   /**
    * The role being assigned to the rendered page element by the list.
@@ -187,6 +216,9 @@ export interface IPageProps<T = any> extends React.HTMLAttributes<HTMLDivElement
   page: IPage<T>;
 }
 
+/**
+ * {@docCategory List}
+ */
 export interface IPageSpecification {
   /**
    * The number of items to allocate to the page.

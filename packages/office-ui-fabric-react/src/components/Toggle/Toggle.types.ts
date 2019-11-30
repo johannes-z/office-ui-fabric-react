@@ -3,12 +3,16 @@ import { IStyle, ITheme } from '../../Styling';
 import { IRefObject, IComponentAs, IStyleFunctionOrObject } from '../../Utilities';
 import { IKeytipProps } from '../../Keytip';
 
+/**
+ * {@docCategory Toggle}
+ */
 export interface IToggle {
   focus: () => void;
 }
 
 /**
  * Toggle component props.
+ * {@docCategory Toggle}
  */
 export interface IToggleProps extends React.HTMLAttributes<HTMLElement> {
   /**
@@ -25,7 +29,7 @@ export interface IToggleProps extends React.HTMLAttributes<HTMLElement> {
   /**
    * A label for the toggle.
    */
-  label?: string;
+  label?: string | JSX.Element;
 
   /**
    * Text to display when toggle is ON.
@@ -100,10 +104,17 @@ export interface IToggleProps extends React.HTMLAttributes<HTMLElement> {
    * Optional keytip for this toggle
    */
   keytipProps?: IKeytipProps;
+
+  /**
+   * (Optional) Specify whether to use the "switch" role (ARIA 1.1) or the checkbox role (ARIA 1.0).
+   * If unspecified, defaults to "switch".
+   */
+  role?: 'checkbox' | 'switch';
 }
 
 /**
  * Properties required to build the styles for the Toggle component.
+ * {@docCategory Toggle}
  */
 export interface IToggleStyleProps {
   /**
@@ -139,6 +150,7 @@ export interface IToggleStyleProps {
 
 /**
  * Styles for the Toggle component.
+ * {@docCategory Toggle}
  */
 export interface IToggleStyles {
   /** Root element. */

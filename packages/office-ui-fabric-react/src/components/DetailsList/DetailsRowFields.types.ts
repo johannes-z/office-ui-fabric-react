@@ -1,10 +1,21 @@
 import { IColumn } from './DetailsList.types';
-import { IDetailsRowStyles, ICellStyleProps } from './DetailsRow.types';
+import { ICellStyleProps, IDetailsRowStyles } from './DetailsRow.types';
 import { IDetailsListProps } from './DetailsList';
 import { IDetailsRowProps } from './DetailsRow';
 
-export type IOverrideColumnRenderProps = Pick<IDetailsListProps, 'onRenderItemColumn'> & Pick<IDetailsRowProps, 'cellsByColumn'>;
+/**
+ * Extended column render props.
+ *
+ * {@docCategory DetailsList}
+ */
+export type IOverrideColumnRenderProps = Pick<IDetailsListProps, 'onRenderItemColumn' | 'getCellValueKey'> &
+  Pick<IDetailsRowProps, 'cellsByColumn'>;
 
+/**
+ * Props interface for the DetailsRowFields component.
+ *
+ * {@docCategory DetailsList}
+ */
 export interface IDetailsRowFieldsProps extends IOverrideColumnRenderProps {
   /**
    * Data source for this component
@@ -32,14 +43,19 @@ export interface IDetailsRowFieldsProps extends IOverrideColumnRenderProps {
   compact?: boolean;
 
   /**
-   * Whether to show shimmer
+   * Subset of classnames currently generated in DetailsRow that are used within DetailsRowFields.
    */
-  shimmer?: boolean;
+  rowClassNames: {
+    [k in keyof Pick<
+      IDetailsRowStyles,
+      'isMultiline' | 'isRowHeader' | 'cell' | 'cellAnimation' | 'cellPadded' | 'cellUnpadded' | 'fields'
+    >]: string
+  };
 
   /**
-   * Required prop to be passed in from the parent DetailsRow a map of classNames and its mergestyle-created classNames
+   * Style properties to customize cell render output.
    */
-  rowClassNames: { [className in keyof IDetailsRowStyles]: string };
-
   cellStyleProps?: ICellStyleProps;
+
+  enableUpdateAnimations?: boolean;
 }

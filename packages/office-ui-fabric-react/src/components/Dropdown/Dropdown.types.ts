@@ -1,19 +1,34 @@
+import * as React from 'react';
 import { IRenderFunction, IStyleFunctionOrObject } from '../../Utilities';
 import { IStyle, ITheme } from '../../Styling';
 import { ISelectableOption } from '../../utilities/selectableOption/SelectableOption.types';
 import { ISelectableDroppableTextProps } from '../../utilities/selectableOption/SelectableDroppableText.types';
 import { ResponsiveMode } from '../../utilities/decorators/withResponsiveMode';
 import { IKeytipProps } from '../../Keytip';
-import { ILabelStyleProps } from '../../Label';
 import { RectangleEdge } from '../../utilities/positioning';
+import { ICheckboxStyleProps } from '../Checkbox/Checkbox.types';
+import { ILabelStyleProps } from '../Label/Label.types';
 import { IPanelStyleProps } from '../Panel/Panel.types';
 
 export { SelectableOptionMenuItemType as DropdownMenuItemType } from '../../utilities/selectableOption/SelectableOption.types';
 
+export { ResponsiveMode }; // Exported because the type is an optional prop and not exported otherwise.
+
+/**
+ * {@docCategory Dropdown}
+ */
 export interface IDropdown {
+  /**
+   * All selected options
+   */
+  readonly selectedOptions: IDropdownOption[];
+
   focus: (shouldOpenOnFocus?: boolean) => void;
 }
 
+/**
+ * {@docCategory Dropdown}
+ */
 export interface IDropdownProps extends ISelectableDroppableTextProps<IDropdown, HTMLDivElement> {
   /**
    * Input placeholder text. Displayed until option is selected.
@@ -38,9 +53,9 @@ export interface IDropdownProps extends ISelectableDroppableTextProps<IDropdown,
   onChanged?: (option: IDropdownOption, index?: number) => void;
 
   /**
-   * Callback issues when the options callout is dismissed
+   * Custom render function for the label.
    */
-  onDismiss?: () => void;
+  onRenderLabel?: IRenderFunction<IDropdownProps>;
 
   /**
    * Optional custom renderer for placeholder text
@@ -76,11 +91,6 @@ export interface IDropdownProps extends ISelectableDroppableTextProps<IDropdown,
    * options always getting rendered in a Panel.
    */
   responsiveMode?: ResponsiveMode;
-
-  /**
-   * Optional mode indicates if multi-choice selections is allowed.  Default to false
-   */
-  multiSelect?: boolean;
 
   /**
    * Keys that will be initially used to set selected items. This prop is used for `multiSelect`
@@ -131,6 +141,9 @@ export interface IDropdownProps extends ISelectableDroppableTextProps<IDropdown,
   styles?: IStyleFunctionOrObject<IDropdownStyleProps, IDropdownStyles>;
 }
 
+/**
+ * {@docCategory Dropdown}
+ */
 export interface IDropdownOption extends ISelectableOption {
   /**
    * Deprecated at v.65.1, use `selected` instead.
@@ -141,12 +154,18 @@ export interface IDropdownOption extends ISelectableOption {
 
 /**
  * The props needed to construct styles. This represents the simplified set of immutable things which control the class names.
+ * {@docCategory Dropdown}
  */
 export type IDropdownStyleProps = Pick<IDropdownProps, 'theme' | 'className' | 'disabled' | 'required'> & {
   /**
    * Whether the dropdown is in an error state.
    */
   hasError: boolean;
+
+  /**
+   * Specifies if the dropdown has label content.
+   */
+  hasLabel: boolean;
 
   /**
    * Whether the dropdown is in an opened state.
@@ -178,6 +197,7 @@ export type IDropdownStyleProps = Pick<IDropdownProps, 'theme' | 'className' | '
 
 /**
  * Represents the stylable areas of the control.
+ * {@docCategory Dropdown}
  */
 export interface IDropdownStyles {
   /** Root element of the Dropdown (includes Label and the actual Dropdown). */
@@ -219,6 +239,9 @@ export interface IDropdownStyles {
   /** Style for a dropdown item when it is both selected and disabled. */
   dropdownItemSelectedAndDisabled: IStyle;
 
+  /** Style for a dropdown item when it is hidden */
+  dropdownItemHidden: IStyle;
+
   /**
    * Refers to the text element that renders the actual dropdown item/option text. This would be wrapped by the element
    * referred to by `dropdownItem`.
@@ -244,6 +267,9 @@ export interface IDropdownStyles {
   subComponentStyles: IDropdownSubComponentStyles;
 }
 
+/**
+ * {@docCategory Dropdown}
+ */
 export interface IDropdownSubComponentStyles {
   /** Refers to the panel that hosts the Dropdown options in small viewports. */
   panel: IStyleFunctionOrObject<IPanelStyleProps, any>;
@@ -251,5 +277,9 @@ export interface IDropdownSubComponentStyles {
 
   /** Refers to the primary label for the Dropdown. */
   label: IStyleFunctionOrObject<ILabelStyleProps, any>;
+  // #5690: replace any with ILabelStyles in TS 2.9
+
+  /** Refers to the individual dropdown item when the multiSelect prop is true. */
+  multiSelectItem: IStyleFunctionOrObject<ICheckboxStyleProps, any>;
   // #5690: replace any with ILabelStyles in TS 2.9
 }

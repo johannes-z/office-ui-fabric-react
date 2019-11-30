@@ -5,10 +5,11 @@ import { Calendar, ICalendarStrings } from '../../Calendar';
 import { DatePicker } from './DatePicker';
 import { DatePickerBase } from './DatePicker.base';
 import { IDatePickerStrings } from './DatePicker.types';
-import { FirstWeekOfYear } from '../../utilities/dateValues/DateValues';
+import { FirstWeekOfYear } from 'office-ui-fabric-react/lib/utilities/dateValues/DateValues';
 import { shallow, mount, ReactWrapper } from 'enzyme';
-import { resetIds } from '../../Utilities';
-import { Callout } from '../Callout/Callout';
+import { resetIds, KeyCodes } from 'office-ui-fabric-react/lib/Utilities';
+import { Callout } from 'office-ui-fabric-react/lib/Callout';
+import { PrimaryButton } from 'office-ui-fabric-react/lib/Button';
 
 describe('DatePicker', () => {
   beforeEach(() => {
@@ -93,6 +94,21 @@ describe('DatePicker', () => {
     datePicker.unmount();
   });
 
+  it('should call custom onChange when allowTextInput is true', () => {
+    const onChange = jest.fn();
+    const datePicker = mount(<DatePickerBase allowTextInput={true} textField={{ onChange: onChange }} />);
+    const textField = datePicker.find('input');
+
+    expect(textField).toBeDefined();
+
+    textField.simulate('change', { target: { value: 'Jan 1 2020' } }).simulate('blur');
+    textField.simulate('change', { target: { value: '' } }).simulate('blur');
+
+    expect(onChange).toHaveBeenCalledTimes(2);
+
+    datePicker.unmount();
+  });
+
   // @todo: usage of document.querySelector is incorrectly testing DOM mounted by previous tests and needs to be fixed.
   it.skip('should call onSelectDate only once when allowTextInput is true and popup is used to select the value', () => {
     const onSelectDate = jest.fn();
@@ -112,6 +128,33 @@ describe('DatePicker', () => {
     const calloutProps = datePicker.find(Callout).props();
 
     expect(calloutProps.ariaLabel).toBe('Calendar');
+  });
+
+  it('should close parent Callout if Esc is pressed', () => {
+    const menu = (props: any) => {
+      return (
+        <Callout {...props}>
+          <DatePicker />
+        </Callout>
+      );
+    };
+    const wrapper = mount(
+      <PrimaryButton
+        menuAs={menu}
+        menuProps={{
+          items: []
+        }}
+      />
+    );
+    wrapper.simulate('click');
+    let callout = wrapper.find(Callout);
+    expect(callout.exists()).toBe(true);
+
+    const datePicker = wrapper.find(DatePickerBase);
+    datePicker.simulate('keydown', { which: KeyCodes.escape });
+
+    callout = wrapper.find(Callout);
+    expect(callout.exists()).toBe(false);
   });
 
   describe('when Calendar properties are not specified', () => {

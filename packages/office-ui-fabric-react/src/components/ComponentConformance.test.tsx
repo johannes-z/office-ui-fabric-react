@@ -99,13 +99,13 @@ const classNameSelectors: { [key: string]: string } = {
   Callout: 'ms-Callout',
   ContextualMenu: 'ms-ContextualMenu',
   DetailsList: 'ms-DetailsList',
-  Dropdown: 'ms-Dropdown',
   ExpandingCard: 'ms-Callout',
   Modal: 'ms-Modal',
   Nav: 'ms-Nav',
   Panel: 'ms-Panel',
   PlainCard: 'ms-Callout',
-  Tooltip: 'ms-Tooltip'
+  Tooltip: 'ms-Tooltip',
+  MessageBar: 'ms-MessageBar'
 };
 
 // NOTE: Please consider modifying your component to work with this test instead

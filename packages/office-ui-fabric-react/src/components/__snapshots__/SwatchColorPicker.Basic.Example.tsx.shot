@@ -9,6 +9,9 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
     className=
         ms-FocusZone
         ms-swatchColorPickerBodyContainer
+        &:focus {
+          outline: none;
+        }
         {
           clear: both;
           display: block;
@@ -19,7 +22,6 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
     onFocus={[Function]}
     onKeyDown={[Function]}
     onMouseDownCapture={[Function]}
-    role="presentation"
   >
     <table
       className=
@@ -69,7 +71,7 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
                     border-radius: 50%;
                     border: none;
                     box-sizing: border-box;
-                    color: #333333;
+                    color: #323130;
                     cursor: pointer;
                     display: inline-block;
                     font-family: 'Segoe UI', 'Segoe UI Web (West European)', 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Roboto', 'Helvetica Neue', sans-serif;
@@ -96,7 +98,7 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
                     bottom: 0px;
                     content: "";
                     left: 0px;
-                    outline: 1px solid #666666;
+                    outline: 1px solid #605e5c;
                     position: absolute;
                     right: 0px;
                     top: 0px;
@@ -116,7 +118,7 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
                     top: 0px;
                   }
                   .ms-Fabric--isFocusVisible &:focus::after {
-                    border-color: #666666;
+                    border-color: #605e5c;
                     border-radius: 50%;
                     bottom: -2px;
                     left: -2px;
@@ -127,37 +129,43 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
                   @media screen and (-ms-high-contrast: active){.ms-Fabric--isFocusVisible &:focus::after {
                     outline: 1px solid ButtonText;
                   }
-                  &:hover, &:active, &:focus {
+                  &:hover {
                     background-color: #ffffff;
-                    border: 2px solid #eaeaea;
+                    border: 2px solid #f3f2f1;
+                    color: #0078d4;
+                    padding-bottom: 2px;
+                    padding-left: 2px;
+                    padding-right: 2px;
+                    padding-top: 2px;
+                  }
+                  &:active {
+                    background-color: #ffffff;
+                    border: 2px solid #f3f2f1;
+                    color: #000000;
                     padding-bottom: 2px;
                     padding-left: 2px;
                     padding-right: 2px;
                     padding-top: 2px;
                   }
                   &:focus {
+                    background-color: #ffffff;
                     border-color: #ffffff;
+                    border: 2px solid #f3f2f1;
                     padding-bottom: 0px;
                     padding-left: 0px;
                     padding-right: 0px;
                     padding-top: 0px;
                   }
                   &:focus:hover {
-                    border-color: #eaeaea;
+                    border-color: #edebe9;
                     padding-bottom: 2px;
                     padding-left: 2px;
                     padding-right: 2px;
                     padding-top: 2px;
                   }
-                  &:hover {
-                    color: #0078d4;
-                  }
                   @media screen and (-ms-high-contrast: active){&:hover {
                     border-color: Highlight;
                     color: Highlight;
-                  }
-                  &:active {
-                    color: #000000;
                   }
               data-index={0}
               data-is-focusable={true}
@@ -176,7 +184,7 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
               title="orange"
               type="button"
             >
-              <div
+              <span
                 className=
                     ms-Button-flexContainer
                     {
@@ -186,6 +194,7 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
                       height: 100%;
                       justify-content: flex-start;
                     }
+                data-automationid="splitbuttonprimary"
               >
                 <svg
                   className=
@@ -204,7 +213,7 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
                     r="50%"
                   />
                 </svg>
-              </div>
+              </span>
             </button>
           </td>
           <td
@@ -232,7 +241,7 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
                     border-radius: 50%;
                     border: none;
                     box-sizing: border-box;
-                    color: #333333;
+                    color: #323130;
                     cursor: pointer;
                     display: inline-block;
                     font-family: 'Segoe UI', 'Segoe UI Web (West European)', 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Roboto', 'Helvetica Neue', sans-serif;
@@ -259,7 +268,7 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
                     bottom: 0px;
                     content: "";
                     left: 0px;
-                    outline: 1px solid #666666;
+                    outline: 1px solid #605e5c;
                     position: absolute;
                     right: 0px;
                     top: 0px;
@@ -279,7 +288,7 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
                     top: 0px;
                   }
                   .ms-Fabric--isFocusVisible &:focus::after {
-                    border-color: #666666;
+                    border-color: #605e5c;
                     border-radius: 50%;
                     bottom: -2px;
                     left: -2px;
@@ -290,37 +299,43 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
                   @media screen and (-ms-high-contrast: active){.ms-Fabric--isFocusVisible &:focus::after {
                     outline: 1px solid ButtonText;
                   }
-                  &:hover, &:active, &:focus {
+                  &:hover {
                     background-color: #ffffff;
-                    border: 2px solid #eaeaea;
+                    border: 2px solid #f3f2f1;
+                    color: #0078d4;
+                    padding-bottom: 2px;
+                    padding-left: 2px;
+                    padding-right: 2px;
+                    padding-top: 2px;
+                  }
+                  &:active {
+                    background-color: #ffffff;
+                    border: 2px solid #f3f2f1;
+                    color: #000000;
                     padding-bottom: 2px;
                     padding-left: 2px;
                     padding-right: 2px;
                     padding-top: 2px;
                   }
                   &:focus {
+                    background-color: #ffffff;
                     border-color: #ffffff;
+                    border: 2px solid #f3f2f1;
                     padding-bottom: 0px;
                     padding-left: 0px;
                     padding-right: 0px;
                     padding-top: 0px;
                   }
                   &:focus:hover {
-                    border-color: #eaeaea;
+                    border-color: #edebe9;
                     padding-bottom: 2px;
                     padding-left: 2px;
                     padding-right: 2px;
                     padding-top: 2px;
                   }
-                  &:hover {
-                    color: #0078d4;
-                  }
                   @media screen and (-ms-high-contrast: active){&:hover {
                     border-color: Highlight;
                     color: Highlight;
-                  }
-                  &:active {
-                    color: #000000;
                   }
               data-index={1}
               data-is-focusable={true}
@@ -339,7 +354,7 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
               title="cyan"
               type="button"
             >
-              <div
+              <span
                 className=
                     ms-Button-flexContainer
                     {
@@ -349,6 +364,7 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
                       height: 100%;
                       justify-content: flex-start;
                     }
+                data-automationid="splitbuttonprimary"
               >
                 <svg
                   className=
@@ -367,7 +383,7 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
                     r="50%"
                   />
                 </svg>
-              </div>
+              </span>
             </button>
           </td>
           <td
@@ -395,7 +411,7 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
                     border-radius: 50%;
                     border: none;
                     box-sizing: border-box;
-                    color: #333333;
+                    color: #323130;
                     cursor: pointer;
                     display: inline-block;
                     font-family: 'Segoe UI', 'Segoe UI Web (West European)', 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Roboto', 'Helvetica Neue', sans-serif;
@@ -422,7 +438,7 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
                     bottom: 0px;
                     content: "";
                     left: 0px;
-                    outline: 1px solid #666666;
+                    outline: 1px solid #605e5c;
                     position: absolute;
                     right: 0px;
                     top: 0px;
@@ -442,7 +458,7 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
                     top: 0px;
                   }
                   .ms-Fabric--isFocusVisible &:focus::after {
-                    border-color: #666666;
+                    border-color: #605e5c;
                     border-radius: 50%;
                     bottom: -2px;
                     left: -2px;
@@ -453,37 +469,43 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
                   @media screen and (-ms-high-contrast: active){.ms-Fabric--isFocusVisible &:focus::after {
                     outline: 1px solid ButtonText;
                   }
-                  &:hover, &:active, &:focus {
+                  &:hover {
                     background-color: #ffffff;
-                    border: 2px solid #eaeaea;
+                    border: 2px solid #f3f2f1;
+                    color: #0078d4;
+                    padding-bottom: 2px;
+                    padding-left: 2px;
+                    padding-right: 2px;
+                    padding-top: 2px;
+                  }
+                  &:active {
+                    background-color: #ffffff;
+                    border: 2px solid #f3f2f1;
+                    color: #000000;
                     padding-bottom: 2px;
                     padding-left: 2px;
                     padding-right: 2px;
                     padding-top: 2px;
                   }
                   &:focus {
+                    background-color: #ffffff;
                     border-color: #ffffff;
+                    border: 2px solid #f3f2f1;
                     padding-bottom: 0px;
                     padding-left: 0px;
                     padding-right: 0px;
                     padding-top: 0px;
                   }
                   &:focus:hover {
-                    border-color: #eaeaea;
+                    border-color: #edebe9;
                     padding-bottom: 2px;
                     padding-left: 2px;
                     padding-right: 2px;
                     padding-top: 2px;
                   }
-                  &:hover {
-                    color: #0078d4;
-                  }
                   @media screen and (-ms-high-contrast: active){&:hover {
                     border-color: Highlight;
                     color: Highlight;
-                  }
-                  &:active {
-                    color: #000000;
                   }
               data-index={2}
               data-is-focusable={true}
@@ -502,7 +524,7 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
               title="blueMagenta"
               type="button"
             >
-              <div
+              <span
                 className=
                     ms-Button-flexContainer
                     {
@@ -512,6 +534,7 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
                       height: 100%;
                       justify-content: flex-start;
                     }
+                data-automationid="splitbuttonprimary"
               >
                 <svg
                   className=
@@ -530,7 +553,7 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
                     r="50%"
                   />
                 </svg>
-              </div>
+              </span>
             </button>
           </td>
           <td
@@ -558,7 +581,7 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
                     border-radius: 50%;
                     border: none;
                     box-sizing: border-box;
-                    color: #333333;
+                    color: #323130;
                     cursor: pointer;
                     display: inline-block;
                     font-family: 'Segoe UI', 'Segoe UI Web (West European)', 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Roboto', 'Helvetica Neue', sans-serif;
@@ -585,7 +608,7 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
                     bottom: 0px;
                     content: "";
                     left: 0px;
-                    outline: 1px solid #666666;
+                    outline: 1px solid #605e5c;
                     position: absolute;
                     right: 0px;
                     top: 0px;
@@ -605,7 +628,7 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
                     top: 0px;
                   }
                   .ms-Fabric--isFocusVisible &:focus::after {
-                    border-color: #666666;
+                    border-color: #605e5c;
                     border-radius: 50%;
                     bottom: -2px;
                     left: -2px;
@@ -616,37 +639,43 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
                   @media screen and (-ms-high-contrast: active){.ms-Fabric--isFocusVisible &:focus::after {
                     outline: 1px solid ButtonText;
                   }
-                  &:hover, &:active, &:focus {
+                  &:hover {
                     background-color: #ffffff;
-                    border: 2px solid #eaeaea;
+                    border: 2px solid #f3f2f1;
+                    color: #0078d4;
+                    padding-bottom: 2px;
+                    padding-left: 2px;
+                    padding-right: 2px;
+                    padding-top: 2px;
+                  }
+                  &:active {
+                    background-color: #ffffff;
+                    border: 2px solid #f3f2f1;
+                    color: #000000;
                     padding-bottom: 2px;
                     padding-left: 2px;
                     padding-right: 2px;
                     padding-top: 2px;
                   }
                   &:focus {
+                    background-color: #ffffff;
                     border-color: #ffffff;
+                    border: 2px solid #f3f2f1;
                     padding-bottom: 0px;
                     padding-left: 0px;
                     padding-right: 0px;
                     padding-top: 0px;
                   }
                   &:focus:hover {
-                    border-color: #eaeaea;
+                    border-color: #edebe9;
                     padding-bottom: 2px;
                     padding-left: 2px;
                     padding-right: 2px;
                     padding-top: 2px;
                   }
-                  &:hover {
-                    color: #0078d4;
-                  }
                   @media screen and (-ms-high-contrast: active){&:hover {
                     border-color: Highlight;
                     color: Highlight;
-                  }
-                  &:active {
-                    color: #000000;
                   }
               data-index={3}
               data-is-focusable={true}
@@ -665,7 +694,7 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
               title="magenta"
               type="button"
             >
-              <div
+              <span
                 className=
                     ms-Button-flexContainer
                     {
@@ -675,6 +704,7 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
                       height: 100%;
                       justify-content: flex-start;
                     }
+                data-automationid="splitbuttonprimary"
               >
                 <svg
                   className=
@@ -693,7 +723,7 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
                     r="50%"
                   />
                 </svg>
-              </div>
+              </span>
             </button>
           </td>
           <td
@@ -717,11 +747,11 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
                   {
                     -moz-osx-font-smoothing: grayscale;
                     -webkit-font-smoothing: antialiased;
-                    background-color: #eaeaea;
+                    background-color: #a19f9d;
                     border-radius: 50%;
                     border: none;
                     box-sizing: border-box;
-                    color: #333333;
+                    color: #323130;
                     cursor: pointer;
                     display: inline-block;
                     font-family: 'Segoe UI', 'Segoe UI Web (West European)', 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Roboto', 'Helvetica Neue', sans-serif;
@@ -748,7 +778,7 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
                     bottom: 0px;
                     content: "";
                     left: 0px;
-                    outline: 1px solid #666666;
+                    outline: 1px solid #605e5c;
                     position: absolute;
                     right: 0px;
                     top: 0px;
@@ -768,7 +798,7 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
                     top: 0px;
                   }
                   .ms-Fabric--isFocusVisible &:focus::after {
-                    border-color: #666666;
+                    border-color: #605e5c;
                     border-radius: 50%;
                     bottom: -2px;
                     left: -2px;
@@ -779,37 +809,43 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
                   @media screen and (-ms-high-contrast: active){.ms-Fabric--isFocusVisible &:focus::after {
                     outline: 1px solid ButtonText;
                   }
-                  &:hover, &:active, &:focus {
+                  &:hover {
                     background-color: #ffffff;
-                    border: 2px solid #eaeaea;
+                    border: 2px solid #f3f2f1;
+                    color: #0078d4;
+                    padding-bottom: 2px;
+                    padding-left: 2px;
+                    padding-right: 2px;
+                    padding-top: 2px;
+                  }
+                  &:active {
+                    background-color: #ffffff;
+                    border: 2px solid #f3f2f1;
+                    color: #000000;
                     padding-bottom: 2px;
                     padding-left: 2px;
                     padding-right: 2px;
                     padding-top: 2px;
                   }
                   &:focus {
+                    background-color: #ffffff;
                     border-color: #ffffff;
+                    border: 2px solid #f3f2f1;
                     padding-bottom: 0px;
                     padding-left: 0px;
                     padding-right: 0px;
                     padding-top: 0px;
                   }
                   &:focus:hover {
-                    border-color: #eaeaea;
+                    border-color: #edebe9;
                     padding-bottom: 2px;
                     padding-left: 2px;
                     padding-right: 2px;
                     padding-top: 2px;
                   }
-                  &:hover {
-                    color: #0078d4;
-                  }
                   @media screen and (-ms-high-contrast: active){&:hover {
                     border-color: Highlight;
                     color: Highlight;
-                  }
-                  &:active {
-                    color: #000000;
                   }
               data-index={4}
               data-is-focusable={true}
@@ -828,7 +864,7 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
               title="white"
               type="button"
             >
-              <div
+              <span
                 className=
                     ms-Button-flexContainer
                     {
@@ -838,6 +874,7 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
                       height: 100%;
                       justify-content: flex-start;
                     }
+                data-automationid="splitbuttonprimary"
               >
                 <svg
                   className=
@@ -856,7 +893,7 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
                     r="50%"
                   />
                 </svg>
-              </div>
+              </span>
             </button>
           </td>
         </tr>
@@ -870,6 +907,9 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
     className=
         ms-FocusZone
         ms-swatchColorPickerBodyContainer
+        &:focus {
+          outline: none;
+        }
         {
           clear: both;
           display: block;
@@ -880,7 +920,6 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
     onFocus={[Function]}
     onKeyDown={[Function]}
     onMouseDownCapture={[Function]}
-    role="presentation"
   >
     <table
       className=
@@ -930,7 +969,7 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
                     border-radius: 0px;
                     border: none;
                     box-sizing: border-box;
-                    color: #333333;
+                    color: #323130;
                     cursor: pointer;
                     display: inline-block;
                     font-family: 'Segoe UI', 'Segoe UI Web (West European)', 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Roboto', 'Helvetica Neue', sans-serif;
@@ -957,7 +996,7 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
                     bottom: 0px;
                     content: "";
                     left: 0px;
-                    outline: 1px solid #666666;
+                    outline: 1px solid #605e5c;
                     position: absolute;
                     right: 0px;
                     top: 0px;
@@ -979,37 +1018,43 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
                   .ms-Fabric--isFocusVisible &:focus::after {
                     outline-offset: 1px;
                   }
-                  &:hover, &:active, &:focus {
+                  &:hover {
                     background-color: #ffffff;
-                    border: 2px solid #eaeaea;
+                    border: 2px solid #f3f2f1;
+                    color: #0078d4;
+                    padding-bottom: 2px;
+                    padding-left: 2px;
+                    padding-right: 2px;
+                    padding-top: 2px;
+                  }
+                  &:active {
+                    background-color: #ffffff;
+                    border: 2px solid #f3f2f1;
+                    color: #000000;
                     padding-bottom: 2px;
                     padding-left: 2px;
                     padding-right: 2px;
                     padding-top: 2px;
                   }
                   &:focus {
+                    background-color: #ffffff;
                     border-color: #ffffff;
+                    border: 2px solid #f3f2f1;
                     padding-bottom: 0px;
                     padding-left: 0px;
                     padding-right: 0px;
                     padding-top: 0px;
                   }
                   &:focus:hover {
-                    border-color: #eaeaea;
+                    border-color: #edebe9;
                     padding-bottom: 2px;
                     padding-left: 2px;
                     padding-right: 2px;
                     padding-top: 2px;
                   }
-                  &:hover {
-                    color: #0078d4;
-                  }
                   @media screen and (-ms-high-contrast: active){&:hover {
                     border-color: Highlight;
                     color: Highlight;
-                  }
-                  &:active {
-                    color: #000000;
                   }
               data-index={0}
               data-is-focusable={true}
@@ -1028,7 +1073,7 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
               title="orange"
               type="button"
             >
-              <div
+              <span
                 className=
                     ms-Button-flexContainer
                     {
@@ -1038,6 +1083,7 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
                       height: 100%;
                       justify-content: flex-start;
                     }
+                data-automationid="splitbuttonprimary"
               >
                 <svg
                   className=
@@ -1054,7 +1100,7 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
                     width="100%"
                   />
                 </svg>
-              </div>
+              </span>
             </button>
           </td>
           <td
@@ -1082,7 +1128,7 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
                     border-radius: 0px;
                     border: none;
                     box-sizing: border-box;
-                    color: #333333;
+                    color: #323130;
                     cursor: pointer;
                     display: inline-block;
                     font-family: 'Segoe UI', 'Segoe UI Web (West European)', 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Roboto', 'Helvetica Neue', sans-serif;
@@ -1109,7 +1155,7 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
                     bottom: 0px;
                     content: "";
                     left: 0px;
-                    outline: 1px solid #666666;
+                    outline: 1px solid #605e5c;
                     position: absolute;
                     right: 0px;
                     top: 0px;
@@ -1131,37 +1177,43 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
                   .ms-Fabric--isFocusVisible &:focus::after {
                     outline-offset: 1px;
                   }
-                  &:hover, &:active, &:focus {
+                  &:hover {
                     background-color: #ffffff;
-                    border: 2px solid #eaeaea;
+                    border: 2px solid #f3f2f1;
+                    color: #0078d4;
+                    padding-bottom: 2px;
+                    padding-left: 2px;
+                    padding-right: 2px;
+                    padding-top: 2px;
+                  }
+                  &:active {
+                    background-color: #ffffff;
+                    border: 2px solid #f3f2f1;
+                    color: #000000;
                     padding-bottom: 2px;
                     padding-left: 2px;
                     padding-right: 2px;
                     padding-top: 2px;
                   }
                   &:focus {
+                    background-color: #ffffff;
                     border-color: #ffffff;
+                    border: 2px solid #f3f2f1;
                     padding-bottom: 0px;
                     padding-left: 0px;
                     padding-right: 0px;
                     padding-top: 0px;
                   }
                   &:focus:hover {
-                    border-color: #eaeaea;
+                    border-color: #edebe9;
                     padding-bottom: 2px;
                     padding-left: 2px;
                     padding-right: 2px;
                     padding-top: 2px;
                   }
-                  &:hover {
-                    color: #0078d4;
-                  }
                   @media screen and (-ms-high-contrast: active){&:hover {
                     border-color: Highlight;
                     color: Highlight;
-                  }
-                  &:active {
-                    color: #000000;
                   }
               data-index={1}
               data-is-focusable={true}
@@ -1180,7 +1232,7 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
               title="cyan"
               type="button"
             >
-              <div
+              <span
                 className=
                     ms-Button-flexContainer
                     {
@@ -1190,6 +1242,7 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
                       height: 100%;
                       justify-content: flex-start;
                     }
+                data-automationid="splitbuttonprimary"
               >
                 <svg
                   className=
@@ -1206,7 +1259,7 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
                     width="100%"
                   />
                 </svg>
-              </div>
+              </span>
             </button>
           </td>
           <td
@@ -1234,7 +1287,7 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
                     border-radius: 0px;
                     border: none;
                     box-sizing: border-box;
-                    color: #333333;
+                    color: #323130;
                     cursor: pointer;
                     display: inline-block;
                     font-family: 'Segoe UI', 'Segoe UI Web (West European)', 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Roboto', 'Helvetica Neue', sans-serif;
@@ -1261,7 +1314,7 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
                     bottom: 0px;
                     content: "";
                     left: 0px;
-                    outline: 1px solid #666666;
+                    outline: 1px solid #605e5c;
                     position: absolute;
                     right: 0px;
                     top: 0px;
@@ -1283,37 +1336,43 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
                   .ms-Fabric--isFocusVisible &:focus::after {
                     outline-offset: 1px;
                   }
-                  &:hover, &:active, &:focus {
+                  &:hover {
                     background-color: #ffffff;
-                    border: 2px solid #eaeaea;
+                    border: 2px solid #f3f2f1;
+                    color: #0078d4;
+                    padding-bottom: 2px;
+                    padding-left: 2px;
+                    padding-right: 2px;
+                    padding-top: 2px;
+                  }
+                  &:active {
+                    background-color: #ffffff;
+                    border: 2px solid #f3f2f1;
+                    color: #000000;
                     padding-bottom: 2px;
                     padding-left: 2px;
                     padding-right: 2px;
                     padding-top: 2px;
                   }
                   &:focus {
+                    background-color: #ffffff;
                     border-color: #ffffff;
+                    border: 2px solid #f3f2f1;
                     padding-bottom: 0px;
                     padding-left: 0px;
                     padding-right: 0px;
                     padding-top: 0px;
                   }
                   &:focus:hover {
-                    border-color: #eaeaea;
+                    border-color: #edebe9;
                     padding-bottom: 2px;
                     padding-left: 2px;
                     padding-right: 2px;
                     padding-top: 2px;
                   }
-                  &:hover {
-                    color: #0078d4;
-                  }
                   @media screen and (-ms-high-contrast: active){&:hover {
                     border-color: Highlight;
                     color: Highlight;
-                  }
-                  &:active {
-                    color: #000000;
                   }
               data-index={2}
               data-is-focusable={true}
@@ -1332,7 +1391,7 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
               title="blueMagenta"
               type="button"
             >
-              <div
+              <span
                 className=
                     ms-Button-flexContainer
                     {
@@ -1342,6 +1401,7 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
                       height: 100%;
                       justify-content: flex-start;
                     }
+                data-automationid="splitbuttonprimary"
               >
                 <svg
                   className=
@@ -1358,7 +1418,7 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
                     width="100%"
                   />
                 </svg>
-              </div>
+              </span>
             </button>
           </td>
           <td
@@ -1386,7 +1446,7 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
                     border-radius: 0px;
                     border: none;
                     box-sizing: border-box;
-                    color: #333333;
+                    color: #323130;
                     cursor: pointer;
                     display: inline-block;
                     font-family: 'Segoe UI', 'Segoe UI Web (West European)', 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Roboto', 'Helvetica Neue', sans-serif;
@@ -1413,7 +1473,7 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
                     bottom: 0px;
                     content: "";
                     left: 0px;
-                    outline: 1px solid #666666;
+                    outline: 1px solid #605e5c;
                     position: absolute;
                     right: 0px;
                     top: 0px;
@@ -1435,37 +1495,43 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
                   .ms-Fabric--isFocusVisible &:focus::after {
                     outline-offset: 1px;
                   }
-                  &:hover, &:active, &:focus {
+                  &:hover {
                     background-color: #ffffff;
-                    border: 2px solid #eaeaea;
+                    border: 2px solid #f3f2f1;
+                    color: #0078d4;
+                    padding-bottom: 2px;
+                    padding-left: 2px;
+                    padding-right: 2px;
+                    padding-top: 2px;
+                  }
+                  &:active {
+                    background-color: #ffffff;
+                    border: 2px solid #f3f2f1;
+                    color: #000000;
                     padding-bottom: 2px;
                     padding-left: 2px;
                     padding-right: 2px;
                     padding-top: 2px;
                   }
                   &:focus {
+                    background-color: #ffffff;
                     border-color: #ffffff;
+                    border: 2px solid #f3f2f1;
                     padding-bottom: 0px;
                     padding-left: 0px;
                     padding-right: 0px;
                     padding-top: 0px;
                   }
                   &:focus:hover {
-                    border-color: #eaeaea;
+                    border-color: #edebe9;
                     padding-bottom: 2px;
                     padding-left: 2px;
                     padding-right: 2px;
                     padding-top: 2px;
                   }
-                  &:hover {
-                    color: #0078d4;
-                  }
                   @media screen and (-ms-high-contrast: active){&:hover {
                     border-color: Highlight;
                     color: Highlight;
-                  }
-                  &:active {
-                    color: #000000;
                   }
               data-index={3}
               data-is-focusable={true}
@@ -1484,7 +1550,7 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
               title="magenta"
               type="button"
             >
-              <div
+              <span
                 className=
                     ms-Button-flexContainer
                     {
@@ -1494,6 +1560,7 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
                       height: 100%;
                       justify-content: flex-start;
                     }
+                data-automationid="splitbuttonprimary"
               >
                 <svg
                   className=
@@ -1510,7 +1577,7 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
                     width="100%"
                   />
                 </svg>
-              </div>
+              </span>
             </button>
           </td>
           <td
@@ -1534,11 +1601,11 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
                   {
                     -moz-osx-font-smoothing: grayscale;
                     -webkit-font-smoothing: antialiased;
-                    background-color: #eaeaea;
+                    background-color: #a19f9d;
                     border-radius: 0px;
                     border: none;
                     box-sizing: border-box;
-                    color: #333333;
+                    color: #323130;
                     cursor: pointer;
                     display: inline-block;
                     font-family: 'Segoe UI', 'Segoe UI Web (West European)', 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Roboto', 'Helvetica Neue', sans-serif;
@@ -1565,7 +1632,7 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
                     bottom: 0px;
                     content: "";
                     left: 0px;
-                    outline: 1px solid #666666;
+                    outline: 1px solid #605e5c;
                     position: absolute;
                     right: 0px;
                     top: 0px;
@@ -1587,37 +1654,43 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
                   .ms-Fabric--isFocusVisible &:focus::after {
                     outline-offset: 1px;
                   }
-                  &:hover, &:active, &:focus {
+                  &:hover {
                     background-color: #ffffff;
-                    border: 2px solid #eaeaea;
+                    border: 2px solid #f3f2f1;
+                    color: #0078d4;
+                    padding-bottom: 2px;
+                    padding-left: 2px;
+                    padding-right: 2px;
+                    padding-top: 2px;
+                  }
+                  &:active {
+                    background-color: #ffffff;
+                    border: 2px solid #f3f2f1;
+                    color: #000000;
                     padding-bottom: 2px;
                     padding-left: 2px;
                     padding-right: 2px;
                     padding-top: 2px;
                   }
                   &:focus {
+                    background-color: #ffffff;
                     border-color: #ffffff;
+                    border: 2px solid #f3f2f1;
                     padding-bottom: 0px;
                     padding-left: 0px;
                     padding-right: 0px;
                     padding-top: 0px;
                   }
                   &:focus:hover {
-                    border-color: #eaeaea;
+                    border-color: #edebe9;
                     padding-bottom: 2px;
                     padding-left: 2px;
                     padding-right: 2px;
                     padding-top: 2px;
                   }
-                  &:hover {
-                    color: #0078d4;
-                  }
                   @media screen and (-ms-high-contrast: active){&:hover {
                     border-color: Highlight;
                     color: Highlight;
-                  }
-                  &:active {
-                    color: #000000;
                   }
               data-index={4}
               data-is-focusable={true}
@@ -1636,7 +1709,7 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
               title="white"
               type="button"
             >
-              <div
+              <span
                 className=
                     ms-Button-flexContainer
                     {
@@ -1646,6 +1719,7 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
                       height: 100%;
                       justify-content: flex-start;
                     }
+                data-automationid="splitbuttonprimary"
               >
                 <svg
                   className=
@@ -1662,7 +1736,7 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
                     width="100%"
                   />
                 </svg>
-              </div>
+              </span>
             </button>
           </td>
         </tr>
@@ -1676,6 +1750,9 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
     className=
         ms-FocusZone
         ms-swatchColorPickerBodyContainer
+        &:focus {
+          outline: none;
+        }
         {
           clear: both;
           display: block;
@@ -1686,7 +1763,6 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
     onFocus={[Function]}
     onKeyDown={[Function]}
     onMouseDownCapture={[Function]}
-    role="presentation"
   >
     <table
       className=
@@ -1736,7 +1812,7 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
                     border-radius: 0px;
                     border: none;
                     box-sizing: border-box;
-                    color: #333333;
+                    color: #323130;
                     cursor: pointer;
                     display: inline-block;
                     font-family: 'Segoe UI', 'Segoe UI Web (West European)', 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Roboto', 'Helvetica Neue', sans-serif;
@@ -1763,7 +1839,7 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
                     bottom: 0px;
                     content: "";
                     left: 0px;
-                    outline: 1px solid #666666;
+                    outline: 1px solid #605e5c;
                     position: absolute;
                     right: 0px;
                     top: 0px;
@@ -1785,37 +1861,43 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
                   .ms-Fabric--isFocusVisible &:focus::after {
                     outline-offset: 3px;
                   }
-                  &:hover, &:active, &:focus {
+                  &:hover {
                     background-color: #ffffff;
-                    border: 4px solid #eaeaea;
+                    border: 4px solid #f3f2f1;
+                    color: #0078d4;
+                    padding-bottom: 2px;
+                    padding-left: 2px;
+                    padding-right: 2px;
+                    padding-top: 2px;
+                  }
+                  &:active {
+                    background-color: #ffffff;
+                    border: 4px solid #f3f2f1;
+                    color: #000000;
                     padding-bottom: 2px;
                     padding-left: 2px;
                     padding-right: 2px;
                     padding-top: 2px;
                   }
                   &:focus {
+                    background-color: #ffffff;
                     border-color: #ffffff;
+                    border: 4px solid #f3f2f1;
                     padding-bottom: 0px;
                     padding-left: 0px;
                     padding-right: 0px;
                     padding-top: 0px;
                   }
                   &:focus:hover {
-                    border-color: #eaeaea;
+                    border-color: #edebe9;
                     padding-bottom: 2px;
                     padding-left: 2px;
                     padding-right: 2px;
                     padding-top: 2px;
                   }
-                  &:hover {
-                    color: #0078d4;
-                  }
                   @media screen and (-ms-high-contrast: active){&:hover {
                     border-color: Highlight;
                     color: Highlight;
-                  }
-                  &:active {
-                    color: #000000;
                   }
               data-index={0}
               data-is-focusable={true}
@@ -1834,7 +1916,7 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
               title="orange"
               type="button"
             >
-              <div
+              <span
                 className=
                     ms-Button-flexContainer
                     {
@@ -1844,6 +1926,7 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
                       height: 100%;
                       justify-content: flex-start;
                     }
+                data-automationid="splitbuttonprimary"
               >
                 <svg
                   className=
@@ -1860,7 +1943,7 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
                     width="100%"
                   />
                 </svg>
-              </div>
+              </span>
             </button>
           </td>
           <td
@@ -1888,7 +1971,7 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
                     border-radius: 0px;
                     border: none;
                     box-sizing: border-box;
-                    color: #333333;
+                    color: #323130;
                     cursor: pointer;
                     display: inline-block;
                     font-family: 'Segoe UI', 'Segoe UI Web (West European)', 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Roboto', 'Helvetica Neue', sans-serif;
@@ -1915,7 +1998,7 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
                     bottom: 0px;
                     content: "";
                     left: 0px;
-                    outline: 1px solid #666666;
+                    outline: 1px solid #605e5c;
                     position: absolute;
                     right: 0px;
                     top: 0px;
@@ -1937,37 +2020,43 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
                   .ms-Fabric--isFocusVisible &:focus::after {
                     outline-offset: 3px;
                   }
-                  &:hover, &:active, &:focus {
+                  &:hover {
                     background-color: #ffffff;
-                    border: 4px solid #eaeaea;
+                    border: 4px solid #f3f2f1;
+                    color: #0078d4;
+                    padding-bottom: 2px;
+                    padding-left: 2px;
+                    padding-right: 2px;
+                    padding-top: 2px;
+                  }
+                  &:active {
+                    background-color: #ffffff;
+                    border: 4px solid #f3f2f1;
+                    color: #000000;
                     padding-bottom: 2px;
                     padding-left: 2px;
                     padding-right: 2px;
                     padding-top: 2px;
                   }
                   &:focus {
+                    background-color: #ffffff;
                     border-color: #ffffff;
+                    border: 4px solid #f3f2f1;
                     padding-bottom: 0px;
                     padding-left: 0px;
                     padding-right: 0px;
                     padding-top: 0px;
                   }
                   &:focus:hover {
-                    border-color: #eaeaea;
+                    border-color: #edebe9;
                     padding-bottom: 2px;
                     padding-left: 2px;
                     padding-right: 2px;
                     padding-top: 2px;
                   }
-                  &:hover {
-                    color: #0078d4;
-                  }
                   @media screen and (-ms-high-contrast: active){&:hover {
                     border-color: Highlight;
                     color: Highlight;
-                  }
-                  &:active {
-                    color: #000000;
                   }
               data-index={1}
               data-is-focusable={true}
@@ -1986,7 +2075,7 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
               title="cyan"
               type="button"
             >
-              <div
+              <span
                 className=
                     ms-Button-flexContainer
                     {
@@ -1996,6 +2085,7 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
                       height: 100%;
                       justify-content: flex-start;
                     }
+                data-automationid="splitbuttonprimary"
               >
                 <svg
                   className=
@@ -2012,7 +2102,7 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
                     width="100%"
                   />
                 </svg>
-              </div>
+              </span>
             </button>
           </td>
           <td
@@ -2040,7 +2130,7 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
                     border-radius: 0px;
                     border: none;
                     box-sizing: border-box;
-                    color: #333333;
+                    color: #323130;
                     cursor: pointer;
                     display: inline-block;
                     font-family: 'Segoe UI', 'Segoe UI Web (West European)', 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Roboto', 'Helvetica Neue', sans-serif;
@@ -2067,7 +2157,7 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
                     bottom: 0px;
                     content: "";
                     left: 0px;
-                    outline: 1px solid #666666;
+                    outline: 1px solid #605e5c;
                     position: absolute;
                     right: 0px;
                     top: 0px;
@@ -2089,37 +2179,43 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
                   .ms-Fabric--isFocusVisible &:focus::after {
                     outline-offset: 3px;
                   }
-                  &:hover, &:active, &:focus {
+                  &:hover {
                     background-color: #ffffff;
-                    border: 4px solid #eaeaea;
+                    border: 4px solid #f3f2f1;
+                    color: #0078d4;
+                    padding-bottom: 2px;
+                    padding-left: 2px;
+                    padding-right: 2px;
+                    padding-top: 2px;
+                  }
+                  &:active {
+                    background-color: #ffffff;
+                    border: 4px solid #f3f2f1;
+                    color: #000000;
                     padding-bottom: 2px;
                     padding-left: 2px;
                     padding-right: 2px;
                     padding-top: 2px;
                   }
                   &:focus {
+                    background-color: #ffffff;
                     border-color: #ffffff;
+                    border: 4px solid #f3f2f1;
                     padding-bottom: 0px;
                     padding-left: 0px;
                     padding-right: 0px;
                     padding-top: 0px;
                   }
                   &:focus:hover {
-                    border-color: #eaeaea;
+                    border-color: #edebe9;
                     padding-bottom: 2px;
                     padding-left: 2px;
                     padding-right: 2px;
                     padding-top: 2px;
                   }
-                  &:hover {
-                    color: #0078d4;
-                  }
                   @media screen and (-ms-high-contrast: active){&:hover {
                     border-color: Highlight;
                     color: Highlight;
-                  }
-                  &:active {
-                    color: #000000;
                   }
               data-index={2}
               data-is-focusable={true}
@@ -2138,7 +2234,7 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
               title="blueMagenta"
               type="button"
             >
-              <div
+              <span
                 className=
                     ms-Button-flexContainer
                     {
@@ -2148,6 +2244,7 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
                       height: 100%;
                       justify-content: flex-start;
                     }
+                data-automationid="splitbuttonprimary"
               >
                 <svg
                   className=
@@ -2164,7 +2261,7 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
                     width="100%"
                   />
                 </svg>
-              </div>
+              </span>
             </button>
           </td>
           <td
@@ -2192,7 +2289,7 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
                     border-radius: 0px;
                     border: none;
                     box-sizing: border-box;
-                    color: #333333;
+                    color: #323130;
                     cursor: pointer;
                     display: inline-block;
                     font-family: 'Segoe UI', 'Segoe UI Web (West European)', 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Roboto', 'Helvetica Neue', sans-serif;
@@ -2219,7 +2316,7 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
                     bottom: 0px;
                     content: "";
                     left: 0px;
-                    outline: 1px solid #666666;
+                    outline: 1px solid #605e5c;
                     position: absolute;
                     right: 0px;
                     top: 0px;
@@ -2241,37 +2338,43 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
                   .ms-Fabric--isFocusVisible &:focus::after {
                     outline-offset: 3px;
                   }
-                  &:hover, &:active, &:focus {
+                  &:hover {
                     background-color: #ffffff;
-                    border: 4px solid #eaeaea;
+                    border: 4px solid #f3f2f1;
+                    color: #0078d4;
+                    padding-bottom: 2px;
+                    padding-left: 2px;
+                    padding-right: 2px;
+                    padding-top: 2px;
+                  }
+                  &:active {
+                    background-color: #ffffff;
+                    border: 4px solid #f3f2f1;
+                    color: #000000;
                     padding-bottom: 2px;
                     padding-left: 2px;
                     padding-right: 2px;
                     padding-top: 2px;
                   }
                   &:focus {
+                    background-color: #ffffff;
                     border-color: #ffffff;
+                    border: 4px solid #f3f2f1;
                     padding-bottom: 0px;
                     padding-left: 0px;
                     padding-right: 0px;
                     padding-top: 0px;
                   }
                   &:focus:hover {
-                    border-color: #eaeaea;
+                    border-color: #edebe9;
                     padding-bottom: 2px;
                     padding-left: 2px;
                     padding-right: 2px;
                     padding-top: 2px;
                   }
-                  &:hover {
-                    color: #0078d4;
-                  }
                   @media screen and (-ms-high-contrast: active){&:hover {
                     border-color: Highlight;
                     color: Highlight;
-                  }
-                  &:active {
-                    color: #000000;
                   }
               data-index={3}
               data-is-focusable={true}
@@ -2290,7 +2393,7 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
               title="magenta"
               type="button"
             >
-              <div
+              <span
                 className=
                     ms-Button-flexContainer
                     {
@@ -2300,6 +2403,7 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
                       height: 100%;
                       justify-content: flex-start;
                     }
+                data-automationid="splitbuttonprimary"
               >
                 <svg
                   className=
@@ -2316,7 +2420,7 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
                     width="100%"
                   />
                 </svg>
-              </div>
+              </span>
             </button>
           </td>
           <td
@@ -2340,11 +2444,11 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
                   {
                     -moz-osx-font-smoothing: grayscale;
                     -webkit-font-smoothing: antialiased;
-                    background-color: #eaeaea;
+                    background-color: #a19f9d;
                     border-radius: 0px;
                     border: none;
                     box-sizing: border-box;
-                    color: #333333;
+                    color: #323130;
                     cursor: pointer;
                     display: inline-block;
                     font-family: 'Segoe UI', 'Segoe UI Web (West European)', 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Roboto', 'Helvetica Neue', sans-serif;
@@ -2371,7 +2475,7 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
                     bottom: 0px;
                     content: "";
                     left: 0px;
-                    outline: 1px solid #666666;
+                    outline: 1px solid #605e5c;
                     position: absolute;
                     right: 0px;
                     top: 0px;
@@ -2393,37 +2497,43 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
                   .ms-Fabric--isFocusVisible &:focus::after {
                     outline-offset: 3px;
                   }
-                  &:hover, &:active, &:focus {
+                  &:hover {
                     background-color: #ffffff;
-                    border: 4px solid #eaeaea;
+                    border: 4px solid #f3f2f1;
+                    color: #0078d4;
+                    padding-bottom: 2px;
+                    padding-left: 2px;
+                    padding-right: 2px;
+                    padding-top: 2px;
+                  }
+                  &:active {
+                    background-color: #ffffff;
+                    border: 4px solid #f3f2f1;
+                    color: #000000;
                     padding-bottom: 2px;
                     padding-left: 2px;
                     padding-right: 2px;
                     padding-top: 2px;
                   }
                   &:focus {
+                    background-color: #ffffff;
                     border-color: #ffffff;
+                    border: 4px solid #f3f2f1;
                     padding-bottom: 0px;
                     padding-left: 0px;
                     padding-right: 0px;
                     padding-top: 0px;
                   }
                   &:focus:hover {
-                    border-color: #eaeaea;
+                    border-color: #edebe9;
                     padding-bottom: 2px;
                     padding-left: 2px;
                     padding-right: 2px;
                     padding-top: 2px;
                   }
-                  &:hover {
-                    color: #0078d4;
-                  }
                   @media screen and (-ms-high-contrast: active){&:hover {
                     border-color: Highlight;
                     color: Highlight;
-                  }
-                  &:active {
-                    color: #000000;
                   }
               data-index={4}
               data-is-focusable={true}
@@ -2442,7 +2552,7 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
               title="white"
               type="button"
             >
-              <div
+              <span
                 className=
                     ms-Button-flexContainer
                     {
@@ -2452,6 +2562,7 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
                       height: 100%;
                       justify-content: flex-start;
                     }
+                data-automationid="splitbuttonprimary"
               >
                 <svg
                   className=
@@ -2468,7 +2579,7 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
                     width="100%"
                   />
                 </svg>
-              </div>
+              </span>
             </button>
           </td>
         </tr>
@@ -2492,6 +2603,9 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
     className=
         ms-FocusZone
         ms-swatchColorPickerBodyContainer
+        &:focus {
+          outline: none;
+        }
         {
           clear: both;
           display: block;
@@ -2502,7 +2616,6 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
     onFocus={[Function]}
     onKeyDown={[Function]}
     onMouseDownCapture={[Function]}
-    role="presentation"
   >
     <table
       className=
@@ -2552,7 +2665,7 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
                     border-radius: 50%;
                     border: none;
                     box-sizing: border-box;
-                    color: #333333;
+                    color: #323130;
                     cursor: pointer;
                     display: inline-block;
                     font-family: 'Segoe UI', 'Segoe UI Web (West European)', 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Roboto', 'Helvetica Neue', sans-serif;
@@ -2579,7 +2692,7 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
                     bottom: 0px;
                     content: "";
                     left: 0px;
-                    outline: 1px solid #666666;
+                    outline: 1px solid #605e5c;
                     position: absolute;
                     right: 0px;
                     top: 0px;
@@ -2599,7 +2712,7 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
                     top: 0px;
                   }
                   .ms-Fabric--isFocusVisible &:focus::after {
-                    border-color: #666666;
+                    border-color: #605e5c;
                     border-radius: 50%;
                     bottom: -3px;
                     left: -3px;
@@ -2610,37 +2723,43 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
                   @media screen and (-ms-high-contrast: active){.ms-Fabric--isFocusVisible &:focus::after {
                     outline: 1px solid ButtonText;
                   }
-                  &:hover, &:active, &:focus {
+                  &:hover {
                     background-color: #ffffff;
-                    border: 3px solid #eaeaea;
+                    border: 3px solid #f3f2f1;
+                    color: #0078d4;
+                    padding-bottom: 2px;
+                    padding-left: 2px;
+                    padding-right: 2px;
+                    padding-top: 2px;
+                  }
+                  &:active {
+                    background-color: #ffffff;
+                    border: 3px solid #f3f2f1;
+                    color: #000000;
                     padding-bottom: 2px;
                     padding-left: 2px;
                     padding-right: 2px;
                     padding-top: 2px;
                   }
                   &:focus {
+                    background-color: #ffffff;
                     border-color: #ffffff;
+                    border: 3px solid #f3f2f1;
                     padding-bottom: 0px;
                     padding-left: 0px;
                     padding-right: 0px;
                     padding-top: 0px;
                   }
                   &:focus:hover {
-                    border-color: #eaeaea;
+                    border-color: #edebe9;
                     padding-bottom: 2px;
                     padding-left: 2px;
                     padding-right: 2px;
                     padding-top: 2px;
                   }
-                  &:hover {
-                    color: #0078d4;
-                  }
                   @media screen and (-ms-high-contrast: active){&:hover {
                     border-color: Highlight;
                     color: Highlight;
-                  }
-                  &:active {
-                    color: #000000;
                   }
               data-index={0}
               data-is-focusable={true}
@@ -2659,7 +2778,7 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
               title="red"
               type="button"
             >
-              <div
+              <span
                 className=
                     ms-Button-flexContainer
                     {
@@ -2669,6 +2788,7 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
                       height: 100%;
                       justify-content: flex-start;
                     }
+                data-automationid="splitbuttonprimary"
               >
                 <svg
                   className=
@@ -2687,7 +2807,7 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
                     r="50%"
                   />
                 </svg>
-              </div>
+              </span>
             </button>
           </td>
           <td
@@ -2715,7 +2835,7 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
                     border-radius: 50%;
                     border: none;
                     box-sizing: border-box;
-                    color: #333333;
+                    color: #323130;
                     cursor: pointer;
                     display: inline-block;
                     font-family: 'Segoe UI', 'Segoe UI Web (West European)', 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Roboto', 'Helvetica Neue', sans-serif;
@@ -2742,7 +2862,7 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
                     bottom: 0px;
                     content: "";
                     left: 0px;
-                    outline: 1px solid #666666;
+                    outline: 1px solid #605e5c;
                     position: absolute;
                     right: 0px;
                     top: 0px;
@@ -2762,7 +2882,7 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
                     top: 0px;
                   }
                   .ms-Fabric--isFocusVisible &:focus::after {
-                    border-color: #666666;
+                    border-color: #605e5c;
                     border-radius: 50%;
                     bottom: -3px;
                     left: -3px;
@@ -2773,37 +2893,43 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
                   @media screen and (-ms-high-contrast: active){.ms-Fabric--isFocusVisible &:focus::after {
                     outline: 1px solid ButtonText;
                   }
-                  &:hover, &:active, &:focus {
+                  &:hover {
                     background-color: #ffffff;
-                    border: 3px solid #eaeaea;
+                    border: 3px solid #f3f2f1;
+                    color: #0078d4;
+                    padding-bottom: 2px;
+                    padding-left: 2px;
+                    padding-right: 2px;
+                    padding-top: 2px;
+                  }
+                  &:active {
+                    background-color: #ffffff;
+                    border: 3px solid #f3f2f1;
+                    color: #000000;
                     padding-bottom: 2px;
                     padding-left: 2px;
                     padding-right: 2px;
                     padding-top: 2px;
                   }
                   &:focus {
+                    background-color: #ffffff;
                     border-color: #ffffff;
+                    border: 3px solid #f3f2f1;
                     padding-bottom: 0px;
                     padding-left: 0px;
                     padding-right: 0px;
                     padding-top: 0px;
                   }
                   &:focus:hover {
-                    border-color: #eaeaea;
+                    border-color: #edebe9;
                     padding-bottom: 2px;
                     padding-left: 2px;
                     padding-right: 2px;
                     padding-top: 2px;
                   }
-                  &:hover {
-                    color: #0078d4;
-                  }
                   @media screen and (-ms-high-contrast: active){&:hover {
                     border-color: Highlight;
                     color: Highlight;
-                  }
-                  &:active {
-                    color: #000000;
                   }
               data-index={1}
               data-is-focusable={true}
@@ -2822,7 +2948,7 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
               title="orange"
               type="button"
             >
-              <div
+              <span
                 className=
                     ms-Button-flexContainer
                     {
@@ -2832,6 +2958,7 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
                       height: 100%;
                       justify-content: flex-start;
                     }
+                data-automationid="splitbuttonprimary"
               >
                 <svg
                   className=
@@ -2850,7 +2977,7 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
                     r="50%"
                   />
                 </svg>
-              </div>
+              </span>
             </button>
           </td>
           <td
@@ -2878,7 +3005,7 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
                     border-radius: 50%;
                     border: none;
                     box-sizing: border-box;
-                    color: #333333;
+                    color: #323130;
                     cursor: pointer;
                     display: inline-block;
                     font-family: 'Segoe UI', 'Segoe UI Web (West European)', 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Roboto', 'Helvetica Neue', sans-serif;
@@ -2905,7 +3032,7 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
                     bottom: 0px;
                     content: "";
                     left: 0px;
-                    outline: 1px solid #666666;
+                    outline: 1px solid #605e5c;
                     position: absolute;
                     right: 0px;
                     top: 0px;
@@ -2925,7 +3052,7 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
                     top: 0px;
                   }
                   .ms-Fabric--isFocusVisible &:focus::after {
-                    border-color: #666666;
+                    border-color: #605e5c;
                     border-radius: 50%;
                     bottom: -3px;
                     left: -3px;
@@ -2936,37 +3063,43 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
                   @media screen and (-ms-high-contrast: active){.ms-Fabric--isFocusVisible &:focus::after {
                     outline: 1px solid ButtonText;
                   }
-                  &:hover, &:active, &:focus {
+                  &:hover {
                     background-color: #ffffff;
-                    border: 3px solid #eaeaea;
+                    border: 3px solid #f3f2f1;
+                    color: #0078d4;
+                    padding-bottom: 2px;
+                    padding-left: 2px;
+                    padding-right: 2px;
+                    padding-top: 2px;
+                  }
+                  &:active {
+                    background-color: #ffffff;
+                    border: 3px solid #f3f2f1;
+                    color: #000000;
                     padding-bottom: 2px;
                     padding-left: 2px;
                     padding-right: 2px;
                     padding-top: 2px;
                   }
                   &:focus {
+                    background-color: #ffffff;
                     border-color: #ffffff;
+                    border: 3px solid #f3f2f1;
                     padding-bottom: 0px;
                     padding-left: 0px;
                     padding-right: 0px;
                     padding-top: 0px;
                   }
                   &:focus:hover {
-                    border-color: #eaeaea;
+                    border-color: #edebe9;
                     padding-bottom: 2px;
                     padding-left: 2px;
                     padding-right: 2px;
                     padding-top: 2px;
                   }
-                  &:hover {
-                    color: #0078d4;
-                  }
                   @media screen and (-ms-high-contrast: active){&:hover {
                     border-color: Highlight;
                     color: Highlight;
-                  }
-                  &:active {
-                    color: #000000;
                   }
               data-index={2}
               data-is-focusable={true}
@@ -2985,7 +3118,7 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
               title="orangeYellow"
               type="button"
             >
-              <div
+              <span
                 className=
                     ms-Button-flexContainer
                     {
@@ -2995,6 +3128,7 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
                       height: 100%;
                       justify-content: flex-start;
                     }
+                data-automationid="splitbuttonprimary"
               >
                 <svg
                   className=
@@ -3013,7 +3147,7 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
                     r="50%"
                   />
                 </svg>
-              </div>
+              </span>
             </button>
           </td>
           <td
@@ -3041,7 +3175,7 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
                     border-radius: 50%;
                     border: none;
                     box-sizing: border-box;
-                    color: #333333;
+                    color: #323130;
                     cursor: pointer;
                     display: inline-block;
                     font-family: 'Segoe UI', 'Segoe UI Web (West European)', 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Roboto', 'Helvetica Neue', sans-serif;
@@ -3068,7 +3202,7 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
                     bottom: 0px;
                     content: "";
                     left: 0px;
-                    outline: 1px solid #666666;
+                    outline: 1px solid #605e5c;
                     position: absolute;
                     right: 0px;
                     top: 0px;
@@ -3088,7 +3222,7 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
                     top: 0px;
                   }
                   .ms-Fabric--isFocusVisible &:focus::after {
-                    border-color: #666666;
+                    border-color: #605e5c;
                     border-radius: 50%;
                     bottom: -3px;
                     left: -3px;
@@ -3099,37 +3233,43 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
                   @media screen and (-ms-high-contrast: active){.ms-Fabric--isFocusVisible &:focus::after {
                     outline: 1px solid ButtonText;
                   }
-                  &:hover, &:active, &:focus {
+                  &:hover {
                     background-color: #ffffff;
-                    border: 3px solid #eaeaea;
+                    border: 3px solid #f3f2f1;
+                    color: #0078d4;
+                    padding-bottom: 2px;
+                    padding-left: 2px;
+                    padding-right: 2px;
+                    padding-top: 2px;
+                  }
+                  &:active {
+                    background-color: #ffffff;
+                    border: 3px solid #f3f2f1;
+                    color: #000000;
                     padding-bottom: 2px;
                     padding-left: 2px;
                     padding-right: 2px;
                     padding-top: 2px;
                   }
                   &:focus {
+                    background-color: #ffffff;
                     border-color: #ffffff;
+                    border: 3px solid #f3f2f1;
                     padding-bottom: 0px;
                     padding-left: 0px;
                     padding-right: 0px;
                     padding-top: 0px;
                   }
                   &:focus:hover {
-                    border-color: #eaeaea;
+                    border-color: #edebe9;
                     padding-bottom: 2px;
                     padding-left: 2px;
                     padding-right: 2px;
                     padding-top: 2px;
                   }
-                  &:hover {
-                    color: #0078d4;
-                  }
                   @media screen and (-ms-high-contrast: active){&:hover {
                     border-color: Highlight;
                     color: Highlight;
-                  }
-                  &:active {
-                    color: #000000;
                   }
               data-index={3}
               data-is-focusable={true}
@@ -3148,7 +3288,7 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
               title="yellowGreen"
               type="button"
             >
-              <div
+              <span
                 className=
                     ms-Button-flexContainer
                     {
@@ -3158,6 +3298,7 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
                       height: 100%;
                       justify-content: flex-start;
                     }
+                data-automationid="splitbuttonprimary"
               >
                 <svg
                   className=
@@ -3176,7 +3317,7 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
                     r="50%"
                   />
                 </svg>
-              </div>
+              </span>
             </button>
           </td>
         </tr>
@@ -3208,7 +3349,7 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
                     border-radius: 50%;
                     border: none;
                     box-sizing: border-box;
-                    color: #333333;
+                    color: #323130;
                     cursor: pointer;
                     display: inline-block;
                     font-family: 'Segoe UI', 'Segoe UI Web (West European)', 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Roboto', 'Helvetica Neue', sans-serif;
@@ -3235,7 +3376,7 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
                     bottom: 0px;
                     content: "";
                     left: 0px;
-                    outline: 1px solid #666666;
+                    outline: 1px solid #605e5c;
                     position: absolute;
                     right: 0px;
                     top: 0px;
@@ -3255,7 +3396,7 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
                     top: 0px;
                   }
                   .ms-Fabric--isFocusVisible &:focus::after {
-                    border-color: #666666;
+                    border-color: #605e5c;
                     border-radius: 50%;
                     bottom: -3px;
                     left: -3px;
@@ -3266,37 +3407,43 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
                   @media screen and (-ms-high-contrast: active){.ms-Fabric--isFocusVisible &:focus::after {
                     outline: 1px solid ButtonText;
                   }
-                  &:hover, &:active, &:focus {
+                  &:hover {
                     background-color: #ffffff;
-                    border: 3px solid #eaeaea;
+                    border: 3px solid #f3f2f1;
+                    color: #0078d4;
+                    padding-bottom: 2px;
+                    padding-left: 2px;
+                    padding-right: 2px;
+                    padding-top: 2px;
+                  }
+                  &:active {
+                    background-color: #ffffff;
+                    border: 3px solid #f3f2f1;
+                    color: #000000;
                     padding-bottom: 2px;
                     padding-left: 2px;
                     padding-right: 2px;
                     padding-top: 2px;
                   }
                   &:focus {
+                    background-color: #ffffff;
                     border-color: #ffffff;
+                    border: 3px solid #f3f2f1;
                     padding-bottom: 0px;
                     padding-left: 0px;
                     padding-right: 0px;
                     padding-top: 0px;
                   }
                   &:focus:hover {
-                    border-color: #eaeaea;
+                    border-color: #edebe9;
                     padding-bottom: 2px;
                     padding-left: 2px;
                     padding-right: 2px;
                     padding-top: 2px;
                   }
-                  &:hover {
-                    color: #0078d4;
-                  }
                   @media screen and (-ms-high-contrast: active){&:hover {
                     border-color: Highlight;
                     color: Highlight;
-                  }
-                  &:active {
-                    color: #000000;
                   }
               data-index={4}
               data-is-focusable={true}
@@ -3315,7 +3462,7 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
               title="green"
               type="button"
             >
-              <div
+              <span
                 className=
                     ms-Button-flexContainer
                     {
@@ -3325,6 +3472,7 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
                       height: 100%;
                       justify-content: flex-start;
                     }
+                data-automationid="splitbuttonprimary"
               >
                 <svg
                   className=
@@ -3343,7 +3491,7 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
                     r="50%"
                   />
                 </svg>
-              </div>
+              </span>
             </button>
           </td>
           <td
@@ -3371,7 +3519,7 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
                     border-radius: 50%;
                     border: none;
                     box-sizing: border-box;
-                    color: #333333;
+                    color: #323130;
                     cursor: pointer;
                     display: inline-block;
                     font-family: 'Segoe UI', 'Segoe UI Web (West European)', 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Roboto', 'Helvetica Neue', sans-serif;
@@ -3398,7 +3546,7 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
                     bottom: 0px;
                     content: "";
                     left: 0px;
-                    outline: 1px solid #666666;
+                    outline: 1px solid #605e5c;
                     position: absolute;
                     right: 0px;
                     top: 0px;
@@ -3418,7 +3566,7 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
                     top: 0px;
                   }
                   .ms-Fabric--isFocusVisible &:focus::after {
-                    border-color: #666666;
+                    border-color: #605e5c;
                     border-radius: 50%;
                     bottom: -3px;
                     left: -3px;
@@ -3429,37 +3577,43 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
                   @media screen and (-ms-high-contrast: active){.ms-Fabric--isFocusVisible &:focus::after {
                     outline: 1px solid ButtonText;
                   }
-                  &:hover, &:active, &:focus {
+                  &:hover {
                     background-color: #ffffff;
-                    border: 3px solid #eaeaea;
+                    border: 3px solid #f3f2f1;
+                    color: #0078d4;
+                    padding-bottom: 2px;
+                    padding-left: 2px;
+                    padding-right: 2px;
+                    padding-top: 2px;
+                  }
+                  &:active {
+                    background-color: #ffffff;
+                    border: 3px solid #f3f2f1;
+                    color: #000000;
                     padding-bottom: 2px;
                     padding-left: 2px;
                     padding-right: 2px;
                     padding-top: 2px;
                   }
                   &:focus {
+                    background-color: #ffffff;
                     border-color: #ffffff;
+                    border: 3px solid #f3f2f1;
                     padding-bottom: 0px;
                     padding-left: 0px;
                     padding-right: 0px;
                     padding-top: 0px;
                   }
                   &:focus:hover {
-                    border-color: #eaeaea;
+                    border-color: #edebe9;
                     padding-bottom: 2px;
                     padding-left: 2px;
                     padding-right: 2px;
                     padding-top: 2px;
                   }
-                  &:hover {
-                    color: #0078d4;
-                  }
                   @media screen and (-ms-high-contrast: active){&:hover {
                     border-color: Highlight;
                     color: Highlight;
-                  }
-                  &:active {
-                    color: #000000;
                   }
               data-index={5}
               data-is-focusable={true}
@@ -3478,7 +3632,7 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
               title="cyan"
               type="button"
             >
-              <div
+              <span
                 className=
                     ms-Button-flexContainer
                     {
@@ -3488,6 +3642,7 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
                       height: 100%;
                       justify-content: flex-start;
                     }
+                data-automationid="splitbuttonprimary"
               >
                 <svg
                   className=
@@ -3506,7 +3661,7 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
                     r="50%"
                   />
                 </svg>
-              </div>
+              </span>
             </button>
           </td>
           <td
@@ -3534,7 +3689,7 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
                     border-radius: 50%;
                     border: none;
                     box-sizing: border-box;
-                    color: #333333;
+                    color: #323130;
                     cursor: pointer;
                     display: inline-block;
                     font-family: 'Segoe UI', 'Segoe UI Web (West European)', 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Roboto', 'Helvetica Neue', sans-serif;
@@ -3561,7 +3716,7 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
                     bottom: 0px;
                     content: "";
                     left: 0px;
-                    outline: 1px solid #666666;
+                    outline: 1px solid #605e5c;
                     position: absolute;
                     right: 0px;
                     top: 0px;
@@ -3581,7 +3736,7 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
                     top: 0px;
                   }
                   .ms-Fabric--isFocusVisible &:focus::after {
-                    border-color: #666666;
+                    border-color: #605e5c;
                     border-radius: 50%;
                     bottom: -3px;
                     left: -3px;
@@ -3592,37 +3747,43 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
                   @media screen and (-ms-high-contrast: active){.ms-Fabric--isFocusVisible &:focus::after {
                     outline: 1px solid ButtonText;
                   }
-                  &:hover, &:active, &:focus {
+                  &:hover {
                     background-color: #ffffff;
-                    border: 3px solid #eaeaea;
+                    border: 3px solid #f3f2f1;
+                    color: #0078d4;
+                    padding-bottom: 2px;
+                    padding-left: 2px;
+                    padding-right: 2px;
+                    padding-top: 2px;
+                  }
+                  &:active {
+                    background-color: #ffffff;
+                    border: 3px solid #f3f2f1;
+                    color: #000000;
                     padding-bottom: 2px;
                     padding-left: 2px;
                     padding-right: 2px;
                     padding-top: 2px;
                   }
                   &:focus {
+                    background-color: #ffffff;
                     border-color: #ffffff;
+                    border: 3px solid #f3f2f1;
                     padding-bottom: 0px;
                     padding-left: 0px;
                     padding-right: 0px;
                     padding-top: 0px;
                   }
                   &:focus:hover {
-                    border-color: #eaeaea;
+                    border-color: #edebe9;
                     padding-bottom: 2px;
                     padding-left: 2px;
                     padding-right: 2px;
                     padding-top: 2px;
                   }
-                  &:hover {
-                    color: #0078d4;
-                  }
                   @media screen and (-ms-high-contrast: active){&:hover {
                     border-color: Highlight;
                     color: Highlight;
-                  }
-                  &:active {
-                    color: #000000;
                   }
               data-index={6}
               data-is-focusable={true}
@@ -3641,7 +3802,7 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
               title="cyanBlue"
               type="button"
             >
-              <div
+              <span
                 className=
                     ms-Button-flexContainer
                     {
@@ -3651,6 +3812,7 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
                       height: 100%;
                       justify-content: flex-start;
                     }
+                data-automationid="splitbuttonprimary"
               >
                 <svg
                   className=
@@ -3669,7 +3831,7 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
                     r="50%"
                   />
                 </svg>
-              </div>
+              </span>
             </button>
           </td>
           <td
@@ -3697,7 +3859,7 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
                     border-radius: 50%;
                     border: none;
                     box-sizing: border-box;
-                    color: #333333;
+                    color: #323130;
                     cursor: pointer;
                     display: inline-block;
                     font-family: 'Segoe UI', 'Segoe UI Web (West European)', 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Roboto', 'Helvetica Neue', sans-serif;
@@ -3724,7 +3886,7 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
                     bottom: 0px;
                     content: "";
                     left: 0px;
-                    outline: 1px solid #666666;
+                    outline: 1px solid #605e5c;
                     position: absolute;
                     right: 0px;
                     top: 0px;
@@ -3744,7 +3906,7 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
                     top: 0px;
                   }
                   .ms-Fabric--isFocusVisible &:focus::after {
-                    border-color: #666666;
+                    border-color: #605e5c;
                     border-radius: 50%;
                     bottom: -3px;
                     left: -3px;
@@ -3755,37 +3917,43 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
                   @media screen and (-ms-high-contrast: active){.ms-Fabric--isFocusVisible &:focus::after {
                     outline: 1px solid ButtonText;
                   }
-                  &:hover, &:active, &:focus {
+                  &:hover {
                     background-color: #ffffff;
-                    border: 3px solid #eaeaea;
+                    border: 3px solid #f3f2f1;
+                    color: #0078d4;
+                    padding-bottom: 2px;
+                    padding-left: 2px;
+                    padding-right: 2px;
+                    padding-top: 2px;
+                  }
+                  &:active {
+                    background-color: #ffffff;
+                    border: 3px solid #f3f2f1;
+                    color: #000000;
                     padding-bottom: 2px;
                     padding-left: 2px;
                     padding-right: 2px;
                     padding-top: 2px;
                   }
                   &:focus {
+                    background-color: #ffffff;
                     border-color: #ffffff;
+                    border: 3px solid #f3f2f1;
                     padding-bottom: 0px;
                     padding-left: 0px;
                     padding-right: 0px;
                     padding-top: 0px;
                   }
                   &:focus:hover {
-                    border-color: #eaeaea;
+                    border-color: #edebe9;
                     padding-bottom: 2px;
                     padding-left: 2px;
                     padding-right: 2px;
                     padding-top: 2px;
                   }
-                  &:hover {
-                    color: #0078d4;
-                  }
                   @media screen and (-ms-high-contrast: active){&:hover {
                     border-color: Highlight;
                     color: Highlight;
-                  }
-                  &:active {
-                    color: #000000;
                   }
               data-index={7}
               data-is-focusable={true}
@@ -3804,7 +3972,7 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
               title="magenta"
               type="button"
             >
-              <div
+              <span
                 className=
                     ms-Button-flexContainer
                     {
@@ -3814,6 +3982,7 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
                       height: 100%;
                       justify-content: flex-start;
                     }
+                data-automationid="splitbuttonprimary"
               >
                 <svg
                   className=
@@ -3832,7 +4001,7 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
                     r="50%"
                   />
                 </svg>
-              </div>
+              </span>
             </button>
           </td>
         </tr>
@@ -3864,7 +4033,7 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
                     border-radius: 50%;
                     border: none;
                     box-sizing: border-box;
-                    color: #333333;
+                    color: #323130;
                     cursor: pointer;
                     display: inline-block;
                     font-family: 'Segoe UI', 'Segoe UI Web (West European)', 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Roboto', 'Helvetica Neue', sans-serif;
@@ -3891,7 +4060,7 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
                     bottom: 0px;
                     content: "";
                     left: 0px;
-                    outline: 1px solid #666666;
+                    outline: 1px solid #605e5c;
                     position: absolute;
                     right: 0px;
                     top: 0px;
@@ -3911,7 +4080,7 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
                     top: 0px;
                   }
                   .ms-Fabric--isFocusVisible &:focus::after {
-                    border-color: #666666;
+                    border-color: #605e5c;
                     border-radius: 50%;
                     bottom: -3px;
                     left: -3px;
@@ -3922,37 +4091,43 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
                   @media screen and (-ms-high-contrast: active){.ms-Fabric--isFocusVisible &:focus::after {
                     outline: 1px solid ButtonText;
                   }
-                  &:hover, &:active, &:focus {
+                  &:hover {
                     background-color: #ffffff;
-                    border: 3px solid #eaeaea;
+                    border: 3px solid #f3f2f1;
+                    color: #0078d4;
+                    padding-bottom: 2px;
+                    padding-left: 2px;
+                    padding-right: 2px;
+                    padding-top: 2px;
+                  }
+                  &:active {
+                    background-color: #ffffff;
+                    border: 3px solid #f3f2f1;
+                    color: #000000;
                     padding-bottom: 2px;
                     padding-left: 2px;
                     padding-right: 2px;
                     padding-top: 2px;
                   }
                   &:focus {
+                    background-color: #ffffff;
                     border-color: #ffffff;
+                    border: 3px solid #f3f2f1;
                     padding-bottom: 0px;
                     padding-left: 0px;
                     padding-right: 0px;
                     padding-top: 0px;
                   }
                   &:focus:hover {
-                    border-color: #eaeaea;
+                    border-color: #edebe9;
                     padding-bottom: 2px;
                     padding-left: 2px;
                     padding-right: 2px;
                     padding-top: 2px;
                   }
-                  &:hover {
-                    color: #0078d4;
-                  }
                   @media screen and (-ms-high-contrast: active){&:hover {
                     border-color: Highlight;
                     color: Highlight;
-                  }
-                  &:active {
-                    color: #000000;
                   }
               data-index={8}
               data-is-focusable={true}
@@ -3971,7 +4146,7 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
               title="magentaPink"
               type="button"
             >
-              <div
+              <span
                 className=
                     ms-Button-flexContainer
                     {
@@ -3981,6 +4156,7 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
                       height: 100%;
                       justify-content: flex-start;
                     }
+                data-automationid="splitbuttonprimary"
               >
                 <svg
                   className=
@@ -3999,7 +4175,7 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
                     r="50%"
                   />
                 </svg>
-              </div>
+              </span>
             </button>
           </td>
           <td
@@ -4027,7 +4203,7 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
                     border-radius: 50%;
                     border: none;
                     box-sizing: border-box;
-                    color: #333333;
+                    color: #323130;
                     cursor: pointer;
                     display: inline-block;
                     font-family: 'Segoe UI', 'Segoe UI Web (West European)', 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Roboto', 'Helvetica Neue', sans-serif;
@@ -4054,7 +4230,7 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
                     bottom: 0px;
                     content: "";
                     left: 0px;
-                    outline: 1px solid #666666;
+                    outline: 1px solid #605e5c;
                     position: absolute;
                     right: 0px;
                     top: 0px;
@@ -4074,7 +4250,7 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
                     top: 0px;
                   }
                   .ms-Fabric--isFocusVisible &:focus::after {
-                    border-color: #666666;
+                    border-color: #605e5c;
                     border-radius: 50%;
                     bottom: -3px;
                     left: -3px;
@@ -4085,37 +4261,43 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
                   @media screen and (-ms-high-contrast: active){.ms-Fabric--isFocusVisible &:focus::after {
                     outline: 1px solid ButtonText;
                   }
-                  &:hover, &:active, &:focus {
+                  &:hover {
                     background-color: #ffffff;
-                    border: 3px solid #eaeaea;
+                    border: 3px solid #f3f2f1;
+                    color: #0078d4;
+                    padding-bottom: 2px;
+                    padding-left: 2px;
+                    padding-right: 2px;
+                    padding-top: 2px;
+                  }
+                  &:active {
+                    background-color: #ffffff;
+                    border: 3px solid #f3f2f1;
+                    color: #000000;
                     padding-bottom: 2px;
                     padding-left: 2px;
                     padding-right: 2px;
                     padding-top: 2px;
                   }
                   &:focus {
+                    background-color: #ffffff;
                     border-color: #ffffff;
+                    border: 3px solid #f3f2f1;
                     padding-bottom: 0px;
                     padding-left: 0px;
                     padding-right: 0px;
                     padding-top: 0px;
                   }
                   &:focus:hover {
-                    border-color: #eaeaea;
+                    border-color: #edebe9;
                     padding-bottom: 2px;
                     padding-left: 2px;
                     padding-right: 2px;
                     padding-top: 2px;
                   }
-                  &:hover {
-                    color: #0078d4;
-                  }
                   @media screen and (-ms-high-contrast: active){&:hover {
                     border-color: Highlight;
                     color: Highlight;
-                  }
-                  &:active {
-                    color: #000000;
                   }
               data-index={9}
               data-is-focusable={true}
@@ -4134,7 +4316,7 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
               title="black"
               type="button"
             >
-              <div
+              <span
                 className=
                     ms-Button-flexContainer
                     {
@@ -4144,6 +4326,7 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
                       height: 100%;
                       justify-content: flex-start;
                     }
+                data-automationid="splitbuttonprimary"
               >
                 <svg
                   className=
@@ -4162,7 +4345,7 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
                     r="50%"
                   />
                 </svg>
-              </div>
+              </span>
             </button>
           </td>
           <td
@@ -4190,7 +4373,7 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
                     border-radius: 50%;
                     border: none;
                     box-sizing: border-box;
-                    color: #333333;
+                    color: #323130;
                     cursor: pointer;
                     display: inline-block;
                     font-family: 'Segoe UI', 'Segoe UI Web (West European)', 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Roboto', 'Helvetica Neue', sans-serif;
@@ -4217,7 +4400,7 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
                     bottom: 0px;
                     content: "";
                     left: 0px;
-                    outline: 1px solid #666666;
+                    outline: 1px solid #605e5c;
                     position: absolute;
                     right: 0px;
                     top: 0px;
@@ -4237,7 +4420,7 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
                     top: 0px;
                   }
                   .ms-Fabric--isFocusVisible &:focus::after {
-                    border-color: #666666;
+                    border-color: #605e5c;
                     border-radius: 50%;
                     bottom: -3px;
                     left: -3px;
@@ -4248,37 +4431,43 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
                   @media screen and (-ms-high-contrast: active){.ms-Fabric--isFocusVisible &:focus::after {
                     outline: 1px solid ButtonText;
                   }
-                  &:hover, &:active, &:focus {
+                  &:hover {
                     background-color: #ffffff;
-                    border: 3px solid #eaeaea;
+                    border: 3px solid #f3f2f1;
+                    color: #0078d4;
+                    padding-bottom: 2px;
+                    padding-left: 2px;
+                    padding-right: 2px;
+                    padding-top: 2px;
+                  }
+                  &:active {
+                    background-color: #ffffff;
+                    border: 3px solid #f3f2f1;
+                    color: #000000;
                     padding-bottom: 2px;
                     padding-left: 2px;
                     padding-right: 2px;
                     padding-top: 2px;
                   }
                   &:focus {
+                    background-color: #ffffff;
                     border-color: #ffffff;
+                    border: 3px solid #f3f2f1;
                     padding-bottom: 0px;
                     padding-left: 0px;
                     padding-right: 0px;
                     padding-top: 0px;
                   }
                   &:focus:hover {
-                    border-color: #eaeaea;
+                    border-color: #edebe9;
                     padding-bottom: 2px;
                     padding-left: 2px;
                     padding-right: 2px;
                     padding-top: 2px;
                   }
-                  &:hover {
-                    color: #0078d4;
-                  }
                   @media screen and (-ms-high-contrast: active){&:hover {
                     border-color: Highlight;
                     color: Highlight;
-                  }
-                  &:active {
-                    color: #000000;
                   }
               data-index={10}
               data-is-focusable={true}
@@ -4297,7 +4486,7 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
               title="gray"
               type="button"
             >
-              <div
+              <span
                 className=
                     ms-Button-flexContainer
                     {
@@ -4307,6 +4496,7 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
                       height: 100%;
                       justify-content: flex-start;
                     }
+                data-automationid="splitbuttonprimary"
               >
                 <svg
                   className=
@@ -4325,7 +4515,7 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
                     r="50%"
                   />
                 </svg>
-              </div>
+              </span>
             </button>
           </td>
           <td
@@ -4353,7 +4543,7 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
                     border-radius: 50%;
                     border: none;
                     box-sizing: border-box;
-                    color: #333333;
+                    color: #323130;
                     cursor: pointer;
                     display: inline-block;
                     font-family: 'Segoe UI', 'Segoe UI Web (West European)', 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Roboto', 'Helvetica Neue', sans-serif;
@@ -4380,7 +4570,7 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
                     bottom: 0px;
                     content: "";
                     left: 0px;
-                    outline: 1px solid #666666;
+                    outline: 1px solid #605e5c;
                     position: absolute;
                     right: 0px;
                     top: 0px;
@@ -4400,7 +4590,7 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
                     top: 0px;
                   }
                   .ms-Fabric--isFocusVisible &:focus::after {
-                    border-color: #666666;
+                    border-color: #605e5c;
                     border-radius: 50%;
                     bottom: -3px;
                     left: -3px;
@@ -4411,37 +4601,43 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
                   @media screen and (-ms-high-contrast: active){.ms-Fabric--isFocusVisible &:focus::after {
                     outline: 1px solid ButtonText;
                   }
-                  &:hover, &:active, &:focus {
+                  &:hover {
                     background-color: #ffffff;
-                    border: 3px solid #eaeaea;
+                    border: 3px solid #f3f2f1;
+                    color: #0078d4;
+                    padding-bottom: 2px;
+                    padding-left: 2px;
+                    padding-right: 2px;
+                    padding-top: 2px;
+                  }
+                  &:active {
+                    background-color: #ffffff;
+                    border: 3px solid #f3f2f1;
+                    color: #000000;
                     padding-bottom: 2px;
                     padding-left: 2px;
                     padding-right: 2px;
                     padding-top: 2px;
                   }
                   &:focus {
+                    background-color: #ffffff;
                     border-color: #ffffff;
+                    border: 3px solid #f3f2f1;
                     padding-bottom: 0px;
                     padding-left: 0px;
                     padding-right: 0px;
                     padding-top: 0px;
                   }
                   &:focus:hover {
-                    border-color: #eaeaea;
+                    border-color: #edebe9;
                     padding-bottom: 2px;
                     padding-left: 2px;
                     padding-right: 2px;
                     padding-top: 2px;
                   }
-                  &:hover {
-                    color: #0078d4;
-                  }
                   @media screen and (-ms-high-contrast: active){&:hover {
                     border-color: Highlight;
                     color: Highlight;
-                  }
-                  &:active {
-                    color: #000000;
                   }
               data-index={11}
               data-is-focusable={true}
@@ -4460,7 +4656,7 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
               title="gray20"
               type="button"
             >
-              <div
+              <span
                 className=
                     ms-Button-flexContainer
                     {
@@ -4470,6 +4666,7 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
                       height: 100%;
                       justify-content: flex-start;
                     }
+                data-automationid="splitbuttonprimary"
               >
                 <svg
                   className=
@@ -4488,7 +4685,7 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
                     r="50%"
                   />
                 </svg>
-              </div>
+              </span>
             </button>
           </td>
         </tr>
@@ -4502,6 +4699,9 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
     className=
         ms-FocusZone
         ms-swatchColorPickerBodyContainer
+        &:focus {
+          outline: none;
+        }
         {
           clear: both;
           display: block;
@@ -4512,7 +4712,6 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
     onFocus={[Function]}
     onKeyDown={[Function]}
     onMouseDownCapture={[Function]}
-    role="presentation"
   >
     <table
       className=
@@ -4562,10 +4761,11 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
                     -moz-osx-font-smoothing: grayscale;
                     -webkit-font-smoothing: antialiased;
                     background-color: transparent;
+                    border-color: transparent;
                     border-radius: 50%;
                     border: none;
                     box-sizing: border-box;
-                    color: #a6a6a6;
+                    color: #a19f9d;
                     cursor: default;
                     display: inline-block;
                     font-family: 'Segoe UI', 'Segoe UI Web (West European)', 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Roboto', 'Helvetica Neue', sans-serif;
@@ -4590,14 +4790,14 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
                     border: 0;
                   }
                   .ms-Fabric--isFocusVisible &:focus:after {
-                    border: 1px solid #ffffff;
-                    bottom: 0px;
+                    border: 1px solid transparent;
+                    bottom: 2px;
                     content: "";
-                    left: 0px;
-                    outline: 1px solid #666666;
+                    left: 2px;
+                    outline: 1px solid #605e5c;
                     position: absolute;
-                    right: 0px;
-                    top: 0px;
+                    right: 2px;
+                    top: 2px;
                     z-index: 1;
                   }
                   @media screen and (-ms-high-contrast: active){.ms-Fabric--isFocusVisible &:focus:after {
@@ -4614,7 +4814,7 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
                     top: 0px;
                   }
                   .ms-Fabric--isFocusVisible &:focus::after {
-                    border-color: #666666;
+                    border-color: #605e5c;
                     border-radius: 50%;
                     bottom: -2px;
                     left: -2px;
@@ -4625,16 +4825,27 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
                   @media screen and (-ms-high-contrast: active){.ms-Fabric--isFocusVisible &:focus::after {
                     outline: 1px solid ButtonText;
                   }
-                  &:hover, &:active, &:focus {
+                  &:hover {
                     background-color: #ffffff;
-                    border: 2px solid #eaeaea;
+                    border: 2px solid #f3f2f1;
+                    outline: 0px;
+                    padding-bottom: 2px;
+                    padding-left: 2px;
+                    padding-right: 2px;
+                    padding-top: 2px;
+                  }
+                  &:active {
+                    background-color: #ffffff;
+                    border: 2px solid #f3f2f1;
                     padding-bottom: 2px;
                     padding-left: 2px;
                     padding-right: 2px;
                     padding-top: 2px;
                   }
                   &:focus {
+                    background-color: #ffffff;
                     border-color: #ffffff;
+                    border: 2px solid #f3f2f1;
                     outline: 0px;
                     padding-bottom: 0px;
                     padding-left: 0px;
@@ -4642,17 +4853,14 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
                     padding-top: 0px;
                   }
                   &:focus:hover {
-                    border-color: #eaeaea;
+                    border-color: #edebe9;
                     padding-bottom: 2px;
                     padding-left: 2px;
                     padding-right: 2px;
                     padding-top: 2px;
                   }
-                  &:hover {
-                    outline: 0px;
-                  }
                   @media screen and (-ms-high-contrast: active){& {
-                    bordercolor: grayText;
+                    border-color: grayText;
                     color: grayText;
                   }
               data-index={0}
@@ -4673,7 +4881,7 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
               title="orange"
               type="button"
             >
-              <div
+              <span
                 className=
                     ms-Button-flexContainer
                     {
@@ -4683,6 +4891,7 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
                       height: 100%;
                       justify-content: flex-start;
                     }
+                data-automationid="splitbuttonprimary"
               >
                 <svg
                   className=
@@ -4701,7 +4910,7 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
                     r="50%"
                   />
                 </svg>
-              </div>
+              </span>
             </button>
           </td>
           <td
@@ -4729,10 +4938,11 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
                     -moz-osx-font-smoothing: grayscale;
                     -webkit-font-smoothing: antialiased;
                     background-color: transparent;
+                    border-color: transparent;
                     border-radius: 50%;
                     border: none;
                     box-sizing: border-box;
-                    color: #a6a6a6;
+                    color: #a19f9d;
                     cursor: default;
                     display: inline-block;
                     font-family: 'Segoe UI', 'Segoe UI Web (West European)', 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Roboto', 'Helvetica Neue', sans-serif;
@@ -4757,14 +4967,14 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
                     border: 0;
                   }
                   .ms-Fabric--isFocusVisible &:focus:after {
-                    border: 1px solid #ffffff;
-                    bottom: 0px;
+                    border: 1px solid transparent;
+                    bottom: 2px;
                     content: "";
-                    left: 0px;
-                    outline: 1px solid #666666;
+                    left: 2px;
+                    outline: 1px solid #605e5c;
                     position: absolute;
-                    right: 0px;
-                    top: 0px;
+                    right: 2px;
+                    top: 2px;
                     z-index: 1;
                   }
                   @media screen and (-ms-high-contrast: active){.ms-Fabric--isFocusVisible &:focus:after {
@@ -4781,7 +4991,7 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
                     top: 0px;
                   }
                   .ms-Fabric--isFocusVisible &:focus::after {
-                    border-color: #666666;
+                    border-color: #605e5c;
                     border-radius: 50%;
                     bottom: -2px;
                     left: -2px;
@@ -4792,16 +5002,27 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
                   @media screen and (-ms-high-contrast: active){.ms-Fabric--isFocusVisible &:focus::after {
                     outline: 1px solid ButtonText;
                   }
-                  &:hover, &:active, &:focus {
+                  &:hover {
                     background-color: #ffffff;
-                    border: 2px solid #eaeaea;
+                    border: 2px solid #f3f2f1;
+                    outline: 0px;
+                    padding-bottom: 2px;
+                    padding-left: 2px;
+                    padding-right: 2px;
+                    padding-top: 2px;
+                  }
+                  &:active {
+                    background-color: #ffffff;
+                    border: 2px solid #f3f2f1;
                     padding-bottom: 2px;
                     padding-left: 2px;
                     padding-right: 2px;
                     padding-top: 2px;
                   }
                   &:focus {
+                    background-color: #ffffff;
                     border-color: #ffffff;
+                    border: 2px solid #f3f2f1;
                     outline: 0px;
                     padding-bottom: 0px;
                     padding-left: 0px;
@@ -4809,17 +5030,14 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
                     padding-top: 0px;
                   }
                   &:focus:hover {
-                    border-color: #eaeaea;
+                    border-color: #edebe9;
                     padding-bottom: 2px;
                     padding-left: 2px;
                     padding-right: 2px;
                     padding-top: 2px;
                   }
-                  &:hover {
-                    outline: 0px;
-                  }
                   @media screen and (-ms-high-contrast: active){& {
-                    bordercolor: grayText;
+                    border-color: grayText;
                     color: grayText;
                   }
               data-index={1}
@@ -4840,7 +5058,7 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
               title="cyan"
               type="button"
             >
-              <div
+              <span
                 className=
                     ms-Button-flexContainer
                     {
@@ -4850,6 +5068,7 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
                       height: 100%;
                       justify-content: flex-start;
                     }
+                data-automationid="splitbuttonprimary"
               >
                 <svg
                   className=
@@ -4868,7 +5087,7 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
                     r="50%"
                   />
                 </svg>
-              </div>
+              </span>
             </button>
           </td>
           <td
@@ -4896,10 +5115,11 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
                     -moz-osx-font-smoothing: grayscale;
                     -webkit-font-smoothing: antialiased;
                     background-color: transparent;
+                    border-color: transparent;
                     border-radius: 50%;
                     border: none;
                     box-sizing: border-box;
-                    color: #a6a6a6;
+                    color: #a19f9d;
                     cursor: default;
                     display: inline-block;
                     font-family: 'Segoe UI', 'Segoe UI Web (West European)', 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Roboto', 'Helvetica Neue', sans-serif;
@@ -4924,14 +5144,14 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
                     border: 0;
                   }
                   .ms-Fabric--isFocusVisible &:focus:after {
-                    border: 1px solid #ffffff;
-                    bottom: 0px;
+                    border: 1px solid transparent;
+                    bottom: 2px;
                     content: "";
-                    left: 0px;
-                    outline: 1px solid #666666;
+                    left: 2px;
+                    outline: 1px solid #605e5c;
                     position: absolute;
-                    right: 0px;
-                    top: 0px;
+                    right: 2px;
+                    top: 2px;
                     z-index: 1;
                   }
                   @media screen and (-ms-high-contrast: active){.ms-Fabric--isFocusVisible &:focus:after {
@@ -4948,7 +5168,7 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
                     top: 0px;
                   }
                   .ms-Fabric--isFocusVisible &:focus::after {
-                    border-color: #666666;
+                    border-color: #605e5c;
                     border-radius: 50%;
                     bottom: -2px;
                     left: -2px;
@@ -4959,16 +5179,27 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
                   @media screen and (-ms-high-contrast: active){.ms-Fabric--isFocusVisible &:focus::after {
                     outline: 1px solid ButtonText;
                   }
-                  &:hover, &:active, &:focus {
+                  &:hover {
                     background-color: #ffffff;
-                    border: 2px solid #eaeaea;
+                    border: 2px solid #f3f2f1;
+                    outline: 0px;
+                    padding-bottom: 2px;
+                    padding-left: 2px;
+                    padding-right: 2px;
+                    padding-top: 2px;
+                  }
+                  &:active {
+                    background-color: #ffffff;
+                    border: 2px solid #f3f2f1;
                     padding-bottom: 2px;
                     padding-left: 2px;
                     padding-right: 2px;
                     padding-top: 2px;
                   }
                   &:focus {
+                    background-color: #ffffff;
                     border-color: #ffffff;
+                    border: 2px solid #f3f2f1;
                     outline: 0px;
                     padding-bottom: 0px;
                     padding-left: 0px;
@@ -4976,17 +5207,14 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
                     padding-top: 0px;
                   }
                   &:focus:hover {
-                    border-color: #eaeaea;
+                    border-color: #edebe9;
                     padding-bottom: 2px;
                     padding-left: 2px;
                     padding-right: 2px;
                     padding-top: 2px;
                   }
-                  &:hover {
-                    outline: 0px;
-                  }
                   @media screen and (-ms-high-contrast: active){& {
-                    bordercolor: grayText;
+                    border-color: grayText;
                     color: grayText;
                   }
               data-index={2}
@@ -5007,7 +5235,7 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
               title="blueMagenta"
               type="button"
             >
-              <div
+              <span
                 className=
                     ms-Button-flexContainer
                     {
@@ -5017,6 +5245,7 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
                       height: 100%;
                       justify-content: flex-start;
                     }
+                data-automationid="splitbuttonprimary"
               >
                 <svg
                   className=
@@ -5035,7 +5264,7 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
                     r="50%"
                   />
                 </svg>
-              </div>
+              </span>
             </button>
           </td>
           <td
@@ -5063,10 +5292,11 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
                     -moz-osx-font-smoothing: grayscale;
                     -webkit-font-smoothing: antialiased;
                     background-color: transparent;
+                    border-color: transparent;
                     border-radius: 50%;
                     border: none;
                     box-sizing: border-box;
-                    color: #a6a6a6;
+                    color: #a19f9d;
                     cursor: default;
                     display: inline-block;
                     font-family: 'Segoe UI', 'Segoe UI Web (West European)', 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Roboto', 'Helvetica Neue', sans-serif;
@@ -5091,14 +5321,14 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
                     border: 0;
                   }
                   .ms-Fabric--isFocusVisible &:focus:after {
-                    border: 1px solid #ffffff;
-                    bottom: 0px;
+                    border: 1px solid transparent;
+                    bottom: 2px;
                     content: "";
-                    left: 0px;
-                    outline: 1px solid #666666;
+                    left: 2px;
+                    outline: 1px solid #605e5c;
                     position: absolute;
-                    right: 0px;
-                    top: 0px;
+                    right: 2px;
+                    top: 2px;
                     z-index: 1;
                   }
                   @media screen and (-ms-high-contrast: active){.ms-Fabric--isFocusVisible &:focus:after {
@@ -5115,7 +5345,7 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
                     top: 0px;
                   }
                   .ms-Fabric--isFocusVisible &:focus::after {
-                    border-color: #666666;
+                    border-color: #605e5c;
                     border-radius: 50%;
                     bottom: -2px;
                     left: -2px;
@@ -5126,16 +5356,27 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
                   @media screen and (-ms-high-contrast: active){.ms-Fabric--isFocusVisible &:focus::after {
                     outline: 1px solid ButtonText;
                   }
-                  &:hover, &:active, &:focus {
+                  &:hover {
                     background-color: #ffffff;
-                    border: 2px solid #eaeaea;
+                    border: 2px solid #f3f2f1;
+                    outline: 0px;
+                    padding-bottom: 2px;
+                    padding-left: 2px;
+                    padding-right: 2px;
+                    padding-top: 2px;
+                  }
+                  &:active {
+                    background-color: #ffffff;
+                    border: 2px solid #f3f2f1;
                     padding-bottom: 2px;
                     padding-left: 2px;
                     padding-right: 2px;
                     padding-top: 2px;
                   }
                   &:focus {
+                    background-color: #ffffff;
                     border-color: #ffffff;
+                    border: 2px solid #f3f2f1;
                     outline: 0px;
                     padding-bottom: 0px;
                     padding-left: 0px;
@@ -5143,17 +5384,14 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
                     padding-top: 0px;
                   }
                   &:focus:hover {
-                    border-color: #eaeaea;
+                    border-color: #edebe9;
                     padding-bottom: 2px;
                     padding-left: 2px;
                     padding-right: 2px;
                     padding-top: 2px;
                   }
-                  &:hover {
-                    outline: 0px;
-                  }
                   @media screen and (-ms-high-contrast: active){& {
-                    bordercolor: grayText;
+                    border-color: grayText;
                     color: grayText;
                   }
               data-index={3}
@@ -5174,7 +5412,7 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
               title="magenta"
               type="button"
             >
-              <div
+              <span
                 className=
                     ms-Button-flexContainer
                     {
@@ -5184,6 +5422,7 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
                       height: 100%;
                       justify-content: flex-start;
                     }
+                data-automationid="splitbuttonprimary"
               >
                 <svg
                   className=
@@ -5202,7 +5441,7 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
                     r="50%"
                   />
                 </svg>
-              </div>
+              </span>
             </button>
           </td>
           <td
@@ -5230,10 +5469,11 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
                     -moz-osx-font-smoothing: grayscale;
                     -webkit-font-smoothing: antialiased;
                     background-color: transparent;
+                    border-color: transparent;
                     border-radius: 50%;
                     border: none;
                     box-sizing: border-box;
-                    color: #a6a6a6;
+                    color: #a19f9d;
                     cursor: default;
                     display: inline-block;
                     font-family: 'Segoe UI', 'Segoe UI Web (West European)', 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Roboto', 'Helvetica Neue', sans-serif;
@@ -5258,14 +5498,14 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
                     border: 0;
                   }
                   .ms-Fabric--isFocusVisible &:focus:after {
-                    border: 1px solid #ffffff;
-                    bottom: 0px;
+                    border: 1px solid transparent;
+                    bottom: 2px;
                     content: "";
-                    left: 0px;
-                    outline: 1px solid #666666;
+                    left: 2px;
+                    outline: 1px solid #605e5c;
                     position: absolute;
-                    right: 0px;
-                    top: 0px;
+                    right: 2px;
+                    top: 2px;
                     z-index: 1;
                   }
                   @media screen and (-ms-high-contrast: active){.ms-Fabric--isFocusVisible &:focus:after {
@@ -5282,7 +5522,7 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
                     top: 0px;
                   }
                   .ms-Fabric--isFocusVisible &:focus::after {
-                    border-color: #666666;
+                    border-color: #605e5c;
                     border-radius: 50%;
                     bottom: -2px;
                     left: -2px;
@@ -5293,16 +5533,27 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
                   @media screen and (-ms-high-contrast: active){.ms-Fabric--isFocusVisible &:focus::after {
                     outline: 1px solid ButtonText;
                   }
-                  &:hover, &:active, &:focus {
+                  &:hover {
                     background-color: #ffffff;
-                    border: 2px solid #eaeaea;
+                    border: 2px solid #f3f2f1;
+                    outline: 0px;
+                    padding-bottom: 2px;
+                    padding-left: 2px;
+                    padding-right: 2px;
+                    padding-top: 2px;
+                  }
+                  &:active {
+                    background-color: #ffffff;
+                    border: 2px solid #f3f2f1;
                     padding-bottom: 2px;
                     padding-left: 2px;
                     padding-right: 2px;
                     padding-top: 2px;
                   }
                   &:focus {
+                    background-color: #ffffff;
                     border-color: #ffffff;
+                    border: 2px solid #f3f2f1;
                     outline: 0px;
                     padding-bottom: 0px;
                     padding-left: 0px;
@@ -5310,17 +5561,14 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
                     padding-top: 0px;
                   }
                   &:focus:hover {
-                    border-color: #eaeaea;
+                    border-color: #edebe9;
                     padding-bottom: 2px;
                     padding-left: 2px;
                     padding-right: 2px;
                     padding-top: 2px;
                   }
-                  &:hover {
-                    outline: 0px;
-                  }
                   @media screen and (-ms-high-contrast: active){& {
-                    bordercolor: grayText;
+                    border-color: grayText;
                     color: grayText;
                   }
               data-index={4}
@@ -5341,7 +5589,7 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
               title="white"
               type="button"
             >
-              <div
+              <span
                 className=
                     ms-Button-flexContainer
                     {
@@ -5351,6 +5599,7 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
                       height: 100%;
                       justify-content: flex-start;
                     }
+                data-automationid="splitbuttonprimary"
               >
                 <svg
                   className=
@@ -5369,7 +5618,7 @@ exports[`Component Examples renders SwatchColorPicker.Basic.Example.tsx correctl
                     r="50%"
                   />
                 </svg>
-              </div>
+              </span>
             </button>
           </td>
         </tr>

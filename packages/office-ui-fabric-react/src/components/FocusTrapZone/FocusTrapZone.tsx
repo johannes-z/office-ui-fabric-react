@@ -1,17 +1,19 @@
 import * as React from 'react';
 import {
-  BaseComponent,
   elementContains,
   getNativeProps,
   divProperties,
   getFirstTabbable,
   getLastTabbable,
   getNextElement,
-  focusAsync
+  getDocument,
+  focusAsync,
+  initializeComponentRef,
+  on
 } from '../../Utilities';
 import { IFocusTrapZone, IFocusTrapZoneProps } from './FocusTrapZone.types';
 
-export class FocusTrapZone extends BaseComponent<IFocusTrapZoneProps, {}> implements IFocusTrapZone {
+export class FocusTrapZone extends React.Component<IFocusTrapZoneProps, {}> implements IFocusTrapZone {
   private static _focusStack: FocusTrapZone[] = [];
 
   private _root = React.createRef<HTMLDivElement>();
@@ -21,15 +23,21 @@ export class FocusTrapZone extends BaseComponent<IFocusTrapZoneProps, {}> implem
 
   private _previouslyFocusedElementOutsideTrapZone: HTMLElement;
   private _previouslyFocusedElementInTrapZone?: HTMLElement;
-  private _hasFocusHandler: boolean;
-  private _hasClickHandler: boolean;
+  private _disposeFocusHandler: (() => void) | undefined;
+  private _disposeClickHandler: (() => void) | undefined;
+
+  public constructor(props: IFocusTrapZoneProps) {
+    super(props);
+    initializeComponentRef(this);
+  }
 
   public componentDidMount(): void {
     this._bringFocusIntoZone();
     this._updateEventHandlers(this.props);
   }
 
-  public componentWillReceiveProps(nextProps: IFocusTrapZoneProps): void {
+  // tslint:disable-next-line function-name
+  public UNSAFE_componentWillReceiveProps(nextProps: IFocusTrapZoneProps): void {
     const { elementToFocusOnDismiss } = nextProps;
     if (elementToFocusOnDismiss && this._previouslyFocusedElementOutsideTrapZone !== elementToFocusOnDismiss) {
       this._previouslyFocusedElementOutsideTrapZone = elementToFocusOnDismiss;
@@ -41,32 +49,41 @@ export class FocusTrapZone extends BaseComponent<IFocusTrapZoneProps, {}> implem
   public componentDidUpdate(prevProps: IFocusTrapZoneProps) {
     const prevForceFocusInsideTrap = prevProps.forceFocusInsideTrap !== undefined ? prevProps.forceFocusInsideTrap : true;
     const newForceFocusInsideTrap = this.props.forceFocusInsideTrap !== undefined ? this.props.forceFocusInsideTrap : true;
+    const prevDisabled = prevProps.disabled !== undefined ? prevProps.disabled : false;
+    const newDisabled = this.props.disabled !== undefined ? this.props.disabled : false;
 
-    if (!prevForceFocusInsideTrap && newForceFocusInsideTrap) {
-      // Transition from forceFocusInsideTrap disabled to enabled. Emulate what happens when a FocusTrapZone gets mounted
+    if ((!prevForceFocusInsideTrap && newForceFocusInsideTrap) || (prevDisabled && !newDisabled)) {
+      // Transition from forceFocusInsideTrap / FTZ disabled to enabled.
+      // Emulate what happens when a FocusTrapZone gets mounted.
       this._bringFocusIntoZone();
-    } else if (prevForceFocusInsideTrap && !newForceFocusInsideTrap) {
-      // Transition from forceFocusInsideTrap enabled to disabled. Emulate what happens when a FocusTrapZone gets unmounted
+    } else if ((prevForceFocusInsideTrap && !newForceFocusInsideTrap) || (!prevDisabled && newDisabled)) {
+      // Transition from forceFocusInsideTrap / FTZ enabled to disabled.
+      // Emulate what happens when a FocusTrapZone gets unmounted.
       this._returnFocusToInitiator();
     }
   }
 
   public componentWillUnmount(): void {
-    this._events.dispose();
-    this._returnFocusToInitiator();
+    // don't handle return focus unless forceFocusInsideTrap is true or focus is still within FocusTrapZone
+    if (
+      !this.props.disabled ||
+      this.props.forceFocusInsideTrap ||
+      !elementContains(this._root.current, this._getDocument().activeElement as HTMLElement)
+    ) {
+      this._returnFocusToInitiator();
+    }
   }
 
   public render(): JSX.Element {
-    const { className, ariaLabelledBy } = this.props;
-    const divProps = getNativeProps(this.props, divProperties);
+    const { className, disabled = false, ariaLabelledBy } = this.props;
+    const divProps = getNativeProps<React.HTMLAttributes<HTMLDivElement>>(this.props, divProperties);
 
     const bumperProps = {
       style: {
         pointerEvents: 'none',
         position: 'fixed' // 'fixed' prevents browsers from scrolling to bumpers when viewport does not contain them
       },
-      tabIndex: 0,
-      'aria-hidden': true,
+      tabIndex: disabled ? -1 : 0, // make bumpers tabbable only when enabled
       'data-is-visible': true
     } as React.HTMLAttributes<HTMLDivElement>;
 
@@ -103,7 +120,7 @@ export class FocusTrapZone extends BaseComponent<IFocusTrapZoneProps, {}> implem
     const focusSelector =
       typeof firstFocusableSelector === 'string' ? firstFocusableSelector : firstFocusableSelector && firstFocusableSelector();
 
-    let _firstFocusableChild;
+    let _firstFocusableChild: HTMLElement | null = null;
 
     if (this._root.current) {
       if (focusSelector) {
@@ -146,7 +163,7 @@ export class FocusTrapZone extends BaseComponent<IFocusTrapZoneProps, {}> implem
       // even when it's not. Using document.activeElement is another way
       // for us to be able to get what the relatedTarget without relying
       // on the event
-      relatedTarget = document.activeElement as Element;
+      relatedTarget = this._getDocument().activeElement as Element;
     }
 
     if (!elementContains(this._root.current, relatedTarget as HTMLElement)) {
@@ -163,7 +180,12 @@ export class FocusTrapZone extends BaseComponent<IFocusTrapZoneProps, {}> implem
   };
 
   private _onBumperFocus = (isFirstBumper: boolean) => {
+    if (this.props.disabled) {
+      return;
+    }
+
     const currentBumper = (isFirstBumper === this._hasFocus ? this._lastBumper.current : this._firstBumper.current) as HTMLElement;
+
     if (this._root.current) {
       const nextFocusable =
         isFirstBumper === this._hasFocus
@@ -182,13 +204,17 @@ export class FocusTrapZone extends BaseComponent<IFocusTrapZoneProps, {}> implem
   };
 
   private _bringFocusIntoZone(): void {
-    const { elementToFocusOnDismiss, disableFirstFocus = false } = this.props;
+    const { elementToFocusOnDismiss, disabled = false, disableFirstFocus = false } = this.props;
+
+    if (disabled) {
+      return;
+    }
 
     FocusTrapZone._focusStack.push(this);
 
     this._previouslyFocusedElementOutsideTrapZone = elementToFocusOnDismiss
       ? elementToFocusOnDismiss
-      : (document.activeElement as HTMLElement);
+      : (this._getDocument().activeElement as HTMLElement);
     if (!disableFirstFocus && !elementContains(this._root.current, this._previouslyFocusedElementOutsideTrapZone)) {
       this.focus();
     }
@@ -201,12 +227,13 @@ export class FocusTrapZone extends BaseComponent<IFocusTrapZoneProps, {}> implem
       return this !== value;
     });
 
-    const activeElement = document.activeElement as HTMLElement;
+    const doc = this._getDocument();
+    const activeElement = doc.activeElement as HTMLElement;
     if (
       !ignoreExternalFocusing &&
       this._previouslyFocusedElementOutsideTrapZone &&
       typeof this._previouslyFocusedElementOutsideTrapZone.focus === 'function' &&
-      (elementContains(this._root.current, activeElement) || activeElement === document.body)
+      (elementContains(this._root.current, activeElement) || activeElement === doc.body)
     ) {
       this._focusAsync(this._previouslyFocusedElementOutsideTrapZone);
     }
@@ -215,19 +242,19 @@ export class FocusTrapZone extends BaseComponent<IFocusTrapZoneProps, {}> implem
   private _updateEventHandlers(newProps: IFocusTrapZoneProps): void {
     const { isClickableOutsideFocusTrap = false, forceFocusInsideTrap = true } = newProps;
 
-    if (forceFocusInsideTrap && !this._hasFocusHandler) {
-      this._events.on(window, 'focus', this._forceFocusInTrap, true);
-    } else if (!forceFocusInsideTrap && this._hasFocusHandler) {
-      this._events.off(window, 'focus', this._forceFocusInTrap, true);
+    if (forceFocusInsideTrap && !this._disposeFocusHandler) {
+      this._disposeFocusHandler = on(window, 'focus', this._forceFocusInTrap, true);
+    } else if (!forceFocusInsideTrap && this._disposeFocusHandler) {
+      this._disposeFocusHandler();
+      this._disposeFocusHandler = undefined;
     }
-    this._hasFocusHandler = forceFocusInsideTrap;
 
-    if (!isClickableOutsideFocusTrap && !this._hasClickHandler) {
-      this._events.on(window, 'click', this._forceClickInTrap, true);
-    } else if (isClickableOutsideFocusTrap && this._hasClickHandler) {
-      this._events.off(window, 'click', this._forceClickInTrap, true);
+    if (!isClickableOutsideFocusTrap && !this._disposeClickHandler) {
+      this._disposeClickHandler = on(window, 'click', this._forceClickInTrap, true);
+    } else if (isClickableOutsideFocusTrap && this._disposeClickHandler) {
+      this._disposeClickHandler();
+      this._disposeClickHandler = undefined;
     }
-    this._hasClickHandler = !isClickableOutsideFocusTrap;
   }
 
   private _onFocusCapture = (ev: React.FocusEvent<HTMLDivElement>) => {
@@ -246,9 +273,13 @@ export class FocusTrapZone extends BaseComponent<IFocusTrapZoneProps, {}> implem
     return element === this._firstBumper.current || element === this._lastBumper.current;
   }
 
-  private _forceFocusInTrap(ev: FocusEvent): void {
+  private _forceFocusInTrap = (ev: FocusEvent): void => {
+    if (this.props.disabled) {
+      return;
+    }
+
     if (FocusTrapZone._focusStack.length && this === FocusTrapZone._focusStack[FocusTrapZone._focusStack.length - 1]) {
-      const focusedElement = document.activeElement as HTMLElement;
+      const focusedElement = this._getDocument().activeElement as HTMLElement;
 
       if (!elementContains(this._root.current, focusedElement)) {
         this.focus();
@@ -257,9 +288,13 @@ export class FocusTrapZone extends BaseComponent<IFocusTrapZoneProps, {}> implem
         ev.stopPropagation();
       }
     }
-  }
+  };
 
-  private _forceClickInTrap(ev: MouseEvent): void {
+  private _forceClickInTrap = (ev: MouseEvent): void => {
+    if (this.props.disabled) {
+      return;
+    }
+
     if (FocusTrapZone._focusStack.length && this === FocusTrapZone._focusStack[FocusTrapZone._focusStack.length - 1]) {
       const clickedElement = ev.target as HTMLElement;
 
@@ -270,5 +305,9 @@ export class FocusTrapZone extends BaseComponent<IFocusTrapZoneProps, {}> implem
         ev.stopPropagation();
       }
     }
+  };
+
+  private _getDocument(): Document {
+    return getDocument(this._root.current)!;
   }
 }

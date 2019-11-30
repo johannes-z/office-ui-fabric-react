@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { IDocPageProps } from '../../common/DocPage.types';
-import './examples/Announced.Example.scss';
 
 import { AnnouncedSearchResultsExample } from './examples/Announced.SearchResults.Example';
 const AnnouncedSearchResultsExampleCode = require('!raw-loader!office-ui-fabric-react/src/components/Announced/examples/Announced.SearchResults.Example.tsx') as string;
@@ -18,7 +17,6 @@ export const AnnouncedPageProps: IDocPageProps = {
   title: 'Use Cases',
   componentName: 'Announced',
   componentUrl: 'https://github.com/OfficeDev/office-ui-fabric-react/tree/master/packages/experiments/src/components/Announced',
-  propertiesTablesSources: [require<string>('!raw-loader!office-ui-fabric-react/src/components/Announced/Announced.types.ts')],
   overview: require('!raw-loader!office-ui-fabric-react/src/components/Announced/docs/AnnouncedOverview.md'),
   isHeaderVisible: false
 };

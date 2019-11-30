@@ -10,7 +10,7 @@ import {
 import { DirectionalHint } from '../../common/DirectionalHint';
 import { FocusZone, FocusZoneDirection, IFocusZoneProps, FocusZoneTabbableElements } from '../../FocusZone';
 import { IMenuItemClassNames, IContextualMenuClassNames } from './ContextualMenu.classNames';
-import { divProperties, getNativeProps } from '../../Utilities';
+import { divProperties, getNativeProps, shallowCompare } from '../../Utilities';
 
 import {
   assign,
@@ -33,8 +33,7 @@ import {
 } from '../../Utilities';
 import { hasSubmenu, getIsChecked, isItemDisabled } from '../../utilities/contextualMenu/index';
 import { withResponsiveMode, ResponsiveMode } from '../../utilities/decorators/withResponsiveMode';
-import { Callout, ICalloutContentStyleProps, ICalloutContentStyles } from '../../Callout';
-import { ContextualMenu } from './ContextualMenu';
+import { Callout, ICalloutContentStyleProps, ICalloutContentStyles, Target } from '../../Callout';
 import { ContextualMenuItem } from './ContextualMenuItem';
 import { ContextualMenuSplitButton, ContextualMenuButton, ContextualMenuAnchor } from './ContextualMenuItemWrapper/index';
 import { IProcessedStyleSet, mergeStyleSets } from '../../Styling';
@@ -42,8 +41,12 @@ import { IContextualMenuItemStyleProps, IContextualMenuItemStyles } from './Cont
 
 import { getItemStyles } from './ContextualMenu.classNames';
 
-const getClassNames = classNamesFunction<IContextualMenuStyleProps, IContextualMenuStyles>();
-const getContextualMenuItemClassNames = classNamesFunction<IContextualMenuItemStyleProps, IContextualMenuItemStyles>();
+const getClassNames = classNamesFunction<IContextualMenuStyleProps, IContextualMenuStyles>({
+  disableCaching: true
+});
+const getContextualMenuItemClassNames = classNamesFunction<IContextualMenuItemStyleProps, IContextualMenuItemStyles>({
+  disableCaching: true
+});
 
 export interface IContextualMenuState {
   expandedMenuItemKey?: string;
@@ -138,13 +141,24 @@ export class ContextualMenuBase extends BaseComponent<IContextualMenuProps, ICon
     }
   };
 
-  public componentWillUpdate(newProps: IContextualMenuProps): void {
+  public shouldComponentUpdate(newProps: IContextualMenuProps, newState: IContextualMenuState): boolean {
+    if (!newProps.shouldUpdateWhenHidden && this.props.hidden && newProps.hidden) {
+      // Do not update when hidden.
+      return false;
+    }
+
+    return !shallowCompare(this.props, newProps) || !shallowCompare(this.state, newState);
+  }
+
+  // tslint:disable-next-line function-name
+  public UNSAFE_componentWillUpdate(newProps: IContextualMenuProps): void {
     if (newProps.target !== this.props.target) {
       const newTarget = newProps.target;
       this._setTargetWindowAndElement(newTarget!);
     }
-    if (newProps.hidden !== this.props.hidden) {
-      if (newProps.hidden) {
+
+    if (this._isHidden(newProps) !== this._isHidden(this.props)) {
+      if (this._isHidden(newProps)) {
         this._onMenuClosed();
       } else {
         this._onMenuOpened();
@@ -161,7 +175,8 @@ export class ContextualMenuBase extends BaseComponent<IContextualMenuProps, ICon
   }
 
   // Invoked once, both on the client and server, immediately before the initial rendering occurs.
-  public componentWillMount() {
+  // tslint:disable-next-line function-name
+  public UNSAFE_componentWillMount() {
     const target = this.props.target;
     this._setTargetWindowAndElement(target!);
     if (!this.props.hidden) {
@@ -180,15 +195,7 @@ export class ContextualMenuBase extends BaseComponent<IContextualMenuProps, ICon
 
   // Invoked immediately before a component is unmounted from the DOM.
   public componentWillUnmount() {
-    if (this._isFocusingPreviousElement && this._previousActiveElement) {
-      // This slight delay is required so that we can unwind the stack, const react try to mess with focus, and then
-      // apply the correct focus. Without the setTimeout, we end up focusing the correct thing, and then React wants
-      // to reset the focus back to the thing it thinks should have been focused.
-      // Note: Cannot be replaced by this._async.setTimout because those will be removed by the time this is called.
-      setTimeout(() => {
-        this._previousActiveElement && this._previousActiveElement!.focus();
-      }, 0);
-    }
+    this._tryFocusPreviousActiveElement();
 
     if (this.props.onMenuDismissed) {
       this.props.onMenuDismissed(this.props);
@@ -258,7 +265,7 @@ export class ContextualMenuBase extends BaseComponent<IContextualMenuProps, ICon
     this._adjustedFocusZoneProps = { ...focusZoneProps, direction: this._getFocusZoneDirection() };
 
     const hasCheckmarks = canAnyMenuItemsCheck(items);
-    const submenuProps = this.state.expandedMenuItemKey ? this._getSubmenuProps() : null;
+    const submenuProps = this.state.expandedMenuItemKey && this.props.hidden !== true ? this._getSubmenuProps() : null;
 
     isBeakVisible = isBeakVisible === undefined ? this.props.responsiveMode! <= ResponsiveMode.medium : isBeakVisible;
     /**
@@ -291,10 +298,9 @@ export class ContextualMenuBase extends BaseComponent<IContextualMenuProps, ICon
         }
       }
 
-      const calloutStyles =
-        !getMenuClassNames && this._classNames.subComponentStyles
-          ? (this._classNames.subComponentStyles.callout as IStyleFunctionOrObject<ICalloutContentStyleProps, ICalloutContentStyles>)
-          : undefined;
+      const calloutStyles = this._classNames.subComponentStyles
+        ? (this._classNames.subComponentStyles.callout as IStyleFunctionOrObject<ICalloutContentStyleProps, ICalloutContentStyles>)
+        : undefined;
 
       return (
         <Callout
@@ -357,6 +363,15 @@ export class ContextualMenuBase extends BaseComponent<IContextualMenuProps, ICon
     }
   }
 
+  /**
+   * Return whether the contextual menu is hidden.
+   * Undefined value for hidden is equivalent to hidden being false.
+   * @param props - Props for the component
+   */
+  private _isHidden(props: IContextualMenuProps) {
+    return !!props.hidden;
+  }
+
   private _onMenuOpened() {
     this._events.on(this._targetWindow, 'resize', this.dismiss);
     this._shouldUpdateFocusOnMouseEvent = !this.props.delayUpdateFocusOnHover;
@@ -366,11 +381,34 @@ export class ContextualMenuBase extends BaseComponent<IContextualMenuProps, ICon
 
   private _onMenuClosed() {
     this._events.off(this._targetWindow, 'resize', this.dismiss);
-    this._previousActiveElement &&
-      this._async.setTimeout(() => {
+    this._tryFocusPreviousActiveElement();
+
+    if (this.props.onMenuDismissed) {
+      this.props.onMenuDismissed(this.props);
+    }
+
+    this._shouldUpdateFocusOnMouseEvent = !this.props.delayUpdateFocusOnHover;
+
+    // We need to dismiss any submenu related state properties,
+    // so that when the menu is shown again, the submenu is collapsed
+    this.setState({
+      expandedByMouseClick: undefined,
+      dismissedMenuItemKey: undefined,
+      expandedMenuItemKey: undefined,
+      submenuTarget: undefined
+    });
+  }
+
+  private _tryFocusPreviousActiveElement() {
+    if (this._isFocusingPreviousElement && this._previousActiveElement) {
+      // This slight delay is required so that we can unwind the stack, const react try to mess with focus, and then
+      // apply the correct focus. Without the setTimeout, we end up focusing the correct thing, and then React wants
+      // to reset the focus back to the thing it thinks should have been focused.
+      // Note: Cannot be replaced by this._async.setTimout because those will be removed by the time this is called.
+      setTimeout(() => {
         this._previousActiveElement && this._previousActiveElement!.focus();
       }, 0);
-    this._shouldUpdateFocusOnMouseEvent = !this.props.delayUpdateFocusOnHover;
+    }
   }
 
   /**
@@ -382,8 +420,11 @@ export class ContextualMenuBase extends BaseComponent<IContextualMenuProps, ICon
     return focusZoneProps && focusZoneProps.direction !== undefined ? focusZoneProps.direction : FocusZoneDirection.vertical;
   }
 
-  private _onRenderSubMenu(subMenuProps: IContextualMenuProps) {
-    return <ContextualMenu {...subMenuProps} />;
+  private _onRenderSubMenu(subMenuProps: IContextualMenuProps, defaultRender?: IRenderFunction<IContextualMenuProps>): JSX.Element {
+    throw Error(
+      'ContextualMenuBase: onRenderSubMenu callback is null or undefined. ' +
+        'Please ensure to set `onRenderSubMenu` property either manually or with `styled` helper.'
+    );
   }
 
   private _onRenderMenuList = (
@@ -601,7 +642,7 @@ export class ContextualMenuBase extends BaseComponent<IContextualMenuProps, ICon
   ): React.ReactNode {
     const { contextualMenuItemAs: ChildrenRenderer = ContextualMenuItem } = this.props;
     const { itemProps } = item;
-    const divHtmlProperties = itemProps && getNativeProps(itemProps, divProperties);
+    const divHtmlProperties = itemProps && getNativeProps<React.HTMLAttributes<HTMLDivElement>>(itemProps, divProperties);
     return (
       <div className={this._classNames.header} {...divHtmlProperties} style={item.style}>
         <ChildrenRenderer
@@ -797,9 +838,9 @@ export class ContextualMenuBase extends BaseComponent<IContextualMenuProps, ICon
 
     if (shouldHandleKey(ev)) {
       this._isFocusingPreviousElement = true;
+      this.dismiss(ev, dismissAllMenus);
       ev.preventDefault();
       ev.stopPropagation();
-      this.dismiss(ev, dismissAllMenus);
       handled = true;
     }
 
@@ -1144,25 +1185,30 @@ export class ContextualMenuBase extends BaseComponent<IContextualMenuProps, ICon
     }
   };
 
-  private _setTargetWindowAndElement(target: Element | string | MouseEvent | IPoint): void {
+  private _setTargetWindowAndElement(target: Target): void {
+    const currentElement = this._host;
+
     if (target) {
       if (typeof target === 'string') {
-        const currentDoc: Document = getDocument()!;
+        const currentDoc: Document = getDocument(currentElement)!;
         this._target = currentDoc ? (currentDoc.querySelector(target) as Element) : null;
-        this._targetWindow = getWindow()!;
+        this._targetWindow = getWindow(currentElement)!;
       } else if ((target as MouseEvent).stopPropagation) {
         this._targetWindow = getWindow((target as MouseEvent).toElement as HTMLElement)!;
-        this._target = target;
+        this._target = target as MouseEvent;
       } else if ((target as IPoint).x !== undefined && (target as IPoint).y !== undefined) {
-        this._targetWindow = getWindow()!;
-        this._target = target;
+        this._targetWindow = getWindow(currentElement)!;
+        this._target = target as IPoint;
+      } else if ((target as React.RefObject<Element>).current !== undefined) {
+        this._target = (target as React.RefObject<Element>).current;
+        this._targetWindow = getWindow(this._target)!;
       } else {
         const targetElement: Element = target as Element;
         this._targetWindow = getWindow(targetElement)!;
-        this._target = target;
+        this._target = target as Element;
       }
     } else {
-      this._targetWindow = getWindow()!;
+      this._targetWindow = getWindow(currentElement)!;
     }
   }
 

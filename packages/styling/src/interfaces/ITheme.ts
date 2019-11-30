@@ -10,10 +10,15 @@ import { IRawStyle } from '@uifabric/merge-styles';
  * Predefined scheme identifiers.
  * Schemes are is still in an experimental phase.
  * This interface's naming and values are not finalized and are subject to change.
+ * {@docCategory IScheme}
  */
 export type ISchemeNames = 'default' | 'neutral' | 'soft' | 'strong';
 
+/**
+ * {@docCategory IScheme}
+ */
 export interface IScheme {
+  rtl?: boolean;
   palette: IPalette;
   fonts: IFontStyles;
   semanticColors: ISemanticColors;
@@ -40,6 +45,9 @@ export interface IScheme {
   effects: IEffects;
 }
 
+/**
+ * {@docCategory ITheme}
+ */
 export interface ITheme extends IScheme {
   /**
    * @internal
@@ -50,6 +58,9 @@ export interface ITheme extends IScheme {
   schemes?: { [P in ISchemeNames]?: IScheme };
 }
 
+/**
+ * {@docCategory ITheme}
+ */
 export type IPartialTheme = {
   palette?: Partial<IPalette>;
   fonts?: Partial<IFontStyles>;
@@ -62,6 +73,7 @@ export type IPartialTheme = {
   semanticColors?: Partial<ISemanticColors>;
   isInverted?: boolean;
   disableGlobalClassNames?: boolean;
+  rtl?: boolean;
   spacing?: Partial<ISpacing>;
   effects?: Partial<IEffects>;
   schemes?: { [P in ISchemeNames]?: IScheme };

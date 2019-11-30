@@ -1,14 +1,15 @@
-import './FeedbackList.scss';
-
 import * as React from 'react';
 import { List } from 'office-ui-fabric-react/lib/List';
 import { Link } from 'office-ui-fabric-react/lib/Link';
 import { Pivot, PivotItem } from 'office-ui-fabric-react/lib/Pivot';
 import { PrimaryButton } from 'office-ui-fabric-react/lib/Button';
 import { Label } from 'office-ui-fabric-react/lib/Label';
+import { styled, classNamesFunction } from 'office-ui-fabric-react/lib/Utilities';
+import { IProcessedStyleSet } from 'office-ui-fabric-react/lib/Styling';
+
 import { relativeDates } from './relativeDates';
-import { IFeedbackListProps } from './FeedbackList.types';
-import { classNames } from './FeedbackList.styles';
+import { IFeedbackListProps, IFeedbackListStyleProps, IFeedbackListStyles } from './FeedbackList.types';
+import { getStyles } from './FeedbackList.styles';
 
 export interface IFeedbackListState {
   openIssues: IListItem[];
@@ -21,7 +22,12 @@ export interface IListItem {
   issueCreated: string;
 }
 
-export class FeedbackList extends React.Component<IFeedbackListProps, IFeedbackListState, IListItem> {
+const getClassNames = classNamesFunction<IFeedbackListStyleProps, IFeedbackListStyles>();
+
+export class FeedbackListBase extends React.Component<IFeedbackListProps, IFeedbackListState, IListItem> {
+  private _classNames: IProcessedStyleSet<IFeedbackListStyles>;
+  private _isMounted: boolean;
+
   constructor(props: IFeedbackListProps) {
     super(props);
     this.state = {
@@ -31,6 +37,7 @@ export class FeedbackList extends React.Component<IFeedbackListProps, IFeedbackL
   }
 
   public async componentDidMount(): Promise<void> {
+    this._isMounted = true;
     const githubUrl =
       'https://api.github.com/search/issues?q=type:issue%20repo:OfficeDev/office-ui-fabric-react%20label:%22Component:%20' +
       this.props.title;
@@ -38,12 +45,50 @@ export class FeedbackList extends React.Component<IFeedbackListProps, IFeedbackL
     const openIssuesURL = githubUrl + '%22%20is:open';
     const closedIssuesURL = githubUrl + '%22%20is:closed';
 
-    const results = await Promise.all([this.getIssues(openIssuesURL), this.getIssues(closedIssuesURL)]);
+    const results = await Promise.all([this._getIssues(openIssuesURL), this._getIssues(closedIssuesURL)]);
 
-    this.setState({ openIssues: results[0], closedIssues: results[1] });
+    if (this._isMounted) {
+      this.setState({ openIssues: results[0], closedIssues: results[1] });
+    }
   }
 
-  public async getIssues(url: string): Promise<IListItem[]> {
+  public componentWillUnmount() {
+    this._isMounted = false;
+  }
+
+  public render(): JSX.Element | null {
+    const { styles, theme } = this.props;
+    const { openIssues, closedIssues } = this.state;
+
+    const classNames = (this._classNames = getClassNames(styles, { theme }));
+    const { subComponentStyles } = classNames;
+
+    return (
+      <div className={classNames.root}>
+        <div>
+          <PrimaryButton
+            href="https://github.com/OfficeDev/office-ui-fabric-react/issues/new/choose"
+            target="_blank"
+            className={classNames.button}
+          >
+            Submit GitHub Issue
+          </PrimaryButton>
+        </div>
+        {(openIssues.length > 0 || closedIssues.length > 0) && (
+          <Pivot styles={subComponentStyles.pivot}>
+            <PivotItem headerText="Open Issues">
+              <List items={openIssues} onRenderCell={this._onRenderCell} data-is-scrollable={true} className={classNames.issueList} />
+            </PivotItem>
+            <PivotItem headerText="Closed Issues">
+              <List items={closedIssues} onRenderCell={this._onRenderCell} data-is-scrollable={true} className={classNames.issueList} />
+            </PivotItem>
+          </Pivot>
+        )}
+      </div>
+    );
+  }
+
+  private async _getIssues(url: string): Promise<IListItem[]> {
     const response = await fetch(url);
     const responseText = await response.text();
 
@@ -63,42 +108,15 @@ export class FeedbackList extends React.Component<IFeedbackListProps, IFeedbackL
     });
   }
 
-  public render(): JSX.Element | null {
-    const { openIssues, closedIssues } = this.state;
-
-    return (
-      <div>
-        <div>
-          <PrimaryButton
-            href="https://github.com/OfficeDev/office-ui-fabric-react/issues/new/choose"
-            target="_blank"
-            className="FeedbackList-button"
-          >
-            Submit GitHub Issue
-          </PrimaryButton>
-        </div>
-        {(openIssues.length > 0 || closedIssues.length > 0) && (
-          <Pivot className="FeedbackList-pivot">
-            <PivotItem headerText="Open Issues">
-              <List items={openIssues} onRenderCell={this._onRenderCell} data-is-scrollable={true} className="FeedbackList-issueList" />
-            </PivotItem>
-            <PivotItem headerText="Closed Issues">
-              <List items={closedIssues} onRenderCell={this._onRenderCell} data-is-scrollable={true} className="FeedbackList-issueList" />
-            </PivotItem>
-          </Pivot>
-        )}
-      </div>
-    );
-  }
-
   private _onRenderCell = (item: IListItem): JSX.Element => {
+    const classNames = this._classNames;
     return (
       <div className={classNames.itemCell} data-is-focusable={true}>
         <div className={classNames.itemName}>
           <Link href={'https://github.com/OfficeDev/office-ui-fabric-react/issues/' + item.issueNum} target="_blank">
-            <Label className="FeedbackList-listElement">{item.issueTitle}</Label>
+            <Label className={classNames.itemLabel}>{item.issueTitle}</Label>
           </Link>
-          <Label className="FeedbackList-timeStamp">
+          <Label className={classNames.timeStamp}>
             <Link href={'https://github.com/OfficeDev/office-ui-fabric-react/issues/' + item.issueNum} target="_blank">
               {'#' + item.issueNum}
             </Link>
@@ -109,3 +127,11 @@ export class FeedbackList extends React.Component<IFeedbackListProps, IFeedbackL
     );
   };
 }
+
+export const FeedbackList: React.StatelessComponent<IFeedbackListProps> = styled<
+  IFeedbackListProps,
+  IFeedbackListStyleProps,
+  IFeedbackListStyles
+>(FeedbackListBase, getStyles, undefined, {
+  scope: 'FeedbackList'
+});

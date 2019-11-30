@@ -1,15 +1,11 @@
 import { IStyle, ITheme } from '../../Styling';
-import { IRefObject, IStyleFunctionOrObject } from '../../Utilities';
+import { IStyleFunctionOrObject } from '../../Utilities';
 import { IColorCellProps, IColorPickerGridCellStyleProps, IColorPickerGridCellStyles } from './ColorPickerGridCell.types';
 
-export interface ISwatchColorPicker {}
-
+/**
+ * {@docCategory SwatchColorPicker}
+ */
 export interface ISwatchColorPickerProps {
-  /**
-   * Gets the component ref.
-   */
-  componentRef?: IRefObject<ISwatchColorPicker>;
-
   /**
    * the number of columns for the swatch color picker
    */
@@ -36,9 +32,25 @@ export interface ISwatchColorPickerProps {
   selectedId?: string;
 
   /**
-   * The color cells that will be made available to the user
+   * The color cells that will be made available to the user.
+   *
+   * Note: When the reference to this prop changes,
+   * regardless of how many color cells change, all of the color cells
+   * will be re-rendered (potentially bad perf.) because we memoize
+   * based on this prop's reference.
    */
   colorCells: IColorCellProps[];
+
+  /**
+   * Indicates whether the SwatchColorPicker is fully controlled.
+   * When true, the component will not set its internal state to track the selected color.
+   * Instead, the parent component will be responsible for handling state in the callbacks like
+   * onColorChanged.
+   *
+   * NOTE: This property is a temporary workaround to force the component to be fully controllable
+   * without breaking existing behavior
+   */
+  isControlled?: boolean;
 
   /**
    * Callback issued when the user changes the color.
@@ -142,6 +154,7 @@ export interface ISwatchColorPickerProps {
 
 /**
  * Properties required to build the styles for the color picker component.
+ * {@docCategory SwatchColorPicker}
  */
 export interface ISwatchColorPickerStyleProps {
   /**
@@ -162,6 +175,7 @@ export interface ISwatchColorPickerStyleProps {
 
 /**
  * Styles for the Color Picker Component.
+ * {@docCategory SwatchColorPicker}
  */
 export interface ISwatchColorPickerStyles {
   /**

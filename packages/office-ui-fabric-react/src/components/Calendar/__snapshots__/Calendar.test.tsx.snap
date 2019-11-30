@@ -54,6 +54,7 @@ exports[`Calendar Test rendering simplest calendar Renders simple calendar corre
                     type="button"
                   >
                     <i
+                      aria-hidden={true}
                       className=
 
                           {
@@ -66,7 +67,6 @@ exports[`Calendar Test rendering simplest calendar Renders simple calendar corre
                             speak: none;
                           }
                       data-icon-name="Up"
-                      role="presentation"
                     >
                       
                     </i>
@@ -82,6 +82,7 @@ exports[`Calendar Test rendering simplest calendar Renders simple calendar corre
                     type="button"
                   >
                     <i
+                      aria-hidden={true}
                       className=
 
                           {
@@ -94,7 +95,6 @@ exports[`Calendar Test rendering simplest calendar Renders simple calendar corre
                             speak: none;
                           }
                       data-icon-name="Down"
-                      role="presentation"
                     >
                       
                     </i>
@@ -103,12 +103,15 @@ exports[`Calendar Test rendering simplest calendar Renders simple calendar corre
               </div>
             </div>
             <div
-              className="ms-FocusZone"
+              className=
+                  ms-FocusZone
+                  &:focus {
+                    outline: none;
+                  }
               data-focuszone-id="FocusZone3"
               onFocus={[Function]}
               onKeyDown={[Function]}
               onMouseDownCapture={[Function]}
-              role="presentation"
             >
               <table
                 aria-activedescendant="DatePickerDay-active0"
@@ -1084,7 +1087,9 @@ exports[`Calendar Test rendering simplest calendar Renders simple calendar corre
               className="ms-DatePicker-header"
             >
               <div
+                aria-atomic={true}
                 aria-label="2000"
+                aria-live="polite"
                 className="ms-DatePicker-currentYear js-showYearPicker"
                 onClick={[Function]}
                 onKeyDown={[Function]}
@@ -1108,6 +1113,7 @@ exports[`Calendar Test rendering simplest calendar Renders simple calendar corre
                     type="button"
                   >
                     <i
+                      aria-hidden={true}
                       className=
 
                           {
@@ -1120,7 +1126,6 @@ exports[`Calendar Test rendering simplest calendar Renders simple calendar corre
                             speak: none;
                           }
                       data-icon-name="Up"
-                      role="presentation"
                     >
                       
                     </i>
@@ -1134,6 +1139,7 @@ exports[`Calendar Test rendering simplest calendar Renders simple calendar corre
                     type="button"
                   >
                     <i
+                      aria-hidden={true}
                       className=
 
                           {
@@ -1146,7 +1152,6 @@ exports[`Calendar Test rendering simplest calendar Renders simple calendar corre
                             speak: none;
                           }
                       data-icon-name="Down"
-                      role="presentation"
                     >
                       
                     </i>
@@ -1155,12 +1160,15 @@ exports[`Calendar Test rendering simplest calendar Renders simple calendar corre
               </div>
             </div>
             <div
-              className="ms-FocusZone"
+              className=
+                  ms-FocusZone
+                  &:focus {
+                    outline: none;
+                  }
               data-focuszone-id="FocusZone4"
               onFocus={[Function]}
               onKeyDown={[Function]}
               onMouseDownCapture={[Function]}
-              role="presentation"
             >
               <div
                 aria-readonly="true"
@@ -1222,6 +1230,10 @@ exports[`Calendar Test rendering simplest calendar Renders simple calendar corre
                   >
                     Apr
                   </button>
+                </div>
+                <div
+                  role="row"
+                >
                   <button
                     aria-label="May 2000"
                     aria-selected={false}
@@ -1274,6 +1286,10 @@ exports[`Calendar Test rendering simplest calendar Renders simple calendar corre
                   >
                     Aug
                   </button>
+                </div>
+                <div
+                  role="row"
+                >
                   <button
                     aria-label="September 2000"
                     aria-selected={false}

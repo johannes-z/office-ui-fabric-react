@@ -47,7 +47,7 @@ describe('TeachingBubble', () => {
     const componentContent = renderer.create(
       <TeachingBubbleContent
         headline="Test Title"
-        hasCloseIcon={true}
+        hasCloseButton={true}
         primaryButtonProps={{ children: 'Test Primary Button', className: 'primary-className' }}
         secondaryButtonProps={{ children: 'Test Secondary Button', className: 'secondary-className' }}
       >
@@ -84,6 +84,12 @@ describe('TeachingBubble', () => {
         Content
       </TeachingBubbleContent>
     );
+    const treeContent = componentContent.toJSON();
+    expect(treeContent).toMatchSnapshot();
+  });
+
+  it('renders TeachingBubbleContent with custom footer text', () => {
+    const componentContent = renderer.create(<TeachingBubbleContent footerContent="1 of 2">Content</TeachingBubbleContent>);
     const treeContent = componentContent.toJSON();
     expect(treeContent).toMatchSnapshot();
   });

@@ -22,16 +22,18 @@ export const getStyles = (props: IModalStyleProps): IModalStyles => {
     modalRectangleTop,
     theme,
     topOffsetFixed,
-    isModeless
+    isModeless,
+    layerClassName,
+    isDefaultDragHandle
   } = props;
-  const { palette } = theme;
+  const { palette, effects, fonts } = theme;
 
   const classNames = getGlobalClassNames(globalClassNames, theme);
 
   return {
     root: [
       classNames.root,
-      theme.fonts.medium,
+      fonts.medium,
       {
         backgroundColor: 'transparent',
         position: isModeless ? 'absolute' : 'fixed',
@@ -58,13 +60,17 @@ export const getStyles = (props: IModalStyleProps): IModalStyles => {
     main: [
       classNames.main,
       {
-        boxShadow: '0 0 5px 0 rgba(0, 0, 0, 0.4)',
+        boxShadow: effects.elevation64,
+        borderRadius: effects.roundedCorner2,
         backgroundColor: palette.white,
         boxSizing: 'border-box',
         position: 'relative',
         textAlign: 'left',
         outline: '3px solid transparent',
-        maxHeight: '100%',
+        maxHeight: 'calc(100% - 32px)',
+        maxWidth: 'calc(100% - 32px)',
+        minHeight: '176px',
+        minWidth: '288px',
         overflowY: 'auto',
         zIndex: isModeless ? ZIndexes.Layer : undefined
       },
@@ -72,23 +78,44 @@ export const getStyles = (props: IModalStyleProps): IModalStyles => {
         hasBeenOpened && {
           top: modalRectangleTop
         },
+      isDefaultDragHandle && {
+        cursor: 'move'
+      },
       containerClassName
     ],
     scrollableContent: [
       classNames.scrollableContent,
       {
         overflowY: 'auto',
-        flexGrow: 1
+        flexGrow: 1,
+        maxHeight: '100vh',
+        selectors: {
+          ['@supports (-webkit-overflow-scrolling: touch)']: {
+            maxHeight: window.innerHeight
+          }
+        }
       },
       scrollableContentClassName
     ],
     layer: isModeless && [
+      layerClassName,
       classNames.layer,
       {
         position: 'static',
         width: 'unset',
         height: 'unset'
       }
-    ]
+    ],
+    keyboardMoveIconContainer: {
+      position: 'absolute',
+      display: 'flex',
+      justifyContent: 'center',
+      width: '100%',
+      padding: '3px 0px'
+    },
+    keyboardMoveIcon: {
+      fontSize: fonts.xLargePlus.fontSize,
+      width: '24px'
+    }
   };
 };

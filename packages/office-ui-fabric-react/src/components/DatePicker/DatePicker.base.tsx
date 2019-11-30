@@ -20,19 +20,18 @@ export interface IDatePickerState {
 
 const DEFAULT_STRINGS: IDatePickerStrings = {
   months: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
-
   shortMonths: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-
   days: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
-
   shortDays: ['S', 'M', 'T', 'W', 'T', 'F', 'S'],
-
   goToToday: 'Go to today',
   prevMonthAriaLabel: 'Go to previous month',
   nextMonthAriaLabel: 'Go to next month',
   prevYearAriaLabel: 'Go to previous year',
   nextYearAriaLabel: 'Go to next year',
-  closeButtonAriaLabel: 'Close date picker'
+  prevYearRangeAriaLabel: 'Previous year range',
+  nextYearRangeAriaLabel: 'Next year range',
+  closeButtonAriaLabel: 'Close date picker',
+  weekNumberFormatString: 'Week number {0}'
 };
 
 export class DatePickerBase extends BaseComponent<IDatePickerProps, IDatePickerState> implements IDatePicker {
@@ -87,8 +86,9 @@ export class DatePickerBase extends BaseComponent<IDatePickerProps, IDatePickerS
     this._preventFocusOpeningPicker = false;
   }
 
-  public componentWillReceiveProps(nextProps: IDatePickerProps): void {
-    const { formatDate, isRequired, strings, value, minDate, maxDate } = nextProps;
+  // tslint:disable-next-line function-name
+  public UNSAFE_componentWillReceiveProps(nextProps: IDatePickerProps): void {
+    const { formatDate, value } = nextProps;
 
     if (
       compareDates(this.props.minDate!, nextProps.minDate!) &&
@@ -101,18 +101,9 @@ export class DatePickerBase extends BaseComponent<IDatePickerProps, IDatePickerS
       return;
     }
 
-    let errorMessage = isRequired && !value ? strings!.isRequiredErrorMessage || ' ' : undefined;
-
-    if (!errorMessage && value) {
-      errorMessage = this._isDateOutOfBounds(value!, minDate, maxDate) ? strings!.isOutOfBoundsErrorMessage || ' ' : undefined;
-    }
+    this._setErrorMessage(true, nextProps);
 
     this._id = nextProps.id || this._id;
-
-    // Set error message
-    this.setState({
-      errorMessage: errorMessage
-    });
 
     // Issue# 1274: Check if the date value changed from old value, i.e., if indeed a new date is being
     // passed in or if the formatting function was modified. We only update the selected date if either of these
@@ -129,11 +120,6 @@ export class DatePickerBase extends BaseComponent<IDatePickerProps, IDatePickerS
 
   public componentDidUpdate(prevProps: IDatePickerProps, prevState: IDatePickerState) {
     if (prevState.isDatePickerShown && !this.state.isDatePickerShown) {
-      // In browsers like IE, textfield gets unfocused when datepicker is collapsed
-      if (this.props.allowTextInput) {
-        this._async.requestAnimationFrame(() => this.focus());
-      }
-
       // If DatePicker's menu (Calendar) is closed, run onAfterMenuDismiss
       if (this.props.onAfterMenuDismiss) {
         this.props.onAfterMenuDismiss();
@@ -168,7 +154,7 @@ export class DatePickerBase extends BaseComponent<IDatePickerProps, IDatePickerS
       calendarAs: CalendarType = Calendar,
       tabIndex
     } = this.props;
-    const { isDatePickerShown, formattedDate, selectedDate, errorMessage } = this.state;
+    const { isDatePickerShown, formattedDate, selectedDate } = this.state;
 
     const classNames = getClassNames(styles, {
       theme: theme!,
@@ -179,25 +165,21 @@ export class DatePickerBase extends BaseComponent<IDatePickerProps, IDatePickerS
     });
 
     const calloutId = getId('DatePicker-Callout');
-    const nativeProps = getNativeProps(this.props, divProperties, ['value']);
+    const nativeProps = getNativeProps<React.HTMLAttributes<HTMLDivElement>>(this.props, divProperties, ['value']);
     const iconProps = textFieldProps && textFieldProps.iconProps;
 
     return (
       <div {...nativeProps} className={classNames.root}>
-        <div
-          ref={this._datePickerDiv}
-          role="combobox"
-          aria-expanded={isDatePickerShown}
-          aria-haspopup="true"
-          aria-owns={isDatePickerShown ? calloutId : undefined}
-        >
+        <div ref={this._datePickerDiv} aria-haspopup="true" aria-owns={isDatePickerShown ? calloutId : undefined}>
           <TextField
+            role="combobox"
             label={label}
+            aria-expanded={isDatePickerShown}
             ariaLabel={ariaLabel}
             aria-controls={isDatePickerShown ? calloutId : undefined}
             required={isRequired}
             disabled={disabled}
-            errorMessage={errorMessage}
+            errorMessage={this._getErrorMessage()}
             placeholder={placeholder}
             borderless={borderless}
             value={formattedDate}
@@ -236,7 +218,7 @@ export class DatePickerBase extends BaseComponent<IDatePickerProps, IDatePickerS
             onDismiss={this._calendarDismissed}
             onPositioned={this._onCalloutPositioned}
           >
-            <FocusTrapZone isClickableOutsideFocusTrap={true} disableFirstFocus={this.props.disableAutoFocus}>
+            <FocusTrapZone isClickableOutsideFocusTrap={true} disableFirstFocus={this.props.disableAutoFocus} forceFocusInsideTrap={false}>
               <CalendarType
                 {...calendarProps}
                 onSelectDate={this._onSelectDate}
@@ -276,6 +258,23 @@ export class DatePickerBase extends BaseComponent<IDatePickerProps, IDatePickerS
     this.setState(this._getDefaultState());
   }
 
+  private _setErrorMessage(setState: boolean, nextProps?: IDatePickerProps): string | undefined {
+    const { isRequired, strings, value, minDate, maxDate, initialPickerDate } = nextProps || this.props;
+    let errorMessage = !initialPickerDate && isRequired && !value ? strings!.isRequiredErrorMessage || ' ' : undefined;
+
+    if (!errorMessage && value) {
+      errorMessage = this._isDateOutOfBounds(value!, minDate, maxDate) ? strings!.isOutOfBoundsErrorMessage || ' ' : undefined;
+    }
+
+    if (setState) {
+      this.setState({
+        errorMessage: errorMessage
+      });
+    }
+
+    return errorMessage;
+  }
+
   private _onSelectDate = (date: Date): void => {
     const { formatDate, onSelectDate } = this.props;
 
@@ -296,7 +295,14 @@ export class DatePickerBase extends BaseComponent<IDatePickerProps, IDatePickerS
   };
 
   private _onCalloutPositioned = (): void => {
-    if (this._calendar.current && !this.props.disableAutoFocus) {
+    let shouldFocus = true;
+    // If the user has specified that the callout shouldn't use initial focus, then respect
+    // that and don't attempt to set focus. That will default to true within the callout
+    // so we need to check if it's undefined here.
+    if (this.props.calloutProps && this.props.calloutProps.setInitialFocus !== undefined) {
+      shouldFocus = this.props.calloutProps.setInitialFocus;
+    }
+    if (this._calendar.current && shouldFocus) {
       this._calendar.current.focus();
     }
   };
@@ -320,7 +326,9 @@ export class DatePickerBase extends BaseComponent<IDatePickerProps, IDatePickerS
   };
 
   private _onTextFieldChanged = (ev: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>, newValue: string): void => {
-    if (this.props.allowTextInput) {
+    const { allowTextInput, textField } = this.props;
+
+    if (allowTextInput) {
       if (this.state.isDatePickerShown) {
         this._dismissDatePickerPopup();
       }
@@ -331,6 +339,10 @@ export class DatePickerBase extends BaseComponent<IDatePickerProps, IDatePickerS
         errorMessage: isRequired && !value ? strings!.isRequiredErrorMessage || ' ' : undefined,
         formattedDate: newValue
       });
+    }
+
+    if (textField && textField.onChange) {
+      textField.onChange(ev, newValue);
     }
   };
 
@@ -361,28 +373,29 @@ export class DatePickerBase extends BaseComponent<IDatePickerProps, IDatePickerS
   };
 
   private _onTextFieldClick = (ev: React.MouseEvent<HTMLElement>): void => {
-    if (!this.state.isDatePickerShown && !this.props.disabled) {
+    if (!this.props.disableAutoFocus && !this.state.isDatePickerShown && !this.props.disabled) {
       this._showDatePickerPopup();
-    } else {
-      if (this.props.allowTextInput) {
-        this.setState({
-          isDatePickerShown: false
-        });
-      }
+      return;
+    }
+    if (this.props.allowTextInput) {
+      this._dismissDatePickerPopup();
     }
   };
 
   private _onIconClick = (ev: React.MouseEvent<HTMLElement>): void => {
     ev.stopPropagation();
-    this._onTextFieldClick(ev);
+    if (!this.state.isDatePickerShown && !this.props.disabled) {
+      this._showDatePickerPopup();
+    } else if (this.props.allowTextInput) {
+      this._dismissDatePickerPopup();
+    }
   };
 
   private _showDatePickerPopup(): void {
     if (!this.state.isDatePickerShown) {
       this._preventFocusOpeningPicker = true;
       this.setState({
-        isDatePickerShown: true,
-        errorMessage: ''
+        isDatePickerShown: true
       });
     }
   }
@@ -411,7 +424,9 @@ export class DatePickerBase extends BaseComponent<IDatePickerProps, IDatePickerS
   };
 
   private _handleEscKey = (ev: React.KeyboardEvent<HTMLElement>): void => {
-    ev.stopPropagation();
+    if (this.state.isDatePickerShown) {
+      ev.stopPropagation();
+    }
     this._calendarDismissed();
   };
 
@@ -496,11 +511,18 @@ export class DatePickerBase extends BaseComponent<IDatePickerProps, IDatePickerS
       selectedDate: props.value || undefined,
       formattedDate: props.formatDate && props.value ? props.formatDate(props.value) : '',
       isDatePickerShown: false,
-      errorMessage: undefined
+      errorMessage: this._setErrorMessage(false)
     };
   }
 
   private _isDateOutOfBounds(date: Date, minDate?: Date, maxDate?: Date): boolean {
     return (!!minDate && compareDatePart(minDate!, date) > 0) || (!!maxDate && compareDatePart(maxDate!, date) < 0);
+  }
+
+  private _getErrorMessage(): string | undefined {
+    if (this.state.isDatePickerShown) {
+      return undefined;
+    }
+    return this.state.errorMessage;
   }
 }

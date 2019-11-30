@@ -14,6 +14,19 @@ export class ToggleBase extends BaseComponent<IToggleProps, IToggleState> implem
   private _id: string;
   private _toggleButton = React.createRef<HTMLButtonElement>();
 
+  public static getDerivedStateFromProps(
+    nextProps: Readonly<IToggleProps>,
+    prevState: Readonly<IToggleState>
+  ): Partial<IToggleState> | null {
+    if (nextProps.checked === undefined) {
+      return null;
+    }
+
+    return {
+      checked: !!nextProps.checked
+    };
+  }
+
   constructor(props: IToggleProps) {
     super(props);
 
@@ -38,14 +51,6 @@ export class ToggleBase extends BaseComponent<IToggleProps, IToggleState> implem
    */
   public get checked(): boolean {
     return this.state.checked;
-  }
-
-  public componentWillReceiveProps(newProps: IToggleProps): void {
-    if (newProps.checked !== undefined) {
-      this.setState({
-        checked: !!newProps.checked // convert null to false
-      });
-    }
   }
 
   public render(): JSX.Element {
@@ -77,10 +82,29 @@ export class ToggleBase extends BaseComponent<IToggleProps, IToggleState> implem
       onOffMissing: !onText && !offText
     });
 
+    const labelId = `${this._id}-label`;
+    const stateTextId = `${this._id}-stateText`;
+
+    // The following properties take priority for what Narrator should read:
+    // 1. ariaLabel
+    // 2. onAriaLabel (if checked) or offAriaLabel (if not checked)
+    // 3. label
+    // 4. onText (if checked) or offText (if not checked)
+    let labelledById: string | undefined = undefined;
+    if (!ariaLabel && !badAriaLabel) {
+      if (label) {
+        labelledById = labelId;
+      } else if (stateText) {
+        labelledById = stateTextId;
+      }
+    }
+
+    const ariaRole = this.props.role ? this.props.role : 'switch';
+
     return (
       <RootType className={classNames.root} hidden={(toggleNativeProps as any).hidden}>
         {label && (
-          <Label htmlFor={this._id} className={classNames.label}>
+          <Label htmlFor={this._id} className={classNames.label} id={labelId}>
             {label}
           </Label>
         )}
@@ -95,7 +119,7 @@ export class ToggleBase extends BaseComponent<IToggleProps, IToggleState> implem
                 disabled={disabled}
                 id={this._id}
                 type="button"
-                role="switch" // ARIA 1.1 definition; "checkbox" in ARIA 1.0
+                role={ariaRole}
                 ref={this._toggleButton}
                 aria-disabled={disabled}
                 aria-checked={checked}
@@ -103,12 +127,17 @@ export class ToggleBase extends BaseComponent<IToggleProps, IToggleState> implem
                 data-is-focusable={true}
                 onChange={this._noop}
                 onClick={this._onClick}
+                aria-labelledby={labelledById}
               >
                 <div className={classNames.thumb} />
               </button>
             )}
           </KeytipData>
-          {stateText && <Label className={classNames.text}>{stateText}</Label>}
+          {stateText && (
+            <Label htmlFor={this._id} className={classNames.text} id={stateTextId}>
+              {stateText}
+            </Label>
+          )}
         </div>
       </RootType>
     );

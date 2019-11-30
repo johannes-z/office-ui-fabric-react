@@ -2,11 +2,25 @@
 
 exports[`Component Examples renders Toggle.Basic.Example.tsx correctly 1`] = `
 <div
-  style={
-    Object {
-      "padding": "2px",
-    }
-  }
+  className=
+      ms-Stack
+      {
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+        flex-wrap: nowrap;
+        height: auto;
+        width: auto;
+      }
+      & > * {
+        text-overflow: ellipsis;
+      }
+      & > *:not(:first-child) {
+        margin-top: 10px;
+      }
+      & > *:not(.ms-StackItem) {
+        flex-shrink: 1;
+      }
 >
   <div
     className=
@@ -31,11 +45,11 @@ exports[`Component Examples renders Toggle.Basic.Example.tsx correctly 1`] = `
             -webkit-font-smoothing: antialiased;
             box-shadow: none;
             box-sizing: border-box;
-            color: #333333;
+            color: #323130;
             display: block;
             font-family: 'Segoe UI', 'Segoe UI Web (West European)', 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Roboto', 'Helvetica Neue', sans-serif;
             font-size: 14px;
-            font-weight: 400;
+            font-weight: 600;
             margin-bottom: 0px;
             margin-left: 0px;
             margin-right: 0px;
@@ -48,6 +62,7 @@ exports[`Component Examples renders Toggle.Basic.Example.tsx correctly 1`] = `
             word-wrap: break-word;
           }
       htmlFor="Toggle0"
+      id="Toggle0-label"
     >
       Enabled and checked
     </label>
@@ -61,29 +76,29 @@ exports[`Component Examples renders Toggle.Basic.Example.tsx correctly 1`] = `
     >
       <button
         aria-checked={true}
+        aria-labelledby="Toggle0-label"
         className=
             ms-Toggle-background
             {
               align-items: center;
               background: #0078d4;
               border-color: transparent;
-              border-radius: 1em;
-              border-style: solid;
-              border-width: 1px;
+              border-radius: 10px;
+              border: 1px solid #605e5c;
               box-sizing: border-box;
               cursor: pointer;
               display: flex;
               font-size: 20px;
-              height: 1em;
+              height: 20px;
               justify-content: flex-end;
               outline: transparent;
               padding-bottom: 0;
-              padding-left: .2em;
-              padding-right: .2em;
+              padding-left: 3px;
+              padding-right: 3px;
               padding-top: 0;
               position: relative;
               transition: all 0.1s ease;
-              width: 2.2em;
+              width: 40px;
             }
             &::-moz-focus-inner {
               border: 0;
@@ -93,14 +108,14 @@ exports[`Component Examples renders Toggle.Basic.Example.tsx correctly 1`] = `
               bottom: -2px;
               content: "";
               left: -2px;
-              outline: 1px solid #666666;
+              outline: 1px solid #605e5c;
               position: absolute;
               right: -2px;
               top: -2px;
               z-index: 1;
             }
             &:hover {
-              background-color: #106ebe;
+              background-color: #005a9e;
               border-color: transparent;
             }
             @media screen and (-ms-high-contrast: active){&:hover {
@@ -112,10 +127,8 @@ exports[`Component Examples renders Toggle.Basic.Example.tsx correctly 1`] = `
             }
         data-is-focusable={true}
         id="Toggle0"
-        onBlur={[Function]}
         onChange={[Function]}
         onClick={[Function]}
-        onFocus={[Function]}
         role="switch"
         type="button"
       >
@@ -125,13 +138,13 @@ exports[`Component Examples renders Toggle.Basic.Example.tsx correctly 1`] = `
               {
                 background-color: #ffffff;
                 border-color: transparent;
-                border-radius: .5em;
+                border-radius: 50%;
                 border-style: solid;
                 border-width: .28em;
                 box-sizing: border-box;
-                height: .5em;
+                height: 12px;
                 transition: all 0.1s ease;
-                width: .5em;
+                width: 12px;
               }
               @media screen and (-ms-high-contrast: active){& {
                 background-color: Window;
@@ -148,11 +161,11 @@ exports[`Component Examples renders Toggle.Basic.Example.tsx correctly 1`] = `
               -webkit-font-smoothing: antialiased;
               box-shadow: none;
               box-sizing: border-box;
-              color: #333333;
+              color: #323130;
               display: block;
               font-family: 'Segoe UI', 'Segoe UI Web (West European)', 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Roboto', 'Helvetica Neue', sans-serif;
               font-size: 14px;
-              font-weight: 400;
+              font-weight: 600;
               margin-bottom: 0px;
               margin-left: 0px;
               margin-right: 0px;
@@ -165,6 +178,7 @@ exports[`Component Examples renders Toggle.Basic.Example.tsx correctly 1`] = `
               word-wrap: break-word;
             }
             && {
+              font-weight: 400;
               margin-bottom: 0;
               margin-left: 8px;
               margin-right: 8px;
@@ -175,6 +189,8 @@ exports[`Component Examples renders Toggle.Basic.Example.tsx correctly 1`] = `
               padding-top: 0;
               user-select: none;
             }
+        htmlFor="Toggle0"
+        id="Toggle0-stateText"
       >
         On
       </label>
@@ -202,11 +218,11 @@ exports[`Component Examples renders Toggle.Basic.Example.tsx correctly 1`] = `
             -webkit-font-smoothing: antialiased;
             box-shadow: none;
             box-sizing: border-box;
-            color: #333333;
+            color: #323130;
             display: block;
             font-family: 'Segoe UI', 'Segoe UI Web (West European)', 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Roboto', 'Helvetica Neue', sans-serif;
             font-size: 14px;
-            font-weight: 400;
+            font-weight: 600;
             margin-bottom: 0px;
             margin-left: 0px;
             margin-right: 0px;
@@ -219,6 +235,7 @@ exports[`Component Examples renders Toggle.Basic.Example.tsx correctly 1`] = `
             word-wrap: break-word;
           }
       htmlFor="Toggle1"
+      id="Toggle1-label"
     >
       Enabled and unchecked
     </label>
@@ -232,28 +249,27 @@ exports[`Component Examples renders Toggle.Basic.Example.tsx correctly 1`] = `
     >
       <button
         aria-checked={false}
+        aria-labelledby="Toggle1-label"
         className=
             ms-Toggle-background
             {
               align-items: center;
               background: #ffffff;
-              border-color: #666666;
-              border-radius: 1em;
-              border-style: solid;
-              border-width: 1px;
+              border-radius: 10px;
+              border: 1px solid #605e5c;
               box-sizing: border-box;
               cursor: pointer;
               display: flex;
               font-size: 20px;
-              height: 1em;
+              height: 20px;
               outline: transparent;
               padding-bottom: 0;
-              padding-left: .2em;
-              padding-right: .2em;
+              padding-left: 3px;
+              padding-right: 3px;
               padding-top: 0;
               position: relative;
               transition: all 0.1s ease;
-              width: 2.2em;
+              width: 40px;
             }
             &::-moz-focus-inner {
               border: 0;
@@ -263,14 +279,17 @@ exports[`Component Examples renders Toggle.Basic.Example.tsx correctly 1`] = `
               bottom: -2px;
               content: "";
               left: -2px;
-              outline: 1px solid #666666;
+              outline: 1px solid #605e5c;
               position: absolute;
               right: -2px;
               top: -2px;
               z-index: 1;
             }
             &:hover {
-              border-color: #333333;
+              border-color: #323130;
+            }
+            &:hover .ms-Toggle-thumb {
+              background-color: #201f1e;
             }
             @media screen and (-ms-high-contrast: active){&:hover .ms-Toggle-thumb {
               border-color: Highlight;
@@ -280,10 +299,8 @@ exports[`Component Examples renders Toggle.Basic.Example.tsx correctly 1`] = `
             }
         data-is-focusable={true}
         id="Toggle1"
-        onBlur={[Function]}
         onChange={[Function]}
         onClick={[Function]}
-        onFocus={[Function]}
         role="switch"
         type="button"
       >
@@ -291,15 +308,15 @@ exports[`Component Examples renders Toggle.Basic.Example.tsx correctly 1`] = `
           className=
               ms-Toggle-thumb
               {
-                background-color: #333333;
+                background-color: #605e5c;
                 border-color: transparent;
-                border-radius: .5em;
+                border-radius: 50%;
                 border-style: solid;
                 border-width: .28em;
                 box-sizing: border-box;
-                height: .5em;
+                height: 12px;
                 transition: all 0.1s ease;
-                width: .5em;
+                width: 12px;
               }
         />
       </button>
@@ -312,11 +329,11 @@ exports[`Component Examples renders Toggle.Basic.Example.tsx correctly 1`] = `
               -webkit-font-smoothing: antialiased;
               box-shadow: none;
               box-sizing: border-box;
-              color: #333333;
+              color: #323130;
               display: block;
               font-family: 'Segoe UI', 'Segoe UI Web (West European)', 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Roboto', 'Helvetica Neue', sans-serif;
               font-size: 14px;
-              font-weight: 400;
+              font-weight: 600;
               margin-bottom: 0px;
               margin-left: 0px;
               margin-right: 0px;
@@ -329,6 +346,7 @@ exports[`Component Examples renders Toggle.Basic.Example.tsx correctly 1`] = `
               word-wrap: break-word;
             }
             && {
+              font-weight: 400;
               margin-bottom: 0;
               margin-left: 8px;
               margin-right: 8px;
@@ -339,6 +357,8 @@ exports[`Component Examples renders Toggle.Basic.Example.tsx correctly 1`] = `
               padding-top: 0;
               user-select: none;
             }
+        htmlFor="Toggle1"
+        id="Toggle1-stateText"
       >
         Off
       </label>
@@ -367,11 +387,11 @@ exports[`Component Examples renders Toggle.Basic.Example.tsx correctly 1`] = `
             -webkit-font-smoothing: antialiased;
             box-shadow: none;
             box-sizing: border-box;
-            color: #a6a6a6;
+            color: #a19f9d;
             display: block;
             font-family: 'Segoe UI', 'Segoe UI Web (West European)', 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Roboto', 'Helvetica Neue', sans-serif;
             font-size: 14px;
-            font-weight: 400;
+            font-weight: 600;
             margin-bottom: 0px;
             margin-left: 0px;
             margin-right: 0px;
@@ -387,6 +407,7 @@ exports[`Component Examples renders Toggle.Basic.Example.tsx correctly 1`] = `
             color: GrayText;
           }
       htmlFor="Toggle2"
+      id="Toggle2-label"
     >
       Disabled and checked
     </label>
@@ -401,30 +422,30 @@ exports[`Component Examples renders Toggle.Basic.Example.tsx correctly 1`] = `
       <button
         aria-checked={true}
         aria-disabled={true}
+        aria-labelledby="Toggle2-label"
         className=
             ms-Toggle-background
             {
               align-items: center;
-              background-color: #c8c8c8;
+              background-color: #c8c6c4;
               background: #ffffff;
               border-color: transparent;
-              border-radius: 1em;
-              border-style: solid;
-              border-width: 1px;
+              border-radius: 10px;
+              border: 1px solid #605e5c;
               box-sizing: border-box;
               cursor: default;
               display: flex;
               font-size: 20px;
-              height: 1em;
+              height: 20px;
               justify-content: flex-end;
               outline: transparent;
               padding-bottom: 0;
-              padding-left: .2em;
-              padding-right: .2em;
+              padding-left: 3px;
+              padding-right: 3px;
               padding-top: 0;
               position: relative;
               transition: all 0.1s ease;
-              width: 2.2em;
+              width: 40px;
             }
             &::-moz-focus-inner {
               border: 0;
@@ -434,7 +455,7 @@ exports[`Component Examples renders Toggle.Basic.Example.tsx correctly 1`] = `
               bottom: -2px;
               content: "";
               left: -2px;
-              outline: 1px solid #666666;
+              outline: 1px solid #605e5c;
               position: absolute;
               right: -2px;
               top: -2px;
@@ -443,10 +464,8 @@ exports[`Component Examples renders Toggle.Basic.Example.tsx correctly 1`] = `
         data-is-focusable={true}
         disabled={true}
         id="Toggle2"
-        onBlur={[Function]}
         onChange={[Function]}
         onClick={[Function]}
-        onFocus={[Function]}
         role="switch"
         type="button"
       >
@@ -454,15 +473,15 @@ exports[`Component Examples renders Toggle.Basic.Example.tsx correctly 1`] = `
           className=
               ms-Toggle-thumb
               {
-                background-color: #f4f4f4;
+                background-color: #f3f2f1;
                 border-color: transparent;
-                border-radius: .5em;
+                border-radius: 50%;
                 border-style: solid;
                 border-width: .28em;
                 box-sizing: border-box;
-                height: .5em;
+                height: 12px;
                 transition: all 0.1s ease;
-                width: .5em;
+                width: 12px;
               }
         />
       </button>
@@ -475,11 +494,11 @@ exports[`Component Examples renders Toggle.Basic.Example.tsx correctly 1`] = `
               -webkit-font-smoothing: antialiased;
               box-shadow: none;
               box-sizing: border-box;
-              color: #333333;
+              color: #323130;
               display: block;
               font-family: 'Segoe UI', 'Segoe UI Web (West European)', 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Roboto', 'Helvetica Neue', sans-serif;
               font-size: 14px;
-              font-weight: 400;
+              font-weight: 600;
               margin-bottom: 0px;
               margin-left: 0px;
               margin-right: 0px;
@@ -492,7 +511,8 @@ exports[`Component Examples renders Toggle.Basic.Example.tsx correctly 1`] = `
               word-wrap: break-word;
             }
             && {
-              color: #a6a6a6;
+              color: #a19f9d;
+              font-weight: 400;
               margin-bottom: 0;
               margin-left: 8px;
               margin-right: 8px;
@@ -506,6 +526,8 @@ exports[`Component Examples renders Toggle.Basic.Example.tsx correctly 1`] = `
             @media screen and (-ms-high-contrast: active){&& {
               color: GrayText;
             }
+        htmlFor="Toggle2"
+        id="Toggle2-stateText"
       >
         On
       </label>
@@ -533,11 +555,11 @@ exports[`Component Examples renders Toggle.Basic.Example.tsx correctly 1`] = `
             -webkit-font-smoothing: antialiased;
             box-shadow: none;
             box-sizing: border-box;
-            color: #a6a6a6;
+            color: #a19f9d;
             display: block;
             font-family: 'Segoe UI', 'Segoe UI Web (West European)', 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Roboto', 'Helvetica Neue', sans-serif;
             font-size: 14px;
-            font-weight: 400;
+            font-weight: 600;
             margin-bottom: 0px;
             margin-left: 0px;
             margin-right: 0px;
@@ -553,6 +575,7 @@ exports[`Component Examples renders Toggle.Basic.Example.tsx correctly 1`] = `
             color: GrayText;
           }
       htmlFor="Toggle3"
+      id="Toggle3-label"
     >
       Disabled and unchecked
     </label>
@@ -567,28 +590,28 @@ exports[`Component Examples renders Toggle.Basic.Example.tsx correctly 1`] = `
       <button
         aria-checked={false}
         aria-disabled={true}
+        aria-labelledby="Toggle3-label"
         className=
             ms-Toggle-background
             {
               align-items: center;
               background: #ffffff;
-              border-color: #c8c8c8;
-              border-radius: 1em;
-              border-style: solid;
-              border-width: 1px;
+              border-color: #c8c6c4;
+              border-radius: 10px;
+              border: 1px solid #605e5c;
               box-sizing: border-box;
               cursor: default;
               display: flex;
               font-size: 20px;
-              height: 1em;
+              height: 20px;
               outline: transparent;
               padding-bottom: 0;
-              padding-left: .2em;
-              padding-right: .2em;
+              padding-left: 3px;
+              padding-right: 3px;
               padding-top: 0;
               position: relative;
               transition: all 0.1s ease;
-              width: 2.2em;
+              width: 40px;
             }
             &::-moz-focus-inner {
               border: 0;
@@ -598,7 +621,7 @@ exports[`Component Examples renders Toggle.Basic.Example.tsx correctly 1`] = `
               bottom: -2px;
               content: "";
               left: -2px;
-              outline: 1px solid #666666;
+              outline: 1px solid #605e5c;
               position: absolute;
               right: -2px;
               top: -2px;
@@ -607,10 +630,8 @@ exports[`Component Examples renders Toggle.Basic.Example.tsx correctly 1`] = `
         data-is-focusable={true}
         disabled={true}
         id="Toggle3"
-        onBlur={[Function]}
         onChange={[Function]}
         onClick={[Function]}
-        onFocus={[Function]}
         role="switch"
         type="button"
       >
@@ -618,15 +639,15 @@ exports[`Component Examples renders Toggle.Basic.Example.tsx correctly 1`] = `
           className=
               ms-Toggle-thumb
               {
-                background-color: #c8c8c8;
+                background-color: #c8c6c4;
                 border-color: transparent;
-                border-radius: .5em;
+                border-radius: 50%;
                 border-style: solid;
                 border-width: .28em;
                 box-sizing: border-box;
-                height: .5em;
+                height: 12px;
                 transition: all 0.1s ease;
-                width: .5em;
+                width: 12px;
               }
         />
       </button>
@@ -639,11 +660,11 @@ exports[`Component Examples renders Toggle.Basic.Example.tsx correctly 1`] = `
               -webkit-font-smoothing: antialiased;
               box-shadow: none;
               box-sizing: border-box;
-              color: #333333;
+              color: #323130;
               display: block;
               font-family: 'Segoe UI', 'Segoe UI Web (West European)', 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Roboto', 'Helvetica Neue', sans-serif;
               font-size: 14px;
-              font-weight: 400;
+              font-weight: 600;
               margin-bottom: 0px;
               margin-left: 0px;
               margin-right: 0px;
@@ -656,7 +677,8 @@ exports[`Component Examples renders Toggle.Basic.Example.tsx correctly 1`] = `
               word-wrap: break-word;
             }
             && {
-              color: #a6a6a6;
+              color: #a19f9d;
+              font-weight: 400;
               margin-bottom: 0;
               margin-left: 8px;
               margin-right: 8px;
@@ -670,6 +692,8 @@ exports[`Component Examples renders Toggle.Basic.Example.tsx correctly 1`] = `
             @media screen and (-ms-high-contrast: active){&& {
               color: GrayText;
             }
+        htmlFor="Toggle3"
+        id="Toggle3-stateText"
       >
         Off
       </label>
@@ -678,7 +702,6 @@ exports[`Component Examples renders Toggle.Basic.Example.tsx correctly 1`] = `
   <div
     className=
         ms-Toggle
-        is-checked
         is-enabled
         {
           -moz-osx-font-smoothing: grayscale;
@@ -700,11 +723,11 @@ exports[`Component Examples renders Toggle.Basic.Example.tsx correctly 1`] = `
             -webkit-font-smoothing: antialiased;
             box-shadow: none;
             box-sizing: border-box;
-            color: #333333;
+            color: #323130;
             display: block;
             font-family: 'Segoe UI', 'Segoe UI Web (West European)', 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Roboto', 'Helvetica Neue', sans-serif;
             font-size: 14px;
-            font-weight: 400;
+            font-weight: 600;
             margin-bottom: 0px;
             margin-left: 0px;
             margin-right: 16px;
@@ -714,9 +737,11 @@ exports[`Component Examples renders Toggle.Basic.Example.tsx correctly 1`] = `
             padding-left: 0;
             padding-right: 0;
             padding-top: 5px;
+            word-break: break-all;
             word-wrap: break-word;
           }
       htmlFor="Toggle4"
+      id="Toggle4-label"
     >
       With inline label
     </label>
@@ -729,30 +754,28 @@ exports[`Component Examples renders Toggle.Basic.Example.tsx correctly 1`] = `
           }
     >
       <button
-        aria-checked={true}
+        aria-checked={false}
+        aria-labelledby="Toggle4-label"
         className=
             ms-Toggle-background
             {
               align-items: center;
-              background: #0078d4;
-              border-color: transparent;
-              border-radius: 1em;
-              border-style: solid;
-              border-width: 1px;
+              background: #ffffff;
+              border-radius: 10px;
+              border: 1px solid #605e5c;
               box-sizing: border-box;
               cursor: pointer;
               display: flex;
               font-size: 20px;
-              height: 1em;
-              justify-content: flex-end;
+              height: 20px;
               outline: transparent;
               padding-bottom: 0;
-              padding-left: .2em;
-              padding-right: .2em;
+              padding-left: 3px;
+              padding-right: 3px;
               padding-top: 0;
               position: relative;
               transition: all 0.1s ease;
-              width: 2.2em;
+              width: 40px;
             }
             &::-moz-focus-inner {
               border: 0;
@@ -762,29 +785,28 @@ exports[`Component Examples renders Toggle.Basic.Example.tsx correctly 1`] = `
               bottom: -2px;
               content: "";
               left: -2px;
-              outline: 1px solid #666666;
+              outline: 1px solid #605e5c;
               position: absolute;
               right: -2px;
               top: -2px;
               z-index: 1;
             }
             &:hover {
-              background-color: #106ebe;
-              border-color: transparent;
+              border-color: #323130;
             }
-            @media screen and (-ms-high-contrast: active){&:hover {
-              background-color: Highlight;
+            &:hover .ms-Toggle-thumb {
+              background-color: #201f1e;
+            }
+            @media screen and (-ms-high-contrast: active){&:hover .ms-Toggle-thumb {
               border-color: Highlight;
             }
-            @media screen and (-ms-high-contrast: active){& {
-              background-color: WindowText;
+            @media screen and (-ms-high-contrast: active){&:hover {
+              border-color: Highlight;
             }
         data-is-focusable={true}
         id="Toggle4"
-        onBlur={[Function]}
         onChange={[Function]}
         onClick={[Function]}
-        onFocus={[Function]}
         role="switch"
         type="button"
       >
@@ -792,19 +814,15 @@ exports[`Component Examples renders Toggle.Basic.Example.tsx correctly 1`] = `
           className=
               ms-Toggle-thumb
               {
-                background-color: #ffffff;
+                background-color: #605e5c;
                 border-color: transparent;
-                border-radius: .5em;
+                border-radius: 50%;
                 border-style: solid;
                 border-width: .28em;
                 box-sizing: border-box;
-                height: .5em;
+                height: 12px;
                 transition: all 0.1s ease;
-                width: .5em;
-              }
-              @media screen and (-ms-high-contrast: active){& {
-                background-color: Window;
-                border-color: Window;
+                width: 12px;
               }
         />
       </button>
@@ -817,11 +835,11 @@ exports[`Component Examples renders Toggle.Basic.Example.tsx correctly 1`] = `
               -webkit-font-smoothing: antialiased;
               box-shadow: none;
               box-sizing: border-box;
-              color: #333333;
+              color: #323130;
               display: block;
               font-family: 'Segoe UI', 'Segoe UI Web (West European)', 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Roboto', 'Helvetica Neue', sans-serif;
               font-size: 14px;
-              font-weight: 400;
+              font-weight: 600;
               margin-bottom: 0px;
               margin-left: 0px;
               margin-right: 0px;
@@ -834,6 +852,7 @@ exports[`Component Examples renders Toggle.Basic.Example.tsx correctly 1`] = `
               word-wrap: break-word;
             }
             && {
+              font-weight: 400;
               margin-bottom: 0;
               margin-left: 8px;
               margin-right: 8px;
@@ -844,15 +863,16 @@ exports[`Component Examples renders Toggle.Basic.Example.tsx correctly 1`] = `
               padding-top: 0;
               user-select: none;
             }
+        htmlFor="Toggle4"
+        id="Toggle4-stateText"
       >
-        On
+        Off
       </label>
     </div>
   </div>
   <div
     className=
         ms-Toggle
-        is-checked
         is-disabled
         {
           -moz-osx-font-smoothing: grayscale;
@@ -874,11 +894,11 @@ exports[`Component Examples renders Toggle.Basic.Example.tsx correctly 1`] = `
             -webkit-font-smoothing: antialiased;
             box-shadow: none;
             box-sizing: border-box;
-            color: #a6a6a6;
+            color: #a19f9d;
             display: block;
             font-family: 'Segoe UI', 'Segoe UI Web (West European)', 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Roboto', 'Helvetica Neue', sans-serif;
             font-size: 14px;
-            font-weight: 400;
+            font-weight: 600;
             margin-bottom: 0px;
             margin-left: 0px;
             margin-right: 16px;
@@ -888,12 +908,14 @@ exports[`Component Examples renders Toggle.Basic.Example.tsx correctly 1`] = `
             padding-left: 0;
             padding-right: 0;
             padding-top: 5px;
+            word-break: break-all;
             word-wrap: break-word;
           }
           @media screen and (-ms-high-contrast: active){& {
             color: GrayText;
           }
       htmlFor="Toggle5"
+      id="Toggle5-label"
     >
       Disabled with inline label
     </label>
@@ -906,32 +928,30 @@ exports[`Component Examples renders Toggle.Basic.Example.tsx correctly 1`] = `
           }
     >
       <button
-        aria-checked={true}
+        aria-checked={false}
         aria-disabled={true}
+        aria-labelledby="Toggle5-label"
         className=
             ms-Toggle-background
             {
               align-items: center;
-              background-color: #c8c8c8;
               background: #ffffff;
-              border-color: transparent;
-              border-radius: 1em;
-              border-style: solid;
-              border-width: 1px;
+              border-color: #c8c6c4;
+              border-radius: 10px;
+              border: 1px solid #605e5c;
               box-sizing: border-box;
               cursor: default;
               display: flex;
               font-size: 20px;
-              height: 1em;
-              justify-content: flex-end;
+              height: 20px;
               outline: transparent;
               padding-bottom: 0;
-              padding-left: .2em;
-              padding-right: .2em;
+              padding-left: 3px;
+              padding-right: 3px;
               padding-top: 0;
               position: relative;
               transition: all 0.1s ease;
-              width: 2.2em;
+              width: 40px;
             }
             &::-moz-focus-inner {
               border: 0;
@@ -941,7 +961,7 @@ exports[`Component Examples renders Toggle.Basic.Example.tsx correctly 1`] = `
               bottom: -2px;
               content: "";
               left: -2px;
-              outline: 1px solid #666666;
+              outline: 1px solid #605e5c;
               position: absolute;
               right: -2px;
               top: -2px;
@@ -950,10 +970,8 @@ exports[`Component Examples renders Toggle.Basic.Example.tsx correctly 1`] = `
         data-is-focusable={true}
         disabled={true}
         id="Toggle5"
-        onBlur={[Function]}
         onChange={[Function]}
         onClick={[Function]}
-        onFocus={[Function]}
         role="switch"
         type="button"
       >
@@ -961,15 +979,15 @@ exports[`Component Examples renders Toggle.Basic.Example.tsx correctly 1`] = `
           className=
               ms-Toggle-thumb
               {
-                background-color: #f4f4f4;
+                background-color: #c8c6c4;
                 border-color: transparent;
-                border-radius: .5em;
+                border-radius: 50%;
                 border-style: solid;
                 border-width: .28em;
                 box-sizing: border-box;
-                height: .5em;
+                height: 12px;
                 transition: all 0.1s ease;
-                width: .5em;
+                width: 12px;
               }
         />
       </button>
@@ -982,11 +1000,11 @@ exports[`Component Examples renders Toggle.Basic.Example.tsx correctly 1`] = `
               -webkit-font-smoothing: antialiased;
               box-shadow: none;
               box-sizing: border-box;
-              color: #333333;
+              color: #323130;
               display: block;
               font-family: 'Segoe UI', 'Segoe UI Web (West European)', 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Roboto', 'Helvetica Neue', sans-serif;
               font-size: 14px;
-              font-weight: 400;
+              font-weight: 600;
               margin-bottom: 0px;
               margin-left: 0px;
               margin-right: 0px;
@@ -999,7 +1017,8 @@ exports[`Component Examples renders Toggle.Basic.Example.tsx correctly 1`] = `
               word-wrap: break-word;
             }
             && {
-              color: #a6a6a6;
+              color: #a19f9d;
+              font-weight: 400;
               margin-bottom: 0;
               margin-left: 8px;
               margin-right: 8px;
@@ -1013,15 +1032,16 @@ exports[`Component Examples renders Toggle.Basic.Example.tsx correctly 1`] = `
             @media screen and (-ms-high-contrast: active){&& {
               color: GrayText;
             }
+        htmlFor="Toggle5"
+        id="Toggle5-stateText"
       >
-        On
+        Off
       </label>
     </div>
   </div>
   <div
     className=
         ms-Toggle
-        is-checked
         is-enabled
         {
           -moz-osx-font-smoothing: grayscale;
@@ -1043,11 +1063,11 @@ exports[`Component Examples renders Toggle.Basic.Example.tsx correctly 1`] = `
             -webkit-font-smoothing: antialiased;
             box-shadow: none;
             box-sizing: border-box;
-            color: #333333;
+            color: #323130;
             display: block;
             font-family: 'Segoe UI', 'Segoe UI Web (West European)', 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Roboto', 'Helvetica Neue', sans-serif;
             font-size: 14px;
-            font-weight: 400;
+            font-weight: 600;
             margin-bottom: 0px;
             margin-left: 16px;
             margin-right: 0px;
@@ -1058,9 +1078,11 @@ exports[`Component Examples renders Toggle.Basic.Example.tsx correctly 1`] = `
             padding-left: 0;
             padding-right: 0;
             padding-top: 5px;
+            word-break: break-all;
             word-wrap: break-word;
           }
       htmlFor="Toggle6"
+      id="Toggle6-label"
     >
       With inline label and without onText and offText
     </label>
@@ -1073,30 +1095,28 @@ exports[`Component Examples renders Toggle.Basic.Example.tsx correctly 1`] = `
           }
     >
       <button
-        aria-checked={true}
+        aria-checked={false}
+        aria-labelledby="Toggle6-label"
         className=
             ms-Toggle-background
             {
               align-items: center;
-              background: #0078d4;
-              border-color: transparent;
-              border-radius: 1em;
-              border-style: solid;
-              border-width: 1px;
+              background: #ffffff;
+              border-radius: 10px;
+              border: 1px solid #605e5c;
               box-sizing: border-box;
               cursor: pointer;
               display: flex;
               font-size: 20px;
-              height: 1em;
-              justify-content: flex-end;
+              height: 20px;
               outline: transparent;
               padding-bottom: 0;
-              padding-left: .2em;
-              padding-right: .2em;
+              padding-left: 3px;
+              padding-right: 3px;
               padding-top: 0;
               position: relative;
               transition: all 0.1s ease;
-              width: 2.2em;
+              width: 40px;
             }
             &::-moz-focus-inner {
               border: 0;
@@ -1106,29 +1126,28 @@ exports[`Component Examples renders Toggle.Basic.Example.tsx correctly 1`] = `
               bottom: -2px;
               content: "";
               left: -2px;
-              outline: 1px solid #666666;
+              outline: 1px solid #605e5c;
               position: absolute;
               right: -2px;
               top: -2px;
               z-index: 1;
             }
             &:hover {
-              background-color: #106ebe;
-              border-color: transparent;
+              border-color: #323130;
             }
-            @media screen and (-ms-high-contrast: active){&:hover {
-              background-color: Highlight;
+            &:hover .ms-Toggle-thumb {
+              background-color: #201f1e;
+            }
+            @media screen and (-ms-high-contrast: active){&:hover .ms-Toggle-thumb {
               border-color: Highlight;
             }
-            @media screen and (-ms-high-contrast: active){& {
-              background-color: WindowText;
+            @media screen and (-ms-high-contrast: active){&:hover {
+              border-color: Highlight;
             }
         data-is-focusable={true}
         id="Toggle6"
-        onBlur={[Function]}
         onChange={[Function]}
         onClick={[Function]}
-        onFocus={[Function]}
         role="switch"
         type="button"
       >
@@ -1136,19 +1155,15 @@ exports[`Component Examples renders Toggle.Basic.Example.tsx correctly 1`] = `
           className=
               ms-Toggle-thumb
               {
-                background-color: #ffffff;
+                background-color: #605e5c;
                 border-color: transparent;
-                border-radius: .5em;
+                border-radius: 50%;
                 border-style: solid;
                 border-width: .28em;
                 box-sizing: border-box;
-                height: .5em;
+                height: 12px;
                 transition: all 0.1s ease;
-                width: .5em;
-              }
-              @media screen and (-ms-high-contrast: active){& {
-                background-color: Window;
-                border-color: Window;
+                width: 12px;
               }
         />
       </button>
@@ -1157,7 +1172,6 @@ exports[`Component Examples renders Toggle.Basic.Example.tsx correctly 1`] = `
   <div
     className=
         ms-Toggle
-        is-checked
         is-disabled
         {
           -moz-osx-font-smoothing: grayscale;
@@ -1179,11 +1193,11 @@ exports[`Component Examples renders Toggle.Basic.Example.tsx correctly 1`] = `
             -webkit-font-smoothing: antialiased;
             box-shadow: none;
             box-sizing: border-box;
-            color: #a6a6a6;
+            color: #a19f9d;
             display: block;
             font-family: 'Segoe UI', 'Segoe UI Web (West European)', 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Roboto', 'Helvetica Neue', sans-serif;
             font-size: 14px;
-            font-weight: 400;
+            font-weight: 600;
             margin-bottom: 0px;
             margin-left: 16px;
             margin-right: 0px;
@@ -1194,12 +1208,14 @@ exports[`Component Examples renders Toggle.Basic.Example.tsx correctly 1`] = `
             padding-left: 0;
             padding-right: 0;
             padding-top: 5px;
+            word-break: break-all;
             word-wrap: break-word;
           }
           @media screen and (-ms-high-contrast: active){& {
             color: GrayText;
           }
       htmlFor="Toggle7"
+      id="Toggle7-label"
     >
       Disabled with inline label and without onText and offText
     </label>
@@ -1212,32 +1228,30 @@ exports[`Component Examples renders Toggle.Basic.Example.tsx correctly 1`] = `
           }
     >
       <button
-        aria-checked={true}
+        aria-checked={false}
         aria-disabled={true}
+        aria-labelledby="Toggle7-label"
         className=
             ms-Toggle-background
             {
               align-items: center;
-              background-color: #c8c8c8;
               background: #ffffff;
-              border-color: transparent;
-              border-radius: 1em;
-              border-style: solid;
-              border-width: 1px;
+              border-color: #c8c6c4;
+              border-radius: 10px;
+              border: 1px solid #605e5c;
               box-sizing: border-box;
               cursor: default;
               display: flex;
               font-size: 20px;
-              height: 1em;
-              justify-content: flex-end;
+              height: 20px;
               outline: transparent;
               padding-bottom: 0;
-              padding-left: .2em;
-              padding-right: .2em;
+              padding-left: 3px;
+              padding-right: 3px;
               padding-top: 0;
               position: relative;
               transition: all 0.1s ease;
-              width: 2.2em;
+              width: 40px;
             }
             &::-moz-focus-inner {
               border: 0;
@@ -1247,7 +1261,7 @@ exports[`Component Examples renders Toggle.Basic.Example.tsx correctly 1`] = `
               bottom: -2px;
               content: "";
               left: -2px;
-              outline: 1px solid #666666;
+              outline: 1px solid #605e5c;
               position: absolute;
               right: -2px;
               top: -2px;
@@ -1256,10 +1270,8 @@ exports[`Component Examples renders Toggle.Basic.Example.tsx correctly 1`] = `
         data-is-focusable={true}
         disabled={true}
         id="Toggle7"
-        onBlur={[Function]}
         onChange={[Function]}
         onClick={[Function]}
-        onFocus={[Function]}
         role="switch"
         type="button"
       >
@@ -1267,18 +1279,192 @@ exports[`Component Examples renders Toggle.Basic.Example.tsx correctly 1`] = `
           className=
               ms-Toggle-thumb
               {
-                background-color: #f4f4f4;
+                background-color: #c8c6c4;
                 border-color: transparent;
-                border-radius: .5em;
+                border-radius: 50%;
                 border-style: solid;
                 border-width: .28em;
                 box-sizing: border-box;
-                height: .5em;
+                height: 12px;
                 transition: all 0.1s ease;
-                width: .5em;
+                width: 12px;
               }
         />
       </button>
+    </div>
+  </div>
+  <div
+    className=
+        ms-Toggle
+        is-checked
+        is-enabled
+        {
+          -moz-osx-font-smoothing: grayscale;
+          -webkit-font-smoothing: antialiased;
+          font-family: 'Segoe UI', 'Segoe UI Web (West European)', 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Roboto', 'Helvetica Neue', sans-serif;
+          font-size: 14px;
+          font-weight: 400;
+          margin-bottom: 8px;
+        }
+  >
+    <label
+      className=
+          ms-Label
+          ms-Toggle-label
+          {
+            -moz-osx-font-smoothing: grayscale;
+            -webkit-font-smoothing: antialiased;
+            box-shadow: none;
+            box-sizing: border-box;
+            color: #323130;
+            display: block;
+            font-family: 'Segoe UI', 'Segoe UI Web (West European)', 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Roboto', 'Helvetica Neue', sans-serif;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 0px;
+            margin-left: 0px;
+            margin-right: 0px;
+            margin-top: 0px;
+            overflow-wrap: break-word;
+            padding-bottom: 5px;
+            padding-left: 0;
+            padding-right: 0;
+            padding-top: 5px;
+            word-wrap: break-word;
+          }
+      htmlFor="Toggle8"
+      id="Toggle8-label"
+    >
+      Enabled and checked (ARIA 1.0 compatible)
+    </label>
+    <div
+      className=
+          ms-Toggle-innerContainer
+          {
+            display: inline-flex;
+            position: relative;
+          }
+    >
+      <button
+        aria-checked={true}
+        aria-labelledby="Toggle8-label"
+        className=
+            ms-Toggle-background
+            {
+              align-items: center;
+              background: #0078d4;
+              border-color: transparent;
+              border-radius: 10px;
+              border: 1px solid #605e5c;
+              box-sizing: border-box;
+              cursor: pointer;
+              display: flex;
+              font-size: 20px;
+              height: 20px;
+              justify-content: flex-end;
+              outline: transparent;
+              padding-bottom: 0;
+              padding-left: 3px;
+              padding-right: 3px;
+              padding-top: 0;
+              position: relative;
+              transition: all 0.1s ease;
+              width: 40px;
+            }
+            &::-moz-focus-inner {
+              border: 0;
+            }
+            .ms-Fabric--isFocusVisible &:focus:after {
+              border: 1px solid #ffffff;
+              bottom: -2px;
+              content: "";
+              left: -2px;
+              outline: 1px solid #605e5c;
+              position: absolute;
+              right: -2px;
+              top: -2px;
+              z-index: 1;
+            }
+            &:hover {
+              background-color: #005a9e;
+              border-color: transparent;
+            }
+            @media screen and (-ms-high-contrast: active){&:hover {
+              background-color: Highlight;
+              border-color: Highlight;
+            }
+            @media screen and (-ms-high-contrast: active){& {
+              background-color: WindowText;
+            }
+        data-is-focusable={true}
+        id="Toggle8"
+        onChange={[Function]}
+        onClick={[Function]}
+        role="checkbox"
+        type="button"
+      >
+        <div
+          className=
+              ms-Toggle-thumb
+              {
+                background-color: #ffffff;
+                border-color: transparent;
+                border-radius: 50%;
+                border-style: solid;
+                border-width: .28em;
+                box-sizing: border-box;
+                height: 12px;
+                transition: all 0.1s ease;
+                width: 12px;
+              }
+              @media screen and (-ms-high-contrast: active){& {
+                background-color: Window;
+                border-color: Window;
+              }
+        />
+      </button>
+      <label
+        className=
+            ms-Label
+            ms-Toggle-stateText
+            {
+              -moz-osx-font-smoothing: grayscale;
+              -webkit-font-smoothing: antialiased;
+              box-shadow: none;
+              box-sizing: border-box;
+              color: #323130;
+              display: block;
+              font-family: 'Segoe UI', 'Segoe UI Web (West European)', 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Roboto', 'Helvetica Neue', sans-serif;
+              font-size: 14px;
+              font-weight: 600;
+              margin-bottom: 0px;
+              margin-left: 0px;
+              margin-right: 0px;
+              margin-top: 0px;
+              overflow-wrap: break-word;
+              padding-bottom: 5px;
+              padding-left: 0;
+              padding-right: 0;
+              padding-top: 5px;
+              word-wrap: break-word;
+            }
+            && {
+              font-weight: 400;
+              margin-bottom: 0;
+              margin-left: 8px;
+              margin-right: 8px;
+              margin-top: 0;
+              padding-bottom: 0;
+              padding-left: 0;
+              padding-right: 0;
+              padding-top: 0;
+              user-select: none;
+            }
+        htmlFor="Toggle8"
+        id="Toggle8-stateText"
+      >
+        On
+      </label>
     </div>
   </div>
 </div>

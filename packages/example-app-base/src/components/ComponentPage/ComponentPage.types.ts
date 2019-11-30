@@ -1,3 +1,7 @@
+import { IStyle, ITheme } from 'office-ui-fabric-react/lib/Styling';
+import { IStyleFunctionOrObject } from 'office-ui-fabric-react/lib/Utilities';
+import { IPageJson } from 'office-ui-fabric-react/lib/common/DocPage.types';
+
 export interface IComponentPageSection {
   title: string;
   section: JSX.Element;
@@ -12,22 +16,21 @@ export interface IComponentPageProps {
   componentName: string;
   /** Component examples **/
   exampleCards?: JSX.Element;
-  /** Array of implementation examples, displayed in the order defined */
-  implementationExampleCards?: JSX.Element;
   /** Component properties table(s) **/
   propertiesTables?: JSX.Element;
   bestPractices?: JSX.Element;
   dos?: JSX.Element;
   donts?: JSX.Element;
   overview?: JSX.Element;
-  /** Related link */
+  accessibility?: JSX.Element;
+  /**
+   * Related link
+   */
   related?: JSX.Element;
   isHeaderVisible?: boolean;
   areBadgesVisible?: boolean;
   /** className of the component being documented */
   className?: string;
-  /** Status of the component; e.g. keyboard accessible */
-  componentStatus?: JSX.Element;
   /** Pass through other sections for ComponentPage */
   otherSections?: IComponentPageSection[];
   /** Includes the feedback section **/
@@ -80,4 +83,55 @@ export interface IComponentPageProps {
    * Overrides URL from componentUrl.
    */
   editOverviewUrl?: string;
+
+  /** Theme provided by higher-order component. */
+  theme?: ITheme;
+
+  /** Optional override styles */
+  styles?: IStyleFunctionOrObject<IComponentPageStyleProps, IComponentPageStyles>;
+
+  /**
+   * JSON to populate the api reference tables
+   */
+  jsonDocs?: IPageJson;
+}
+
+export type IComponentPageStyleProps = Pick<IComponentPageProps, 'theme'>;
+
+export interface IComponentPageStyles {
+  root: IStyle;
+  body: IStyle;
+  header: IStyle;
+  headerLink: IStyle;
+  title: IStyle;
+  navigation: IStyle;
+  subHeading: IStyle;
+  /** Styles applied to all sections */
+  section: IStyle;
+  overviewSection: IStyle;
+  overviewText: IStyle;
+  overviewHeading: IStyle;
+  /**
+   * Used on the actual (rarely shown) "Best Practices" part of the best practices/dos/don'ts section.
+   * For the wrapper of both this section and the dos/don'ts, use `bestPracticesSection`.
+   */
+  usageSection: IStyle;
+  /** Used on the actual (rarely shown) "Best Practices" heading. */
+  usageHeading: IStyle;
+  variantsSection: IStyle;
+  variantsTitle: IStyle;
+  variantsList: IStyle;
+  implementationSection: IStyle;
+  feedbackSection: IStyle;
+  /** Wrapper for best practices, dos, and don'ts */
+  bestPracticesSection: IStyle;
+  /** Wrapper for the dos/don'ts sections */
+  doSections: IStyle;
+  /** Used on each of the dos and don'ts sections */
+  dosDontsSection: IStyle;
+  dosDontsHeading: IStyle;
+  dosDontsLine: IStyle;
+  dosLine: IStyle;
+  dontsSection: IStyle;
+  dontsLine: IStyle;
 }

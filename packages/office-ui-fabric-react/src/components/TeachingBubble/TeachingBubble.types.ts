@@ -5,10 +5,13 @@ import { TeachingBubbleContentBase } from './TeachingBubbleContent.base';
 import { IImageProps } from '../../Image';
 import { IButtonProps } from '../../Button';
 import { IAccessiblePopupProps } from '../../common/IAccessiblePopupProps';
-import { ICalloutProps } from '../../Callout';
+import { ICalloutProps, Target } from '../../Callout';
 import { IStyle, ITheme } from '../../Styling';
 import { IRefObject, IStyleFunctionOrObject } from '../../Utilities';
 
+/**
+ * {@docCategory TeachingBubble}
+ */
 export interface ITeachingBubble {
   /** Sets focus to the TeachingBubble root element */
   focus(): void;
@@ -16,6 +19,7 @@ export interface ITeachingBubble {
 
 /**
  * TeachingBubble component props.
+ * {@docCategory TeachingBubble}
  */
 export interface ITeachingBubbleProps extends React.ClassAttributes<TeachingBubbleBase | TeachingBubbleContentBase>, IAccessiblePopupProps {
   /**
@@ -50,12 +54,17 @@ export interface ITeachingBubbleProps extends React.ClassAttributes<TeachingBubb
   hasCondensedHeadline?: boolean;
 
   /**
-   * Does the TeachingBubble have a close button in the top right corner?
+   * @deprecated Use `hasCloseButton`.
    */
   hasCloseIcon?: boolean;
 
   /**
-   * An Image for the Teaching Bubble.
+   * Whether the TeachingBubble renders close button in the top right corner.
+   */
+  hasCloseButton?: boolean;
+
+  /**
+   * An Image for the TeachingBubble.
    */
   illustrationImage?: IImageProps;
 
@@ -70,9 +79,21 @@ export interface ITeachingBubbleProps extends React.ClassAttributes<TeachingBubb
   secondaryButtonProps?: IButtonProps;
 
   /**
+   * Text that will be rendered in the footer of the TeachingBubble. May be rendered alongside primary and secondary buttons.
+   */
+  footerContent?: string | JSX.Element;
+
+  /**
+   * @deprecated use target instead
    * Element to anchor the TeachingBubble to.
    */
   targetElement?: HTMLElement;
+
+  /**
+   * Element, MouseEvent, Point, or querySelector string that the TeachingBubble
+   * should anchor to.
+   */
+  target?: Target;
 
   /**
    * Callback when the TeachingBubble tries to close.
@@ -80,7 +101,7 @@ export interface ITeachingBubbleProps extends React.ClassAttributes<TeachingBubb
   onDismiss?: (ev?: any) => void;
 
   /**
-   * Whether or not the Teaching Bubble is wide, with image on the left side.
+   * Whether or not the TeachingBubble is wide, with image on the left side.
    */
   isWide?: boolean;
 
@@ -100,6 +121,9 @@ export interface ITeachingBubbleProps extends React.ClassAttributes<TeachingBubb
   ariaDescribedBy?: string;
 }
 
+/**
+ * {@docCategory TeachingBubble}
+ */
 export type ITeachingBubbleStyleProps = Required<Pick<ITeachingBubbleProps, 'theme'>> &
   Pick<ITeachingBubbleProps, 'hasCondensedHeadline' | 'hasSmallHeadline' | 'isWide'> & {
     /** Class name for callout. */
@@ -108,8 +132,13 @@ export type ITeachingBubbleStyleProps = Required<Pick<ITeachingBubbleProps, 'the
     primaryButtonClassName?: string;
     /** Class name for secondary button. */
     secondaryButtonClassName?: string;
+    /** If the close button is visible. */
+    hasCloseButton?: boolean;
   };
 
+/**
+ * {@docCategory TeachingBubble}
+ */
 export interface ITeachingBubbleStyles {
   root: IStyle;
   body: IStyle;
@@ -126,8 +155,11 @@ export interface ITeachingBubbleStyles {
   subComponentStyles?: ITeachingBubbleSubComponentStyles;
 }
 
+/**
+ * {@docCategory TeachingBubble}
+ */
 export interface ITeachingBubbleSubComponentStyles {
-  /** Refers to the callout that hosts the teaching bubble. */
+  /** Refers to the callout that hosts the TeachingBubble. */
   // TODO: this should be the interface once we're on TS 2.9.2 but otherwise causes errors in 2.8.4
   // callout: IStyleFunctionOrObject<ICalloutContentStyleProps, ICalloutContentStyles>;
   callout: IStyleFunctionOrObject<any, any>;

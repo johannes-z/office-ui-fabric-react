@@ -1,17 +1,21 @@
-# [@uifabric/azure-themes](http://dev.microsoft.com/fabric)
+# @uifabric/azure-themes
 
-##### AzureThemes components for Office UI Fabric React
+**Azure theme for [Office UI Fabric React](https://dev.microsoft.com/fabric)**
 
-These are not production ready components and __should never be used in product__. This AzureThemes space is useful for testing new components whose APIs might change before final release.
-
-To import AzureThemes components:
+The Azure themes require the following import statements:
 
 ```js
-import { AzureCustomizations } from '@uifabric/azure-themes';
+import { Fabric, Customizer } from 'office-ui-fabric-react';
+import { AzureCustomizationsLight, AzureCustomizationsDark } from '@uifabric/azure-themes';
 ```
 
-Once the AzureThemes component graduates to a production release, the component will be available at:
+The theme may subsequently be set to either the Azure or Azure-Dark themes
 
-```js
-import { AzureCustomizations } from 'office-ui-fabric-react';
+```jsx
+  const customizations = AzureCustomizationsDark // or alternatively AzureCustomizationsLight
+  <Customizer {...customizations}>
+    <Fabric>
+        <div>{child component}</div>
+    </Fabric>
+  </Customizer>
 ```

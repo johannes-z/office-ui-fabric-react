@@ -4,6 +4,7 @@ import { BaseComponent, KeyCodes, classNamesFunction, IStyleFunctionOrObject, cs
 import { IProcessedStyleSet } from '../../../Styling';
 import { CommandButton, IButton } from '../../../Button';
 import { Spinner, ISpinnerStyleProps, ISpinnerStyles } from '../../../Spinner';
+import { Announced } from '../../../Announced';
 import { ISuggestionsProps, SuggestionActionType, ISuggestionsStyleProps, ISuggestionsStyles } from './Suggestions.types';
 import { SuggestionsItem } from './SuggestionsItem';
 import { getStyles as suggestionsItemStyles } from './SuggestionsItem.styles';
@@ -18,11 +19,20 @@ export interface ISuggestionsState {
   selectedActionType: SuggestionActionType;
 }
 
+const StyledSuggestionsItem = styled<ISuggestionItemProps<any>, ISuggestionsItemStyleProps, ISuggestionsItemStyles>(
+  SuggestionsItem,
+  suggestionsItemStyles,
+  undefined,
+  { scope: 'SuggestionItem' }
+);
+
+/**
+ * {@docCategory Pickers}
+ */
 export class Suggestions<T> extends BaseComponent<ISuggestionsProps<T>, ISuggestionsState> {
   protected _forceResolveButton = React.createRef<IButton>();
   protected _searchForMoreButton = React.createRef<IButton>();
   protected _selectedElement = React.createRef<HTMLDivElement>();
-  private SuggestionsItemOfProperType = SuggestionsItem as new (props: ISuggestionItemProps<T>) => SuggestionsItem<T>;
   private activeSelectedElement: HTMLDivElement | null;
   private _classNames: Partial<IProcessedStyleSet<ISuggestionsStyles>>;
 
@@ -67,11 +77,11 @@ export class Suggestions<T> extends BaseComponent<ISuggestionsProps<T>, ISuggest
       resultsFooterFull,
       resultsFooter,
       isResultsFooterVisible = true,
-      suggestionsAvailableAlertText,
       suggestionsHeaderText,
       suggestionsClassName,
       theme,
-      styles
+      styles,
+      suggestionsListId
     } = this.props;
 
     // TODO
@@ -117,11 +127,7 @@ export class Suggestions<T> extends BaseComponent<ISuggestionsProps<T>, ISuggest
       : { className: css('ms-Suggestions-spinner', legacyStyles.suggestionsSpinner) };
 
     const noResults = () => {
-      return noResultsFoundText ? (
-        <div role="alert" className={this._classNames.noSuggestions}>
-          {noResultsFoundText}
-        </div>
-      ) : null;
+      return noResultsFoundText ? <div className={this._classNames.noSuggestions}>{noResultsFoundText}</div> : null;
     };
 
     // MostRecently Used text should supercede the header text if it's there and available.
@@ -136,9 +142,13 @@ export class Suggestions<T> extends BaseComponent<ISuggestionsProps<T>, ISuggest
     }
 
     const hasNoSuggestions = (!suggestions || !suggestions.length) && !isLoading;
+    const divProps: React.HtmlHTMLAttributes<HTMLDivElement> =
+      hasNoSuggestions || isLoading ? { role: 'dialog', id: suggestionsListId } : {};
 
     return (
-      <div className={this._classNames.root}>
+      <div className={this._classNames.root} {...divProps}>
+        <Announced message={this._getAlertText()} aria-live="polite" />
+
         {headerText ? <div className={this._classNames.title}>{headerText}</div> : null}
         {forceResolveText && this._shouldShowForceResolve() && (
           <CommandButton
@@ -165,13 +175,6 @@ export class Suggestions<T> extends BaseComponent<ISuggestionsProps<T>, ISuggest
         {footerTitle && !moreSuggestionsAvailable && !isMostRecentlyUsedVisible && !isSearching ? (
           <div className={this._classNames.title}>{footerTitle(this.props)}</div>
         ) : null}
-        {
-          <span role="alert" aria-live="polite" className={this._classNames.suggestionsAvailable}>
-            {!isLoading && !isSearching && suggestions && suggestions.length > 0 && suggestionsAvailableAlertText
-              ? suggestionsAvailableAlertText
-              : null}
-          </span>
-        }
       </div>
     );
   }
@@ -294,6 +297,19 @@ export class Suggestions<T> extends BaseComponent<ISuggestionsProps<T>, ISuggest
     }
   }
 
+  private _getAlertText = () => {
+    const { isLoading, isSearching, suggestions, suggestionsAvailableAlertText, noResultsFoundText } = this.props;
+    if (!isLoading && !isSearching) {
+      if (suggestions.length > 0) {
+        return suggestionsAvailableAlertText || '';
+      }
+      if (noResultsFoundText) {
+        return noResultsFoundText;
+      }
+    }
+    return '';
+  };
+
   private _renderSuggestions(): JSX.Element | null {
     const {
       onRenderSuggestion,
@@ -307,22 +323,22 @@ export class Suggestions<T> extends BaseComponent<ISuggestionsProps<T>, ISuggest
 
     let { suggestions } = this.props;
 
-    const TypedSuggestionsItem = this.SuggestionsItemOfProperType;
+    const StyledTypedSuggestionsItem: React.StatelessComponent<ISuggestionItemProps<T>> = StyledSuggestionsItem;
 
-    // TODO:
-    // Move this styled component in a separate file and make it available to the public API.
-    // This should be done after rewriting pickers to use a composition pattern instead of inheritance.
-    const StyledTypedSuggestionsItem = styled<ISuggestionItemProps<T>, ISuggestionsItemStyleProps, ISuggestionsItemStyles>(
-      TypedSuggestionsItem,
-      suggestionsItemStyles,
-      undefined,
-      {
-        scope: 'SuggestionItem'
+    let selectedIndex = -1;
+    suggestions.some((element, index) => {
+      if (element.selected) {
+        selectedIndex = index;
+        return true;
       }
-    );
+      return false;
+    });
 
     if (resultsMaximumNumber) {
-      suggestions = suggestions.slice(0, resultsMaximumNumber);
+      suggestions =
+        selectedIndex >= resultsMaximumNumber
+          ? suggestions.slice(selectedIndex - resultsMaximumNumber + 1, selectedIndex + 1)
+          : suggestions.slice(0, resultsMaximumNumber);
     }
 
     if (suggestions.length === 0) {
@@ -338,7 +354,7 @@ export class Suggestions<T> extends BaseComponent<ISuggestionsProps<T>, ISuggest
       >
         {suggestions.map((suggestion, index) => (
           <div
-            ref={suggestion.selected ? this._selectedElement : ''}
+            ref={suggestion.selected ? this._selectedElement : undefined}
             // tslint:disable-next-line:no-string-literal
             key={(suggestion.item as any)['key'] ? (suggestion.item as any)['key'] : index}
             id={'sug-' + index}
@@ -348,7 +364,7 @@ export class Suggestions<T> extends BaseComponent<ISuggestionsProps<T>, ISuggest
           >
             <StyledTypedSuggestionsItem
               suggestionModel={suggestion}
-              RenderSuggestion={onRenderSuggestion as any}
+              RenderSuggestion={onRenderSuggestion}
               onClick={this._onClickTypedSuggestionsItem(suggestion.item, index)}
               className={suggestionsItemClassName}
               showRemoveButton={showRemoveButtons}

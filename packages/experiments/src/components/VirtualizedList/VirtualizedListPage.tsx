@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { ExampleCard, ComponentPage, IComponentDemoPageProps, PropertiesTableSet } from '@uifabric/example-app-base';
 import { VirtualizedListBasicExample } from './examples/VirtualizedList.Basic.Example';
-import { VirtualizedListBasicExample2 } from './examples/VirtualizedList.Basic.Example2';
+import { VirtualizedListBasicExample2 } from './examples/VirtualizedList.Basic2.Example';
 
 const VirtualizedListBasicExampleCode = require('!raw-loader!@uifabric/experiments/src/components/VirtualizedList/examples/VirtualizedList.Basic.Example.tsx') as string;
-const VirtualizedListBasicExample2Code = require('!raw-loader!@uifabric/experiments/src/components/VirtualizedList/examples/VirtualizedList.Basic.Example2.tsx') as string;
+const VirtualizedListBasicExample2Code = require('!raw-loader!@uifabric/experiments/src/components/VirtualizedList/examples/VirtualizedList.Basic2.Example.tsx') as string;
 
 export class VirtualizedListPage extends React.Component<IComponentDemoPageProps, {}> {
   public render(): JSX.Element {
@@ -32,7 +32,6 @@ export class VirtualizedListPage extends React.Component<IComponentDemoPageProps
         bestPractices={<div />}
         dos={<div />}
         donts={<div />}
-        related={<a href="https://dev.office.com/fabric-js/Components/VirtualizedList/VirtualizedList.html">Fabric JS</a>}
         isHeaderVisible={this.props.isHeaderVisible}
       />
     );

@@ -21,8 +21,12 @@ import {
   on,
   raiseClick,
   shouldWrapFocus,
-  warnDeprecations
+  warnDeprecations,
+  portalContainsElement,
+  IPoint,
+  getWindow
 } from '../../Utilities';
+import { mergeStyles } from '@uifabric/merge-styles';
 
 const IS_FOCUSABLE_ATTRIBUTE = 'data-is-focusable';
 const IS_ENTER_DISABLED_ATTRIBUTE = 'data-disable-click-on-enter';
@@ -33,20 +37,40 @@ const NO_HORIZONTAL_WRAP = 'data-no-horizontal-wrap';
 const LARGE_DISTANCE_FROM_CENTER = 999999999;
 const LARGE_NEGATIVE_DISTANCE_FROM_CENTER = -999999999;
 
+let focusZoneStyles: string;
+
+const focusZoneClass: string = 'ms-FocusZone';
+
+// Helper function that will return a class for when the root is focused
+function getRootClass(): string {
+  if (!focusZoneStyles) {
+    focusZoneStyles = mergeStyles(
+      {
+        selectors: {
+          ':focus': {
+            outline: 'none'
+          }
+        }
+      },
+      focusZoneClass
+    );
+  }
+  return focusZoneStyles;
+}
+
 const _allInstances: {
   [key: string]: FocusZone;
 } = {};
 const _outerZones: Set<FocusZone> = new Set();
 
-interface IPoint {
-  left: number;
-  top: number;
-}
+// Track the 1 global keydown listener we hook to window.
+let _disposeGlobalKeyDownListener: () => void | undefined;
+
 const ALLOWED_INPUT_TYPES = ['text', 'number', 'password', 'email', 'tel', 'url', 'search'];
 
 const ALLOW_VIRTUAL_ELEMENTS = false;
 
-export class FocusZone extends React.Component<IFocusZoneProps, {}> implements IFocusZone {
+export class FocusZone extends React.Component<IFocusZoneProps> implements IFocusZone {
   public static defaultProps: IFocusZoneProps = {
     isCircularNavigation: false,
     direction: FocusZoneDirection.bidirectional
@@ -86,23 +110,24 @@ export class FocusZone extends React.Component<IFocusZoneProps, {}> implements I
 
   constructor(props: IFocusZoneProps) {
     super(props);
-
     // Manage componentRef resolution.
     initializeComponentRef(this);
 
-    if (typeof process !== 'undefined' && process.env.NODE_ENV !== 'production') {
+    if (process.env.NODE_ENV !== 'production') {
       warnDeprecations('FocusZone', props, {
         rootProps: undefined,
         allowTabKey: 'handleTabKey',
-        elementType: 'as'
+        elementType: 'as',
+        ariaDescribedBy: 'aria-describedby',
+        ariaLabelledBy: 'aria-labelledby'
       });
     }
 
     this._id = getId('FocusZone');
 
     this._focusAlignment = {
-      left: 0,
-      top: 0
+      x: 0,
+      y: 0
     };
 
     this._processingTabKey = false;
@@ -114,11 +139,10 @@ export class FocusZone extends React.Component<IFocusZoneProps, {}> implements I
     _allInstances[this._id] = this;
 
     if (root) {
-      const windowElement = root.ownerDocument!.defaultView;
-
+      const windowElement = getWindow(root);
       let parentElement = getParent(root, ALLOW_VIRTUAL_ELEMENTS);
 
-      while (parentElement && parentElement !== document.body && parentElement.nodeType === 1) {
+      while (parentElement && parentElement !== this._getDocument().body && parentElement.nodeType === 1) {
         if (isElementFocusZone(parentElement)) {
           this._isInnerZone = true;
           break;
@@ -131,7 +155,7 @@ export class FocusZone extends React.Component<IFocusZoneProps, {}> implements I
       }
 
       if (windowElement && _outerZones.size === 1) {
-        this._disposables.push(on(windowElement, 'keydown', this._onKeyDownCapture, true));
+        _disposeGlobalKeyDownListener = on(windowElement, 'keydown', this._onKeyDownCapture, true);
       }
       this._disposables.push(on(root, 'blur', this._onBlur, true));
 
@@ -139,7 +163,7 @@ export class FocusZone extends React.Component<IFocusZoneProps, {}> implements I
       this._updateTabIndexes();
 
       if (this.props.defaultActiveElement) {
-        this._activeElement = getDocument()!.querySelector(this.props.defaultActiveElement) as HTMLElement;
+        this._activeElement = this._getDocument().querySelector(this.props.defaultActiveElement) as HTMLElement;
         this.focus();
       }
     }
@@ -147,7 +171,7 @@ export class FocusZone extends React.Component<IFocusZoneProps, {}> implements I
 
   public componentDidUpdate(): void {
     const { current: root } = this._root;
-    const doc = getDocument(root);
+    const doc = this._getDocument();
 
     if (doc && this._lastIndexPath && (doc.activeElement === doc.body || doc.activeElement === root)) {
       // The element has been removed after the render, attempt to restore focus.
@@ -174,6 +198,11 @@ export class FocusZone extends React.Component<IFocusZoneProps, {}> implements I
 
     // Dispose all events.
     this._disposables.forEach(d => d());
+
+    // If this is the last outer zone, remove the keydown listener.
+    if (_outerZones.size === 0 && _disposeGlobalKeyDownListener) {
+      _disposeGlobalKeyDownListener();
+    }
   }
 
   public render() {
@@ -191,7 +220,8 @@ export class FocusZone extends React.Component<IFocusZoneProps, {}> implements I
 
     return (
       <Tag
-        role="presentation"
+        aria-labelledby={ariaLabelledBy}
+        aria-describedby={ariaDescribedBy}
         {...divProps}
         {
           // root props has been deprecated and should get removed.
@@ -199,11 +229,12 @@ export class FocusZone extends React.Component<IFocusZoneProps, {}> implements I
           // be any native element so typescript rightly flags this as a problem.
           ...rootProps as any
         }
-        className={css('ms-FocusZone', className)}
+        // Once the getClassName correctly memoizes inputs this should
+        // be replaced so that className is passed to getRootClass and is included there so
+        // the class names will always be in the same order.
+        className={css(getRootClass(), className)}
         ref={this._root}
         data-focuszone-id={this._id}
-        aria-labelledby={ariaLabelledBy}
-        aria-describedby={ariaDescribedBy}
         onKeyDown={this._onKeyDown}
         onFocus={this._onFocus}
         onMouseDownCapture={this._onMouseDown}
@@ -263,6 +294,7 @@ export class FocusZone extends React.Component<IFocusZoneProps, {}> implements I
     }
 
     if (element) {
+      // when we Set focus to a specific child, we should recalculate the alignment depend on its position
       this._setActiveElement(element);
       if (this._activeElement) {
         this._activeElement.focus();
@@ -274,23 +306,36 @@ export class FocusZone extends React.Component<IFocusZoneProps, {}> implements I
     return false;
   }
 
+  /**
+   * Forces horizontal alignment in the context of vertical arrowing to use specific point as the reference, rather than a center based on
+   * the last horizontal motion.
+   * @param point - the new reference point.
+   */
+  public setFocusAlignment(point: IPoint): void {
+    this._focusAlignment = point;
+  }
+
   private _evaluateFocusBeforeRender(): void {
     const { current: root } = this._root;
-    const doc = getDocument(root);
 
+    const doc = this._getDocument();
     if (doc) {
       const focusedElement = doc.activeElement as HTMLElement;
 
       // Only update the index path if we are not parked on the root.
       if (focusedElement !== root) {
         const shouldRestoreFocus = elementContains(root, focusedElement, false);
-
-        this._lastIndexPath = shouldRestoreFocus ? getElementIndexPath(root as HTMLElement, doc.activeElement as HTMLElement) : undefined;
+        this._lastIndexPath = shouldRestoreFocus ? getElementIndexPath(root as HTMLElement, focusedElement) : undefined;
       }
     }
   }
 
   private _onFocus = (ev: React.FocusEvent<HTMLElement>): void => {
+    if (this._portalContainsElement(ev.target as HTMLElement)) {
+      // If the event target is inside a portal do not process the event.
+      return;
+    }
+
     const { onActiveElementChanged, doNotAllowFocusEventToPropagate, onFocusNotification } = this.props;
     const isImmediateDescendant = this._isImmediateDescendantOfZone(ev.target as HTMLElement);
     let newActiveElement: HTMLElement | undefined;
@@ -319,7 +364,7 @@ export class FocusZone extends React.Component<IFocusZoneProps, {}> implements I
     // update alignment an immediate descendant
     if (newActiveElement && newActiveElement !== this._activeElement) {
       if (isImmediateDescendant || initialElementFocused) {
-        this._setFocusAlignment(newActiveElement, initialElementFocused);
+        this._setFocusAlignment(newActiveElement, true, true);
       }
 
       this._activeElement = newActiveElement;
@@ -383,6 +428,11 @@ export class FocusZone extends React.Component<IFocusZoneProps, {}> implements I
   };
 
   private _onMouseDown = (ev: React.MouseEvent<HTMLElement>): void => {
+    if (this._portalContainsElement(ev.target as HTMLElement)) {
+      // If the event target is inside a portal do not process the event.
+      return;
+    }
+
     const { disabled } = this.props;
 
     if (disabled) {
@@ -411,7 +461,7 @@ export class FocusZone extends React.Component<IFocusZoneProps, {}> implements I
     }
   };
 
-  private _setActiveElement(element: HTMLElement, forceAlignemnt?: boolean): void {
+  private _setActiveElement(element: HTMLElement, forceAlignment?: boolean): void {
     const previousActiveElement = this._activeElement;
 
     this._activeElement = element;
@@ -425,7 +475,7 @@ export class FocusZone extends React.Component<IFocusZoneProps, {}> implements I
     }
 
     if (this._activeElement) {
-      if (!this._focusAlignment || forceAlignemnt) {
+      if (!this._focusAlignment || forceAlignment) {
         this._setFocusAlignment(element, true, true);
       }
 
@@ -437,6 +487,11 @@ export class FocusZone extends React.Component<IFocusZoneProps, {}> implements I
    * Handle the keystrokes.
    */
   private _onKeyDown = (ev: React.KeyboardEvent<HTMLElement>): boolean | undefined => {
+    if (this._portalContainsElement(ev.target as HTMLElement)) {
+      // If the event target is inside a portal do not process the event.
+      return;
+    }
+
     const { direction, disabled, isInnerZoneKeystroke } = this.props;
 
     if (disabled) {
@@ -452,7 +507,7 @@ export class FocusZone extends React.Component<IFocusZoneProps, {}> implements I
       return;
     }
 
-    if (document.activeElement === this._root.current && this._isInnerZone) {
+    if (this._getDocument().activeElement === this._root.current && this._isInnerZone) {
       // If this element has focus, it is being controlled by a parent.
       // Ignore the keystroke.
       return;
@@ -712,7 +767,7 @@ export class FocusZone extends React.Component<IFocusZoneProps, {}> implements I
 
   private _moveFocusDown(): boolean {
     let targetTop = -1;
-    const leftAlignment = this._focusAlignment.left;
+    const leftAlignment = this._focusAlignment.x;
 
     if (
       this._moveFocus(true, (activeRect: ClientRect, targetRect: ClientRect) => {
@@ -753,7 +808,7 @@ export class FocusZone extends React.Component<IFocusZoneProps, {}> implements I
 
   private _moveFocusUp(): boolean {
     let targetTop = -1;
-    const leftAlignment = this._focusAlignment.left;
+    const leftAlignment = this._focusAlignment.x;
 
     if (
       this._moveFocus(false, (activeRect: ClientRect, targetRect: ClientRect) => {
@@ -806,9 +861,9 @@ export class FocusZone extends React.Component<IFocusZoneProps, {}> implements I
             // Going left at a leftmost rectangle will go down a line instead of up a line like in LTR.
             // This is important, because we want to be comparing the top of the target rect
             // with the bottom of the active rect.
-            topBottomComparison = targetRect.top.toFixed(3) < activeRect.bottom.toFixed(3);
+            topBottomComparison = parseFloat(targetRect.top.toFixed(3)) < parseFloat(activeRect.bottom.toFixed(3));
           } else {
-            topBottomComparison = targetRect.bottom.toFixed(3) > activeRect.top.toFixed(3);
+            topBottomComparison = parseFloat(targetRect.bottom.toFixed(3)) > parseFloat(activeRect.top.toFixed(3));
           }
 
           if (topBottomComparison && targetRect.right <= activeRect.right && this.props.direction !== FocusZoneDirection.vertical) {
@@ -846,9 +901,9 @@ export class FocusZone extends React.Component<IFocusZoneProps, {}> implements I
             // Going right at a rightmost rectangle will go up a line instead of down a line like in LTR.
             // This is important, because we want to be comparing the bottom of the target rect
             // with the top of the active rect.
-            topBottomComparison = targetRect.bottom.toFixed(3) > activeRect.top.toFixed(3);
+            topBottomComparison = parseFloat(targetRect.bottom.toFixed(3)) > parseFloat(activeRect.top.toFixed(3));
           } else {
-            topBottomComparison = targetRect.top.toFixed(3) < activeRect.bottom.toFixed(3);
+            topBottomComparison = parseFloat(targetRect.top.toFixed(3)) < parseFloat(activeRect.bottom.toFixed(3));
           }
 
           if (topBottomComparison && targetRect.left >= activeRect.left && this.props.direction !== FocusZoneDirection.vertical) {
@@ -877,15 +932,18 @@ export class FocusZone extends React.Component<IFocusZoneProps, {}> implements I
       const top = rect.top + rect.height / 2;
 
       if (!this._focusAlignment) {
-        this._focusAlignment = { left, top };
+        this._focusAlignment = {
+          x: left,
+          y: top
+        };
       }
 
       if (isHorizontal) {
-        this._focusAlignment.left = left;
+        this._focusAlignment.x = left;
       }
 
       if (isVertical) {
-        this._focusAlignment.top = top;
+        this._focusAlignment.y = top;
       }
     }
   }
@@ -897,7 +955,7 @@ export class FocusZone extends React.Component<IFocusZoneProps, {}> implements I
   private _getOwnerZone(element?: HTMLElement): HTMLElement | null {
     let parentElement = getParent(element as HTMLElement, ALLOW_VIRTUAL_ELEMENTS);
 
-    while (parentElement && parentElement !== this._root.current && parentElement !== document.body) {
+    while (parentElement && parentElement !== this._root.current && parentElement !== this._getDocument().body) {
       if (isElementFocusZone(parentElement)) {
         return parentElement;
       }
@@ -905,7 +963,7 @@ export class FocusZone extends React.Component<IFocusZoneProps, {}> implements I
       parentElement = getParent(parentElement, ALLOW_VIRTUAL_ELEMENTS);
     }
 
-    return this._root.current;
+    return parentElement;
   }
 
   private _updateTabIndexes(element?: HTMLElement) {
@@ -1001,5 +1059,16 @@ export class FocusZone extends React.Component<IFocusZoneProps, {}> implements I
 
   private _shouldWrapFocus(element: HTMLElement, noWrapDataAttribute: 'data-no-vertical-wrap' | 'data-no-horizontal-wrap'): boolean {
     return !!this.props.checkForNoWrap ? shouldWrapFocus(element, noWrapDataAttribute) : true;
+  }
+
+  /**
+   * Returns true if the element is a descendant of the FocusZone through a React portal.
+   */
+  private _portalContainsElement(element: HTMLElement): boolean {
+    return element && !!this._root.current && portalContainsElement(element, this._root.current);
+  }
+
+  private _getDocument(): Document {
+    return getDocument(this._root.current)!;
   }
 }

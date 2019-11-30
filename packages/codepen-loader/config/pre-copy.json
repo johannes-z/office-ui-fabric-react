@@ -1,5 +1,0 @@
-{
-  "copyTo": {
-    "lib": ["../office-ui-fabric-react/src/utilities/exampleData.ts"]
-  }
-}

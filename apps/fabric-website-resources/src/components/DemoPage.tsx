@@ -1,11 +1,17 @@
 import { IDemoPageProps } from './DemoPage.types';
-import { ComponentPage, ExampleCard, PropertiesTableSet, PageMarkdown, FeedbackList } from '@uifabric/example-app-base';
+import {
+  ComponentPage,
+  ExampleCard,
+  ApiReferencesTableSet,
+  PropertiesTableSet,
+  Markdown,
+  FeedbackList,
+  IExampleCardProps
+} from '@uifabric/example-app-base';
 import * as React from 'react';
-import { ComponentStatus } from '../ComponentStatus/ComponentStatus';
 
 export const DemoPage: React.StatelessComponent<IDemoPageProps> = demoPageProps => {
   const {
-    implementationExamples,
     exampleKnobs,
     examples,
     propertiesTablesSources,
@@ -13,33 +19,22 @@ export const DemoPage: React.StatelessComponent<IDemoPageProps> = demoPageProps 
     bestPractices,
     dos,
     donts,
-    componentStatus,
+    accessibility,
     // Passing the extra props to ComponentPage like this helps to keep the prop names in sync
     ...componentPageProps
   } = demoPageProps;
   return (
     <ComponentPage
       {...componentPageProps}
-      implementationExampleCards={
-        implementationExamples && (
-          <div>
-            {implementationExamples.map(example => (
-              <ExampleCard title={example.title} code={example.code} key={example.title}>
-                {example.view}
-              </ExampleCard>
-            ))}
-          </div>
-        )
-      }
       exampleCards={
         (exampleKnobs || examples) && (
           <div>
             {exampleKnobs}
             {examples &&
               examples.map(example => {
-                const { view, ...cardProps } = example;
+                const { view, styles, ...cardProps } = example;
                 return (
-                  <ExampleCard key={cardProps.title} {...cardProps}>
+                  <ExampleCard key={cardProps.title} styles={styles as IExampleCardProps['styles']} {...cardProps}>
                     {view}
                   </ExampleCard>
                 );
@@ -47,12 +42,15 @@ export const DemoPage: React.StatelessComponent<IDemoPageProps> = demoPageProps 
           </div>
         )
       }
-      propertiesTables={propertiesTablesSources && <PropertiesTableSet sources={propertiesTablesSources} />}
-      overview={overview ? <PageMarkdown>{overview}</PageMarkdown> : undefined}
-      bestPractices={bestPractices ? <PageMarkdown>{bestPractices}</PageMarkdown> : undefined}
-      dos={dos ? <PageMarkdown>{dos}</PageMarkdown> : undefined}
-      donts={donts ? <PageMarkdown>{donts}</PageMarkdown> : undefined}
-      componentStatus={componentStatus ? <ComponentStatus {...componentStatus} /> : undefined}
+      propertiesTables={
+        (componentPageProps.jsonDocs && <ApiReferencesTableSet jsonDocs={componentPageProps.jsonDocs} />) ||
+        (propertiesTablesSources && <PropertiesTableSet sources={propertiesTablesSources} />)
+      }
+      accessibility={accessibility ? <Markdown>{accessibility}</Markdown> : undefined}
+      overview={overview ? <Markdown>{overview}</Markdown> : undefined}
+      bestPractices={bestPractices ? <Markdown>{bestPractices}</Markdown> : undefined}
+      dos={dos ? <Markdown>{dos}</Markdown> : undefined}
+      donts={donts ? <Markdown>{donts}</Markdown> : undefined}
       feedback={componentPageProps.isFeedbackVisible ? <FeedbackList title={componentPageProps.title} /> : undefined}
     />
   );

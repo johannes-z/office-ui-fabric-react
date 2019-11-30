@@ -1,4 +1,4 @@
-import { Customizations, merge } from '@uifabric/utilities';
+import { Customizations, merge, getWindow } from '@uifabric/utilities';
 import { IPalette, ISemanticColors, ITheme, IPartialTheme, IFontStyles } from '../interfaces/index';
 import { DefaultFontStyles } from './DefaultFontStyles';
 import { DefaultPalette } from './DefaultPalette';
@@ -18,7 +18,7 @@ let _onThemeChangeCallbacks: Array<(theme: ITheme) => void> = [];
 export const ThemeSettingName = 'theme';
 
 if (!Customizations.getSettings([ThemeSettingName]).theme) {
-  let win = typeof window !== 'undefined' ? window : undefined;
+  const win = getWindow();
 
   // tslint:disable:no-string-literal no-any
   if (win && (win as any)['FabricConfig'] && (win as any)['FabricConfig'].theme) {
@@ -74,7 +74,7 @@ export function loadTheme(theme: IPartialTheme, depComments: boolean = false): I
   _theme = createTheme(theme, depComments);
 
   // Invoke the legacy method of theming the page as well.
-  legacyLoadTheme({ ..._theme.palette, ..._theme.semanticColors, ..._loadFonts(_theme) });
+  legacyLoadTheme({ ..._theme.palette, ..._theme.semanticColors, ..._theme.effects, ..._loadFonts(_theme) });
 
   Customizations.applySettings({ [ThemeSettingName]: _theme });
 
@@ -99,8 +99,13 @@ function _loadFonts(theme: ITheme): { [name: string]: string } {
   for (const fontName of Object.keys(theme.fonts)) {
     const font = theme.fonts[fontName];
     for (const propName of Object.keys(font)) {
-      const name = 'ms-font-' + fontName + '-' + propName;
-      lines[name] = `"[theme:${name}, default: ${font[propName]}]"`;
+      const name = fontName + propName.charAt(0).toUpperCase() + propName.slice(1);
+      let value = font[propName];
+      if (propName === 'fontSize' && typeof value === 'number') {
+        // if it's a number, convert it to px by default like our theming system does
+        value = value + 'px';
+      }
+      lines[name] = value;
     }
   }
   return lines;
@@ -176,7 +181,10 @@ function _expandFrom<TRetVal, TMapType>(propertyName: string | TRetVal | undefin
 // We'll use these as fallbacks for semantic slots that the passed in theme did not define.
 function _makeSemanticColorsFromPalette(p: IPalette, isInverted: boolean, depComments: boolean): ISemanticColors {
   let toReturn: ISemanticColors = {
+    // DEFAULTS
     bodyBackground: p.white,
+    bodyBackgroundHovered: p.neutralLighter,
+    bodyBackgroundChecked: p.neutralLight,
     bodyStandoutBackground: p.neutralLighterAlt,
     bodyFrameBackground: p.white,
     bodyFrameDivider: p.neutralLight,
@@ -184,52 +192,35 @@ function _makeSemanticColorsFromPalette(p: IPalette, isInverted: boolean, depCom
     bodyTextChecked: p.black,
     bodySubtext: p.neutralSecondary,
     bodyDivider: p.neutralLight,
-
-    disabledBackground: p.neutralLighter,
-    disabledText: p.neutralTertiary,
     disabledBodyText: p.neutralTertiary,
-    disabledSubtext: p.neutralQuaternary,
     disabledBodySubtext: p.neutralTertiaryAlt,
-
+    disabledBorder: p.neutralTertiaryAlt,
     focusBorder: p.neutralSecondary,
     variantBorder: p.neutralLight,
     variantBorderHovered: p.neutralTertiary,
     defaultStateBackground: p.neutralLighterAlt,
 
-    errorText: !isInverted ? p.redDark : '#ff5f5f',
-    warningText: !isInverted ? '#333333' : '#ffffff',
-    errorBackground: !isInverted ? 'rgba(232, 17, 35, .2)' : 'rgba(232, 17, 35, .5)',
-    blockingBackground: !isInverted ? 'rgba(234, 67, 0, .2)' : 'rgba(234, 67, 0, .5)',
-    warningBackground: !isInverted ? 'rgba(255, 185, 0, .2)' : 'rgba(255, 251, 0, .6)',
-    warningHighlight: !isInverted ? '#ffb900' : '#fff100',
-    successBackground: !isInverted ? 'rgba(186, 216, 10, .2)' : 'rgba(186, 216, 10, .4)',
+    // LINKS
+    actionLink: p.neutralPrimary,
+    actionLinkHovered: p.neutralDark,
+    link: p.themePrimary,
+    linkHovered: p.themeDarker,
 
-    inputBorder: p.neutralTertiary,
-    inputBorderHovered: p.neutralPrimary,
-    inputBackground: p.white,
-    inputBackgroundChecked: p.themePrimary,
-    inputBackgroundCheckedHovered: p.themeDarkAlt,
-    inputForegroundChecked: p.white,
-    inputFocusBorderAlt: p.themePrimary,
-    smallInputBorder: p.neutralSecondary,
-    inputText: p.neutralPrimary,
-    inputTextHovered: p.neutralDark,
-    inputPlaceholderText: p.neutralSecondary,
-
-    buttonBackground: p.neutralLighter,
+    // BUTTONS
+    buttonBackground: p.white,
     buttonBackgroundChecked: p.neutralTertiaryAlt,
-    buttonBackgroundHovered: p.neutralLight,
+    buttonBackgroundHovered: p.neutralLighter,
     buttonBackgroundCheckedHovered: p.neutralLight,
     buttonBackgroundPressed: p.neutralLight,
     buttonBackgroundDisabled: p.neutralLighter,
-    buttonBorder: 'transparent',
+    buttonBorder: p.neutralSecondaryAlt,
     buttonText: p.neutralPrimary,
     buttonTextHovered: p.neutralDark,
     buttonTextChecked: p.neutralDark,
     buttonTextCheckedHovered: p.black,
     buttonTextPressed: p.neutralDark,
     buttonTextDisabled: p.neutralTertiary,
-    buttonBorderDisabled: 'transparent',
+    buttonBorderDisabled: p.neutralLighter,
 
     primaryButtonBackground: p.themePrimary,
     primaryButtonBackgroundHovered: p.themeDarkAlt,
@@ -244,15 +235,27 @@ function _makeSemanticColorsFromPalette(p: IPalette, isInverted: boolean, depCom
     accentButtonBackground: p.accent,
     accentButtonText: p.white,
 
-    menuBackground: p.white,
-    menuDivider: p.neutralTertiaryAlt,
-    menuIcon: p.themePrimary,
-    menuHeader: p.themePrimary,
-    menuItemBackgroundHovered: p.neutralLighter,
-    menuItemBackgroundPressed: p.neutralLight,
-    menuItemText: p.neutralPrimary,
-    menuItemTextHovered: p.neutralDark,
+    // INPUTS
+    inputBorder: p.neutralSecondaryAlt,
+    inputBorderHovered: p.neutralPrimary,
+    inputBackground: p.white,
+    inputBackgroundChecked: p.themePrimary,
+    inputBackgroundCheckedHovered: p.themeDark,
+    inputPlaceholderBackgroundChecked: p.themeLighter,
+    inputForegroundChecked: p.white,
+    inputIcon: p.themePrimary,
+    inputIconHovered: p.themeDark,
+    inputIconDisabled: p.neutralTertiary,
+    inputFocusBorderAlt: p.themePrimary,
+    smallInputBorder: p.neutralSecondary,
+    inputText: p.neutralPrimary,
+    inputTextHovered: p.neutralDark,
+    inputPlaceholderText: p.neutralSecondary,
+    disabledBackground: p.neutralLighter,
+    disabledText: p.neutralTertiary,
+    disabledSubtext: p.neutralQuaternary,
 
+    // LISTS
     listBackground: p.white,
     listText: p.neutralPrimary,
     listItemBackgroundHovered: p.neutralLighter,
@@ -262,10 +265,24 @@ function _makeSemanticColorsFromPalette(p: IPalette, isInverted: boolean, depCom
     listHeaderBackgroundHovered: p.neutralLighter,
     listHeaderBackgroundPressed: p.neutralLight,
 
-    actionLink: p.neutralPrimary,
-    actionLinkHovered: p.neutralDark,
-    link: p.themePrimary,
-    linkHovered: p.themeDarker,
+    // MENUS
+    menuBackground: p.white,
+    menuDivider: p.neutralTertiaryAlt,
+    menuIcon: p.themePrimary,
+    menuHeader: p.themePrimary,
+    menuItemBackgroundHovered: p.neutralLighter,
+    menuItemBackgroundPressed: p.neutralLight,
+    menuItemText: p.neutralPrimary,
+    menuItemTextHovered: p.neutralDark,
+
+    errorText: !isInverted ? p.redDark : '#ff5f5f',
+    warningText: !isInverted ? '#333333' : '#ffffff',
+    successText: !isInverted ? '#107C10' : '#92c353',
+    errorBackground: !isInverted ? 'rgba(245, 135, 145, .2)' : 'rgba(232, 17, 35, .5)',
+    blockingBackground: !isInverted ? 'rgba(250, 65, 0, .2)' : 'rgba(234, 67, 0, .5)',
+    warningBackground: !isInverted ? 'rgba(255, 200, 10, .2)' : 'rgba(255, 251, 0, .6)',
+    warningHighlight: !isInverted ? '#ffb900' : '#fff100',
+    successBackground: !isInverted ? 'rgba(95, 210, 85, .2)' : 'rgba(186, 216, 10, .4)',
 
     // Deprecated slots, second pass by _fixDeprecatedSlots() later for self-referential slots
     listTextColor: '',

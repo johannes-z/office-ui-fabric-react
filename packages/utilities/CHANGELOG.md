@@ -1,6 +1,263 @@
 # Change Log - @uifabric/utilities
 
-This log was last generated on Tue, 02 Apr 2019 00:38:15 GMT and should not be manually modified.
+This log was last generated on Mon, 18 Nov 2019 12:33:30 GMT and should not be manually modified.
+
+## 7.6.0
+Mon, 18 Nov 2019 12:33:30 GMT
+
+### Minor changes
+
+- AutoScroll: Add horizontal scrolling (v-mare@microsoft.com)
+## 7.5.0
+Mon, 07 Oct 2019 12:33:45 GMT
+
+### Minor changes
+
+- Reverting dependency on ReactDOM findDOMNode in getWindow and getDocument helpers to avoid bundle problems for partners. (dzearing@microsoft.com)
+## 7.4.0
+Thu, 03 Oct 2019 01:14:35 GMT
+
+### Minor changes
+
+- Async methods can now take a React component as the target being passed to `getWindow`. (dzearing@microsoft.com)
+## 7.3.0
+Tue, 01 Oct 2019 12:33:48 GMT
+
+### Minor changes
+
+- Async helpers now take in a target element which will be used to find the window object. (dzearing@microsoft.com)
+## 7.2.0
+Thu, 26 Sep 2019 12:32:32 GMT
+
+### Minor changes
+
+- mergeStyles and mergeStyleSets have a companion method which accepts options for setting RTL (jdh@microsoft.com)
+### Patches
+
+- Minor refinement to mergeAriaAttributeValues to correctly handleu false, therefore allowing (`cond && "something"). (cliff.koh@microsoft.com)
+## 7.1.0
+Mon, 23 Sep 2019 12:33:15 GMT
+
+### Minor changes
+
+- Customizations: add a way to batch updates (phkuo@microsoft.com)
+## 7.0.11
+Fri, 20 Sep 2019 12:34:28 GMT
+
+### Patches
+
+- Consuming latest merge-styles bits with `concatStyleSetsWithProps`. (dzearing@microsoft.com)
+## 7.0.10
+Mon, 16 Sep 2019 12:34:47 GMT
+
+### Patches
+
+- Move getId to its own file (elcraig@microsoft.com)
+## 7.0.9
+Wed, 04 Sep 2019 04:09:58 GMT
+
+### Patches
+
+- fix version file (kchau@microsoft.com)
+## 7.0.8
+Fri, 23 Aug 2019 12:35:28 GMT
+
+### Patches
+
+- Update npmignores, delete unused jest setup files (elcraig@microsoft.com)
+- Fix up readme and package.json descriptions (elcraig@microsoft.com)
+
+## 7.0.7
+Wed, 17 Jul 2019 18:58:57 GMT
+
+### Patches
+
+- Adding @types/react and @types/react-dom to package.json that have peer dependencies on react and react-dom. (makotom@microsoft.com)
+
+## 7.0.6
+Mon, 01 Jul 2019 18:51:42 GMT
+
+### Patches
+
+- adds react-app-polyfill
+
+## 7.0.5
+Thu, 27 Jun 2019 22:14:22 GMT
+
+### Patches
+
+- Utilities: Update implementation for raising a click event to support IE
+
+## 7.0.4
+Thu, 27 Jun 2019 18:25:04 GMT
+
+### Patches
+
+- Adding a null check in the case a stylesheet instance is not avaiable or old.
+- The `getClassNames` function now returns memoized classnames, resulting in improved performance in high repeat scenarios (like lists rendering checks.) Reintroduction of #8761.
+- Add placeholder as TextArea property
+
+## 7.0.3
+Fri, 14 Jun 2019 12:26:30 GMT
+
+### Patches
+
+- Fix missing assets in production build.
+
+## 7.0.2
+Thu, 13 Jun 2019 00:24:48 GMT
+
+### Patches
+
+- Initial release of Fabric 7
+
+## 7.0.0
+Wed, 12 Jun 2019 00:42:26 GMT
+
+### Breaking changes
+
+- Remove deprecated `autobind` decorator.
+- createRef: removed (use React.createRef instead)
+
+### Minor changes
+
+- Add utility for checking controlled/uncontrolled prop usage
+
+### Patches
+
+- Update and dedupe React deps.
+
+## 6.41.0
+Tue, 11 Jun 2019 12:21:35 GMT
+
+### Minor changes
+
+- Updating `getNativeAttributes` element allow lists to be more refined, reducing unexpected attributes from being injected on primative elements. For example, `min` and `max` were being allowed to be injected for `div` elements. Now they are only injected for `input` elements.
+
+### Patches
+
+- Setting the styles props only when either of defaultProps or componentProps have it defined
+- upgrade to api-extractor 7.1.6
+
+## 6.40.1
+Thu, 06 Jun 2019 12:22:24 GMT
+
+### Patches
+
+- Fix ./index import from selection
+
+## 6.40.0
+Wed, 05 Jun 2019 12:22:30 GMT
+
+### Minor changes
+
+- Migrate Selection to Utilities
+
+## 6.39.3
+Wed, 29 May 2019 12:21:24 GMT
+
+### Patches
+
+- Revert styled and classNameFunctions perf improvements temporarily.
+
+## 6.39.2
+Fri, 24 May 2019 14:51:14 GMT
+
+### Patches
+
+- remove usage of process
+
+## 6.39.1
+Fri, 24 May 2019 12:21:33 GMT
+
+### Patches
+
+- Fix wrapped styled regression caused by nested style arrays.
+- Mutually exclusive warnings are not displayed if value of the prop is undefined
+
+## 6.39.0
+Wed, 22 May 2019 12:21:34 GMT
+
+### Minor changes
+
+- The `getClassNames` function now returns memoized classnames, resulting in improved performance in high repeat scenarios (like lists rendering checks.)
+
+## 6.38.3
+Tue, 14 May 2019 07:50:30 GMT
+
+### Patches
+
+- Update Fabric assets link
+
+## 6.38.2
+Tue, 14 May 2019 01:56:43 GMT
+
+### Patches
+
+- Removed a few more `typeof window` references to avoid memory leaks with IE11.
+
+## 6.38.1
+Thu, 02 May 2019 12:36:35 GMT
+
+### Patches
+
+- a new line is added to the end of the api-extractor.json file
+
+## 6.38.0
+Wed, 01 May 2019 12:34:24 GMT
+
+### Minor changes
+
+- Export Omit from utilities
+
+## 6.37.1
+Tue, 30 Apr 2019 12:31:36 GMT
+
+### Patches
+
+- Adds pointer events to baseElementProperties
+
+## 6.37.0
+Sat, 27 Apr 2019 00:04:47 GMT
+
+### Minor changes
+
+- The `styled` helper can now take in a pure flag to create pure components. Note that in a future release we'd like to match the `styled` contracts of other libraries which can take in a View and an options property bag, but for now to make this non-breaking we'll add another argument.
+
+## 6.36.0
+Fri, 26 Apr 2019 12:35:24 GMT
+
+### Minor changes
+
+- Make isFocusVisible toggleable by user.
+
+## 6.35.7
+Tue, 23 Apr 2019 12:32:00 GMT
+
+### Patches
+
+- Removing closure from `styled` helper to improve performance.
+
+## 6.35.6
+Fri, 19 Apr 2019 12:33:02 GMT
+
+### Patches
+
+- Removing closure from `styled` helper to improve performance.
+
+## 6.35.5
+Thu, 11 Apr 2019 12:37:10 GMT
+
+### Patches
+
+- Documentation: add @docCategory inline tags
+
+## 6.35.4
+Mon, 08 Apr 2019 12:37:15 GMT
+
+### Patches
+
+- Customizer modified to avoid BaseComponent.
 
 ## 6.35.3
 Tue, 02 Apr 2019 00:38:15 GMT
@@ -194,7 +451,7 @@ Mon, 08 Oct 2018 12:24:15 GMT
 
 ### Patches
 
-- Moving tslint/prettier dependencies 
+- Moving tslint/prettier dependencies
 
 ## 6.21.1
 Wed, 26 Sep 2018 12:27:23 GMT
@@ -318,7 +575,7 @@ Fri, 27 Jul 2018 10:25:39 GMT
 
 ### Patches
 
-- prop-types version 
+- prop-types version
 
 ## 6.12.0
 Mon, 23 Jul 2018 10:28:08 GMT
@@ -1071,7 +1328,7 @@ Fri, 26 May 2017 10:21:03 GMT
 
 ### Patches
 
-- Utilities: Fixed incorrect calculation of initials. Properly remove unwanted ASCII characters, and do not calculate initials for Arabic and CJK based languages. 
+- Utilities: Fixed incorrect calculation of initials. Properly remove unwanted ASCII characters, and do not calculate initials for Arabic and CJK based languages.
 
 ## 1.10.1
 Wed, 24 May 2017 23:52:09 GMT

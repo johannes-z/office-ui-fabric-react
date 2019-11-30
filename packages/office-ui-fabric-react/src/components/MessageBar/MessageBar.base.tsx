@@ -3,6 +3,7 @@ import { BaseComponent, DelayedRender, getId, classNamesFunction, getNativeProps
 import { IconButton } from '../../Button';
 import { Icon } from '../../Icon';
 import { IMessageBarProps, IMessageBarStyleProps, IMessageBarStyles, MessageBarType } from './MessageBar.types';
+import { css } from '@uifabric/utilities';
 
 const getClassNames = classNamesFunction<IMessageBarStyleProps, IMessageBarStyles>();
 
@@ -57,13 +58,14 @@ export class MessageBarBase extends BaseComponent<IMessageBarProps, IMessageBarS
   }
 
   private _getDismissDiv(): JSX.Element | null {
-    if (this.props.onDismiss) {
+    const { onDismiss, dismissIconProps } = this.props;
+    if (onDismiss) {
       return (
         <IconButton
           disabled={false}
           className={this._classNames.dismissal}
-          onClick={this.props.onDismiss}
-          iconProps={{ iconName: 'Clear' }}
+          onClick={onDismiss}
+          iconProps={dismissIconProps ? dismissIconProps : { iconName: 'Clear' }}
           ariaLabel={this.props.dismissButtonAriaLabel}
         />
       );
@@ -89,7 +91,6 @@ export class MessageBarBase extends BaseComponent<IMessageBarProps, IMessageBarS
             iconProps={{ iconName: this.state.expandSingleLine ? 'DoubleChevronUp' : 'DoubleChevronDown' }}
             ariaLabel={this.props.overflowButtonAriaLabel}
             aria-expanded={this.state.expandSingleLine}
-            aria-controls={this.state.labelId}
           />
         </div>
       );
@@ -98,46 +99,58 @@ export class MessageBarBase extends BaseComponent<IMessageBarProps, IMessageBarS
   }
 
   private _getIconSpan(): JSX.Element {
+    const { messageBarIconProps } = this.props;
     return (
-      <div className={this._classNames.iconContainer}>
-        <Icon iconName={this.ICON_MAP[this.props.messageBarType!]} className={this._classNames.icon} />
+      <div className={this._classNames.iconContainer} aria-hidden>
+        {messageBarIconProps ? (
+          <Icon {...messageBarIconProps} className={css(this._classNames.icon, messageBarIconProps.className)} />
+        ) : (
+          <Icon iconName={this.ICON_MAP[this.props.messageBarType!]} className={this._classNames.icon} />
+        )}
       </div>
     );
   }
 
   private _renderMultiLine(): React.ReactElement<React.HTMLAttributes<HTMLAreaElement>> {
+    const { theme } = this.props;
+
     return (
-      <div className={this._classNames.root}>
-        <div className={this._classNames.content}>
-          {this._getIconSpan()}
-          {this._renderInnerText()}
-          {this._getDismissDiv()}
+      <div style={{ background: theme!.semanticColors.bodyBackground }}>
+        <div className={this._classNames.root} {...this._getRegionProps()}>
+          <div className={this._classNames.content}>
+            {this._getIconSpan()}
+            {this._renderInnerText()}
+            {this._getDismissDiv()}
+          </div>
+          {this._getActionsDiv()}
         </div>
-        {this._getActionsDiv()}
       </div>
     );
   }
 
   private _renderSingleLine(): React.ReactElement<React.HTMLAttributes<HTMLAreaElement>> {
+    const { theme } = this.props;
     return (
-      <div className={this._classNames.root}>
-        <div className={this._classNames.content}>
-          {this._getIconSpan()}
-          {this._renderInnerText()}
-          {this._getExpandSingleLine()}
-          {this._getActionsDiv()}
-          {this._getDismissSingleLine()}
+      <div style={{ background: theme!.semanticColors.bodyBackground }}>
+        <div className={this._classNames.root} {...this._getRegionProps()}>
+          <div className={this._classNames.content}>
+            {this._getIconSpan()}
+            {this._renderInnerText()}
+            {this._getExpandSingleLine()}
+            {this._getActionsDiv()}
+            {this._getDismissSingleLine()}
+          </div>
         </div>
       </div>
     );
   }
 
   private _renderInnerText(): JSX.Element {
-    const nativeProps = getNativeProps(this.props, htmlElementProperties, ['className']);
+    const nativeProps = getNativeProps<React.HTMLAttributes<HTMLSpanElement>>(this.props, htmlElementProperties, ['className']);
 
     return (
-      <div className={this._classNames.text} id={this.state.labelId}>
-        <span className={this._classNames.innerText} role="status" aria-live={this._getAnnouncementPriority()} {...nativeProps}>
+      <div className={this._classNames.text} id={this.state.labelId} role="status" aria-live={this._getAnnouncementPriority()}>
+        <span className={this._classNames.innerText} {...nativeProps}>
           <DelayedRender>
             <span>{this.props.children}</span>
           </DelayedRender>
@@ -145,6 +158,16 @@ export class MessageBarBase extends BaseComponent<IMessageBarProps, IMessageBarS
       </div>
     );
   }
+
+  private _getRegionProps = () => {
+    const hasActions = !!this._getActionsDiv() || !!this._getDismissDiv();
+    const regionProps = {
+      'aria-describedby': this.state.labelId,
+      role: 'region'
+    };
+
+    return hasActions ? regionProps : {};
+  };
 
   private _getClassNames(): { [key in keyof IMessageBarStyles]: string } {
     const { theme, className, messageBarType, onDismiss, actions, truncated, isMultiline } = this.props;

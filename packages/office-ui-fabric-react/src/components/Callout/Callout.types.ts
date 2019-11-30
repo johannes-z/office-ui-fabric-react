@@ -1,24 +1,25 @@
+import * as React from 'react';
 import { IStyle, ITheme } from '../../Styling';
 import { DirectionalHint } from '../../common/DirectionalHint';
-import { IRefObject, IPoint, IRectangle, IStyleFunctionOrObject } from '../../Utilities';
+import { IPoint, IRectangle, IStyleFunctionOrObject } from '../../Utilities';
 import { ICalloutPositionedInfo } from '../../utilities/positioning';
 import { ILayerProps } from '../../Layer';
 
-export interface ICallout {}
+/**
+ * {@docCategory Callout}
+ */
+export type Target = Element | string | MouseEvent | IPoint | null | React.RefObject<Element>;
 
+/**
+ * {@docCategory Callout}
+ */
 export interface ICalloutProps extends React.HTMLAttributes<HTMLDivElement> {
-  /**
-   * Optional callback to access the ICallout interface. Use this instead of ref for accessing
-   * the public methods and properties of the component.
-   */
-  componentRef?: IRefObject<ICallout>;
-
   /**
    * The target that the Callout should try to position itself based on.
    * It can be either an Element a querySelector string of a valid Element
    * or a MouseEvent. If MouseEvent is given then the origin point of the event will be used.
    */
-  target?: Element | string | MouseEvent | IPoint | null;
+  target?: Target;
 
   /**
    * How the element should be positioned
@@ -63,9 +64,9 @@ export interface ICalloutProps extends React.HTMLAttributes<HTMLDivElement> {
   backgroundColor?: string;
 
   /**
-   * The bounding rectangle for which  the contextual menu can appear in.
+   * The bounding rectangle (or callback that returns a rectangle) for which  the contextual menu can appear in.
    */
-  bounds?: IRectangle;
+  bounds?: IRectangle | ((target?: Target, targetWindow?: Window) => IRectangle | undefined);
 
   /**
    * The minimum distance the callout will be away from the edge of the screen.
@@ -226,8 +227,28 @@ export interface ICalloutProps extends React.HTMLAttributes<HTMLDivElement> {
    * once the callout is visible.
    */
   hidden?: boolean;
+
+  /**
+   * If true, the component will be updated even when hidden=true.
+   * Note that this would consume resources to update even though
+   * nothing is being shown to the user.
+   * This might be helpful though if your updates are small and you want the
+   * callout to be revealed fast to the user when hidden is set to false.
+   */
+  shouldUpdateWhenHidden?: boolean;
+
+  /**
+   * If specified, determines whether the underlying "Popup" component should try to restore
+   * focus when it is dismissed.  When set to false, the Popup won't try to restore focus to
+   * the last focused element.
+   * @defaultvalue true;
+   */
+  shouldRestoreFocus?: boolean;
 }
 
+/**
+ * {@docCategory Callout}
+ */
 export interface ICalloutContentStyleProps {
   /**
    * Theme to apply to the calloutContent.
@@ -271,6 +292,9 @@ export interface ICalloutContentStyleProps {
   calloutMaxWidth?: number;
 }
 
+/**
+ * {@docCategory Callout}
+ */
 export interface ICalloutContentStyles {
   /**
    * Style for wrapper of Callout component.

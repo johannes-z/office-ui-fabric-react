@@ -1,8 +1,9 @@
+import { getGlobalClassNames, HighContrastSelector } from '../../../Styling';
 import { IMenuButtonComponent, IMenuButtonStylesReturnType, IMenuButtonTokenReturnType } from './MenuButton.types';
 
 const baseTokens: IMenuButtonComponent['tokens'] = (props, theme): IMenuButtonTokenReturnType => {
   return {
-    contentPadding: '8px 10px',
+    menuIconSize: 12,
     minWidth: 0
   };
 };
@@ -10,26 +11,46 @@ const baseTokens: IMenuButtonComponent['tokens'] = (props, theme): IMenuButtonTo
 const expandedTokens: IMenuButtonComponent['tokens'] = (props, theme): IMenuButtonTokenReturnType => {
   const { semanticColors } = theme;
   return {
-    backgroundColor: semanticColors.buttonBackgroundPressed,
-    backgroundColorHovered: semanticColors.buttonBackgroundPressed,
-    backgroundColorPressed: semanticColors.buttonBackgroundPressed,
+    backgroundColorExpanded: semanticColors.buttonBackgroundPressed,
+    backgroundColorExpandedHovered: semanticColors.buttonBackgroundPressed,
+    backgroundColorExpandedPressed: semanticColors.buttonBackgroundPressed,
+
+    borderColor: semanticColors.buttonBorder,
+    borderColorHovered: semanticColors.buttonBorder,
+    borderColorPressed: semanticColors.buttonBorder,
 
     color: semanticColors.buttonTextPressed,
     colorHovered: semanticColors.buttonTextPressed,
-    colorPressed: semanticColors.buttonTextPressed
+    colorPressed: semanticColors.buttonTextPressed,
+
+    highContrastColor: 'Highlight',
+    highContrastColorHovered: 'Highlight',
+    highContrastColorPressed: 'Highlight',
+
+    highContrastBorderColor: 'Highlight',
+    highContrastBorderColorHovered: 'Highlight',
+    highContrastBorderColorPressed: 'Highlight'
   };
 };
 
 const primaryExpandedTokens: IMenuButtonComponent['tokens'] = (props, theme): IMenuButtonTokenReturnType => {
   const { semanticColors } = theme;
   return {
-    backgroundColor: semanticColors.primaryButtonBackgroundPressed,
-    backgroundColorHovered: semanticColors.primaryButtonBackgroundPressed,
-    backgroundColorPressed: semanticColors.primaryButtonBackgroundPressed,
+    backgroundColorExpanded: semanticColors.primaryButtonBackgroundPressed,
+    backgroundColorExpandedHovered: semanticColors.primaryButtonBackgroundPressed,
+    backgroundColorExpandedPressed: semanticColors.primaryButtonBackgroundPressed,
+
+    highContrastBackgroundColor: 'Highlight',
+    highContrastBackgroundColorHovered: 'Highlight',
+    highContrastBackgroundColorPressed: 'Highlight',
 
     color: semanticColors.primaryButtonTextPressed,
     colorHovered: semanticColors.primaryButtonTextPressed,
-    colorPressed: semanticColors.primaryButtonTextPressed
+    colorPressed: semanticColors.primaryButtonTextPressed,
+
+    highContrastColor: 'Window',
+    highContrastColorHovered: 'Window',
+    highContrastColorPressed: 'Window'
   };
 };
 
@@ -39,34 +60,68 @@ export const MenuButtonTokens: IMenuButtonComponent['tokens'] = (props, theme): 
   props.primary && props.expanded && primaryExpandedTokens
 ];
 
+const GlobalClassNames = {
+  msMenuButton: 'ms-MenuButton'
+};
+
 export const MenuButtonStyles: IMenuButtonComponent['styles'] = (props, theme, tokens): IMenuButtonStylesReturnType => {
   const { className } = props;
 
+  const globalClassNames = getGlobalClassNames(GlobalClassNames, theme);
+
   return {
+    root: {
+      display: 'inline-flex'
+    },
     button: [
+      globalClassNames.msMenuButton,
       {
-        backgroundColor: tokens.backgroundColor,
+        backgroundColor: props.expanded ? tokens.backgroundColorExpanded : tokens.backgroundColor,
+        borderColor: tokens.borderColor,
         color: tokens.color,
         minWidth: tokens.minWidth,
 
         selectors: {
+          [HighContrastSelector]: {
+            backgroundColor: tokens.highContrastBackgroundColor,
+            color: tokens.highContrastColor,
+            borderColor: tokens.highContrastBorderColor
+          },
           ':hover': {
-            backgroundColor: tokens.backgroundColorHovered,
-            color: tokens.colorHovered
+            backgroundColor: props.expanded ? tokens.backgroundColorExpandedHovered : tokens.backgroundColorHovered,
+            color: tokens.colorHovered,
+
+            selectors: {
+              [HighContrastSelector]: {
+                backgroundColor: tokens.highContrastBackgroundColorHovered,
+                color: tokens.highContrastColorHovered,
+                borderColor: tokens.highContrastBorderColorHovered
+              }
+            }
           },
           ':hover:active': {
-            backgroundColor: tokens.backgroundColorPressed,
-            color: tokens.colorPressed
-          },
-          '> *': {
-            padding: tokens.contentPadding
+            backgroundColor: props.expanded ? tokens.backgroundColorExpandedPressed : tokens.backgroundColorPressed,
+            color: tokens.colorPressed,
+
+            selectors: {
+              [HighContrastSelector]: {
+                backgroundColor: tokens.highContrastBackgroundColorPressed,
+                color: tokens.highContrastColorPressed,
+                borderColor: tokens.highContrastBorderColorPressed
+              }
+            }
           }
         }
       },
       className
     ],
+    menuArea: {
+      height: 'auto',
+      width: 'auto'
+    },
     menuIcon: {
-      paddingTop: '3px'
+      fontSize: tokens.menuIconSize,
+      paddingTop: '5px'
     }
   };
 };

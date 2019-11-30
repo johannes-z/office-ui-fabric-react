@@ -3,8 +3,14 @@ import { LayerBase } from './Layer.base';
 import { IStyle, ITheme } from '../../Styling';
 import { IRefObject, IStyleFunctionOrObject } from '../../Utilities';
 
+/**
+ * {@docCategory Layer}
+ */
 export interface ILayer {}
 
+/**
+ * {@docCategory Layer}
+ */
 export interface ILayerProps extends React.HTMLAttributes<HTMLDivElement | LayerBase> {
   /**
    * Optional callback to access the ILayer interface. Use this instead of ref for accessing
@@ -28,7 +34,10 @@ export interface ILayerProps extends React.HTMLAttributes<HTMLDivElement | Layer
    */
   className?: string;
 
-  /** Callback for when the layer is mounted. */
+  /**
+   * Callback for when the layer is mounted.
+   * @deprecated Use onLayerDidMount.
+   */
   onLayerMounted?: () => void;
 
   /**
@@ -64,6 +73,9 @@ export interface ILayerProps extends React.HTMLAttributes<HTMLDivElement | Layer
   insertFirst?: boolean;
 }
 
+/**
+ * {@docCategory Layer}
+ */
 export interface ILayerStyleProps {
   /**
    * Accept theme prop.
@@ -81,6 +93,9 @@ export interface ILayerStyleProps {
   isNotHost?: boolean;
 }
 
+/**
+ * {@docCategory Layer}
+ */
 export interface ILayerStyles {
   /**
    * Style for the root element when fixed.

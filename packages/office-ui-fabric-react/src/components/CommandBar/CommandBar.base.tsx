@@ -8,6 +8,8 @@ import { FocusZone, FocusZoneDirection } from '../../FocusZone';
 import { classNamesFunction } from '../../Utilities';
 import { CommandBarButton, IButtonProps } from '../../Button';
 import { TooltipHost } from '../../Tooltip';
+import { IComponentAs, getNativeProps, divProperties } from '@uifabric/utilities';
+import { mergeStyles, IStyle } from '@uifabric/styling';
 
 const getClassNames = classNamesFunction<ICommandBarStyleProps, ICommandBarStyles>();
 
@@ -46,12 +48,12 @@ export class CommandBarBase extends BaseComponent<ICommandBarProps, {}> implemen
 
   public render(): JSX.Element {
     const {
-      className,
       items,
       overflowItems,
       farItems,
       styles,
       theme,
+      dataDidRender,
       onReduceData = this._onReduceData,
       onGrowData = this._onGrowData
     } = this.props;
@@ -66,14 +68,19 @@ export class CommandBarBase extends BaseComponent<ICommandBarProps, {}> implemen
 
     this._classNames = getClassNames(styles!, { theme: theme! });
 
+    // ResizeGroup will render these attributes to the root <div>.
+    // TODO We may need to elevate classNames from <FocusZone> into <ResizeGroup> ?
+    const nativeProps = getNativeProps<React.HTMLAttributes<HTMLDivElement>>(this.props, divProperties);
+
     return (
       <ResizeGroup
+        {...nativeProps}
         componentRef={this._resizeGroup}
-        className={className}
         data={commandBarData}
         onReduceData={onReduceData}
         onGrowData={onGrowData}
         onRenderData={this._onRenderData}
+        dataDidRender={dataDidRender}
       />
     );
   }
@@ -101,7 +108,6 @@ export class CommandBarBase extends BaseComponent<ICommandBarProps, {}> implemen
           componentRef={this._resolveRef('_overflowSet')}
           className={css(this._classNames.primarySet)}
           doNotContainWithinFocusZone={true}
-          role={'presentation'}
           items={data.primaryItems}
           overflowItems={data.overflowItems.length ? data.overflowItems : undefined}
           onRenderItem={this._onRenderItem}
@@ -113,7 +119,6 @@ export class CommandBarBase extends BaseComponent<ICommandBarProps, {}> implemen
           <OverflowSet
             className={css(this._classNames.secondarySet)}
             doNotContainWithinFocusZone={true}
-            role={'presentation'}
             items={data.farItems}
             onRenderItem={this._onRenderItem}
             onRenderOverflowButton={nullRender}
@@ -124,20 +129,28 @@ export class CommandBarBase extends BaseComponent<ICommandBarProps, {}> implemen
   };
 
   private _onRenderItem = (item: ICommandBarItemProps): JSX.Element | React.ReactNode => {
-    const CommandButtonType = this.props.buttonAs || item.commandBarButtonAs || CommandBarButton;
-
-    const itemText = item.text || item.name;
-
     if (item.onRender) {
       // These are the top level items, there is no relevant menu dismissing function to
       // provide for the IContextualMenuItem onRender function. Pass in a no op function instead.
       return item.onRender(item, () => undefined);
     }
+
+    const itemText = item.text || item.name;
+    const rootStyles: IStyle = {
+      height: '100%'
+    };
+    const labelStyles: IStyle = {
+      whiteSpace: 'nowrap'
+    };
     const commandButtonProps: ICommandBarItemProps = {
       allowDisabledFocus: true,
       role: 'menuitem',
       ...item,
-      styles: { root: { height: '100%' }, label: { whiteSpace: 'nowrap' }, ...item.buttonStyles },
+      styles: {
+        ...item.buttonStyles,
+        root: item.buttonStyles ? mergeStyles(rootStyles, item.buttonStyles.root) : rootStyles,
+        label: item.buttonStyles ? mergeStyles(labelStyles, item.buttonStyles.label) : labelStyles
+      },
       className: css('ms-CommandBarItem-link', item.className),
       text: !item.iconOnly ? itemText : undefined,
       menuProps: item.subMenuProps,
@@ -147,12 +160,24 @@ export class CommandBarBase extends BaseComponent<ICommandBarProps, {}> implemen
     if (item.iconOnly && itemText !== undefined) {
       return (
         <TooltipHost content={itemText} {...item.tooltipHostProps}>
-          <CommandButtonType {...commandButtonProps as IButtonProps} defaultRender={CommandBarButton} />
+          {this._commandButton(item, commandButtonProps)}
         </TooltipHost>
       );
     }
 
-    return <CommandButtonType {...commandButtonProps as IButtonProps} defaultRender={CommandBarButton} />;
+    return this._commandButton(item, commandButtonProps);
+  };
+
+  private _commandButton = (item: ICommandBarItemProps, props: ICommandBarItemProps): JSX.Element => {
+    const ButtonAs = this.props.buttonAs as IComponentAs<ICommandBarItemProps> | undefined;
+    const CommandBarButtonAs = item.commandBarButtonAs as IComponentAs<ICommandBarItemProps> | undefined;
+    const DefaultButtonAs = (CommandBarButton as {}) as IComponentAs<ICommandBarItemProps>;
+
+    // The prop types between these three possible implementations overlap enough that a force-cast is safe.
+    const Type = ButtonAs || CommandBarButtonAs || DefaultButtonAs;
+
+    // Always pass the default implementation to the override so it may be composed.
+    return <Type {...props as ICommandBarItemProps} defaultRender={DefaultButtonAs} />;
   };
 
   private _onButtonClick(item: ICommandBarItemProps): (ev: React.MouseEvent<HTMLButtonElement>) => void {
